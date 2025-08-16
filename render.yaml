@@ -2,7 +2,9 @@ services:
   - type: web
     name: signova
     env: python
-    buildCommand: pip install -r requirements_django.txt
+    plan: free
+    region: frankfurt # or oregon, pick closest
+    buildCommand: pip install -r requirements_django.txt && python manage.py migrate && python manage.py collectstatic --noinput
     startCommand: gunicorn signova.wsgi:application
     envVars:
       - key: DJANGO_SETTINGS_MODULE

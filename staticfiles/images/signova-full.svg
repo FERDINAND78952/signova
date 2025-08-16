@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0.00 0.00 800.00 200.00">
+  <g stroke-width="2.00" fill="none" stroke-linecap="butt">
+    <!-- Main logo shape -->
+    <path fill="#3B82F6" d="
+      M 50 100
+      C 50 72.39 72.39 50 100 50
+      C 127.61 50 150 72.39 150 100
+      C 150 127.61 127.61 150 100 150
+      C 72.39 150 50 127.61 50 100
+      Z
+    "/>
+    
+    <!-- Hand gesture -->
+    <path fill="#FFFFFF" d="
+      M 85 90
+      C 85 85 90 80 95 80
+      C 100 80 105 85 105 90
+      L 105 110
+      C 105 115 110 120 115 120
+      C 120 120 125 115 125 110
+      L 125 85
+      C 125 80 130 75 135 75
+      C 140 75 145 80 145 85
+      L 145 115
+      C 145 130 130 145 115 145
+      C 100 145 85 130 85 115
+      Z
+    "/>
+    
+    <!-- Text part -->
+    <text x="180" y="120" font-family="Arial" font-size="60" font-weight="bold" fill="#3B82F6">SIGNOVA</text>
+    
+    <!-- Tagline -->
+    <text x="180" y="150" font-family="Arial" font-size="20" fill="#64748B">Sign Language Translator</text>
+  </g>
+</svg>
