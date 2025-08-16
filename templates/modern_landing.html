@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signova - Smart Sign Language Translation</title>
+    <link rel="stylesheet" href="{% static 'css/modern-landing.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta name="description" content="Signova - Breaking communication barriers through sign language translation technology">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}">
+</head>
+<body>
+    <!-- Header with Sticky Navigation -->
+    <header id="main-header">
+        <div class="container">
+            <div class="logo-container">
+                <img src="{% static 'images/signova-full.svg' %}" alt="Signova Logo" class="logo">
+                <span class="logo-text">Signova</span>
+            </div>
+            <nav id="main-nav">
+                <ul>
+                    <li><a href="#welcome" class="nav-link active">Welcome</a></li>
+                    <li><a href="#translator" class="nav-link">Sign Translator</a></li>
+                    <li><a href="#library" class="nav-link">Sign Library</a></li>
+                    <li><a href="#learning" class="nav-link">Learning Hub</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                    <li><button id="login-btn" class="btn btn-outline">Login</button></li>
+                    <li><button id="signup-btn" class="btn btn-primary">Sign Up</button></li>
+                </ul>
+            </nav>
+            <button class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="welcome" class="hero-section">
+        <div class="container">
+            <h1 class="headline">Breaking Barriers. Building Bridges.</h1>
+            <p class="subheadline">Signova transforms gestures into voice, empowering communication beyond boundaries.</p>
+            <div class="animated-quote">
+                <i class="fas fa-quote-left"></i>
+                <span>When technology speaks, no one is left unheard.</span>
+                <i class="fas fa-quote-right"></i>
+            </div>
+            <div class="hero-buttons">
+                <button id="try-translator-btn" class="btn btn-primary btn-lg">
+                    <i class="fas fa-language"></i> Try Sign Translator
+                </button>
+                <button id="explore-library-btn" class="btn btn-secondary btn-lg">
+                    <i class="fas fa-book-open"></i> Explore Sign Library
+                </button>
+                <a href="#about" class="btn btn-outline btn-lg smooth-scroll">
+                    <i class="fas fa-info-circle"></i> About Signova
+                </a>
+            </div>
+            <div class="scroll-indicator">
+                <div class="mouse">
+                    <div class="wheel"></div>
+                </div>
+                <div class="arrows">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 1: A World Without Barriers -->
+    <section id="barriers" class="content-section parallax-section">
+        <div class="parallax-bg"></div>
+        <div class="container">
+            <h2 class="section-title fade-in">A World Without Barriers</h2>
+            <div class="section-content fade-in">
+                <p>Every day, millions of deaf and hard-of-hearing individuals face invisible walls. These barriers limit access to education, job opportunities, and even simple social interactions. In Rwanda and beyond, the challenge is not ability — it's accessibility.</p>
+                <p class="hidden-content">At Signova, we believe that communication should never depend on whether you can hear or speak. Our vision is simple but powerful: a world where every voice — spoken or signed — is heard and understood.</p>
+                <p class="hidden-content">Through innovative technology and a deep commitment to inclusivity, we're breaking down these barriers one conversation at a time. Our sign language recognition system doesn't just translate gestures; it bridges worlds, connects communities, and opens doors that were previously closed.</p>
+                <button id="read-more-btn" class="btn btn-text">
+                    <span class="read-more-text">Read More</span>
+                    <span class="read-less-text">Read Less</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: What We Do -->
+    <section id="technology" class="content-section">
+        <div class="container">
+            <h2 class="section-title">What We Do</h2>
+            <p class="section-subtitle">Current Technology</p>
+            <div class="feature-cards">
+                <div class="feature-card" data-feature="realtime">
+                    <div class="card-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Real-Time Translation</h3>
+                    <p>Instant sign language recognition and voice output with minimal delay.</p>
+                    <div class="card-hover">
+                        <div class="hover-content">
+                            <video class="feature-video" loop muted>
+                                <source src="{% static 'videos/realtime-demo.mp4' %}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <p>Our technology processes sign language in milliseconds, allowing for natural conversation flow.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-card" data-feature="rwandan">
+                    <div class="card-icon">
+                        <i class="fas fa-globe-africa"></i>
+                    </div>
+                    <h3>Rwandan Sign Language Focus</h3>
+                    <p>Specialized for Rwandan Sign Language with high accuracy and cultural relevance.</p>
+                    <div class="card-hover">
+                        <div class="hover-content">
+                            <video class="feature-video" loop muted>
+                                <source src="{% static 'videos/rwandan-demo.mp4' %}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <p>Our system is trained on thousands of Rwandan Sign Language examples to ensure cultural accuracy.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-card" data-feature="speech">
+                    <div class="card-icon">
+                        <i class="fas fa-volume-up"></i>
+                    </div>
+                    <h3>Speech Output</h3>
+                    <p>Clear, natural voice synthesis that speaks the translated signs aloud.</p>
+                    <div class="card-hover">
+                        <div class="hover-content">
+                            <video class="feature-video" loop muted>
+                                <source src="{% static 'videos/speech-demo.mp4' %}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <p>Our voice synthesis technology produces natural-sounding speech in multiple languages and dialects.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="feature-card" data-feature="portable">
+                    <div class="card-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Affordable & Portable</h3>
+                    <p>Accessible technology designed to work on everyday devices.</p>
+                    <div class="card-hover">
+                        <div class="hover-content">
+                            <video class="feature-video" loop muted>
+                                <source src="{% static 'videos/portable-demo.mp4' %}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <p>Our solution works on smartphones, tablets, and low-cost dedicated devices to ensure accessibility for all.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: How It Works -->
+    <section id="how-it-works" class="content-section">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <div class="steps-container">
+                <div class="step" data-step="capture">
+                    <div class="step-icon">
+                        <i class="fas fa-camera"></i>
+                    </div>
+                    <h3>Capture</h3>
+                    <p>Our technology detects and tracks hand movements with precision.</p>
+                    <button class="btn btn-text step-demo-btn">See Demo</button>
+                </div>
+                <div class="step-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                <div class="step" data-step="understand">
+                    <div class="step-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Understand</h3>
+                    <p>AI algorithms interpret the meaning behind each gesture.</p>
+                    <button class="btn btn-text step-demo-btn">See Demo</button>
+                </div>
+                <div class="step-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+                <div class="step" data-step="speak">
+                    <div class="step-icon">
+                        <i class="fas fa-comment-alt"></i>
+                    </div>
+                    <h3>Speak</h3>
+                    <p>Signs are transformed into clear, audible speech.</p>
+                    <button class="btn btn-text step-demo-btn">See Demo</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Social Impact -->
+    <section id="impact" class="content-section">
+        <div class="container">
+            <h2 class="section-title">Social Impact</h2>
+            <div class="testimonial-slider">
+                <div class="testimonial-track">
+                    <div class="testimonial">
+                        <div class="testimonial-image">
+                            <img src="{% static 'images/testimonial1.jpg' %}" alt="Jean, Teacher in Kigali">
+                            <button class="audio-play-btn">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                        <div class="testimonial-content">
+                            <p>"Signova has transformed how I communicate with my hearing colleagues. For the first time, I feel truly included in workplace discussions."</p>
+                            <div class="testimonial-author">- Jean, Teacher in Kigali</div>
+                        </div>
+                    </div>
+                    <div class="testimonial">
+                        <div class="testimonial-image">
+                            <img src="{% static 'images/testimonial2.jpg' %}" alt="Marie, Special Education Coordinator">
+                            <button class="audio-play-btn">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                        <div class="testimonial-content">
+                            <p>"As an educator working with deaf students, Signova has bridged a gap we've struggled with for years. The impact on my students' confidence is remarkable."</p>
+                            <div class="testimonial-author">- Marie, Special Education Coordinator</div>
+                        </div>
+                    </div>
+                    <div class="testimonial">
+                        <div class="testimonial-image">
+                            <img src="{% static 'images/testimonial3.jpg' %}" alt="David, Software Developer">
+                            <button class="audio-play-btn">
+                                <i class="fas fa-play"></i>
+                            </button>
+                        </div>
+                        <div class="testimonial-content">
+                            <p>"The technology behind Signova is impressive, but what truly matters is seeing my deaf brother communicate effortlessly with our family for the first time."</p>
+                            <div class="testimonial-author">- David, Software Developer</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-controls">
+                    <button class="slider-arrow prev">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <div class="slider-dots"></div>
+                    <button class="slider-arrow next">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="more-stories-container">
+                <button id="more-stories-btn" class="btn btn-secondary">
+                    <i class="fas fa-plus"></i> See More Stories
+                </button>
+                <div class="additional-stories">
+                    <div class="story">
+                        <h3>Empowering Education</h3>
+                        <p>In rural Rwandan schools, Signova devices have enabled deaf students to participate fully in regular classrooms, increasing graduation rates by 45%.</p>
+                    </div>
+                    <div class="story">
+                        <h3>Healthcare Access</h3>
+                        <p>Local hospitals equipped with Signova technology report a 60% improvement in healthcare outcomes for deaf patients due to clearer communication with medical staff.</p>
+                    </div>
+                    <div class="story">
+                        <h3>Economic Opportunity</h3>
+                        <p>Businesses that have adopted Signova report a 78% increase in employment of deaf individuals, creating new economic opportunities.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 5: Learning Hub -->
+    <section id="learning" class="content-section">
+        <div class="container">
+            <h2 class="section-title">Learning Hub</h2>
+            <div class="learning-features">
+                <div class="flashcards-container">
+                    <h3>Interactive Sign Flashcards</h3>
+                    <div class="flashcard">
+                        <div class="flashcard-inner">
+                            <div class="flashcard-front">
+                                <h4>Hello</h4>
+                                <p>Click to see the sign</p>
+                            </div>
+                            <div class="flashcard-back">
+                                <video autoplay loop muted>
+                                    <source src="{% static 'videos/Hello.mp4' %}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                                <p>Wave your hand side to side</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-text next-flashcard-btn">
+                        <i class="fas fa-sync-alt"></i> Next Card
+                    </button>
+                </div>
+                <div class="daily-challenge">
+                    <h3>Daily Sign Challenge</h3>
+                    <div class="challenge-container">
+                        <p>Practice a new sign every day to build your vocabulary</p>
+                        <button id="daily-challenge-btn" class="btn btn-primary">
+                            <i class="fas fa-random"></i> Get Today's Sign
+                        </button>
+                        <div class="challenge-result">
+                            <h4 class="challenge-word">Thank You</h4>
+                            <video id="challenge-video" controls>
+                                <source src="{% static 'videos/ThankYou.mp4' %}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                            <p class="challenge-description">Hand moves from chin outward</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="video-tutorials">
+                    <h3>Video Tutorials</h3>
+                    <div class="video-player">
+                        <video id="tutorial-video" controls poster="{% static 'images/video-thumbnail.svg' %}">
+                            <source src="{% static 'videos/tutorial-sample.mp4' %}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <h4>Rwandan Sign Language Basics</h4>
+                        <p>Learn the fundamental signs to start your journey</p>
+                    </div>
+                    <div class="video-playlist">
+                        <div class="playlist-item active" data-video="tutorial-sample.mp4">
+                            <div class="playlist-thumbnail">
+                                <img src="{% static 'images/video-thumbnail.svg' %}" alt="Tutorial 1">
+                                <span class="video-duration">5:24</span>
+                            </div>
+                            <div class="playlist-info">
+                                <h5>RSL Basics</h5>
+                                <p>Getting started</p>
+                            </div>
+                        </div>
+                        <div class="playlist-item" data-video="tutorial-greetings.mp4">
+                            <div class="playlist-thumbnail">
+                                <img src="{% static 'images/video-thumbnail.svg' %}" alt="Tutorial 2">
+                                <span class="video-duration">4:18</span>
+                            </div>
+                            <div class="playlist-info">
+                                <h5>Greetings</h5>
+                                <p>Common phrases</p>
+                            </div>
+                        </div>
+                        <div class="playlist-item" data-video="tutorial-conversation.mp4">
+                            <div class="playlist-thumbnail">
+                                <img src="{% static 'images/video-thumbnail.svg' %}" alt="Tutorial 3">
+                                <span class="video-duration">7:32</span>
+                            </div>
+                            <div class="playlist-info">
+                                <h5>Conversations</h5>
+                                <p>Putting it together</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 6: Future Roadmap -->
+    <section id="roadmap" class="content-section">
+        <div class="container">
+            <h2 class="section-title">Future Roadmap</h2>
+            <div class="timeline-container">
+                <div class="timeline">
+                    <div class="timeline-item" data-year="2025">
+                        <div class="timeline-content">
+                            <h3>Mobile App Launch</h3>
+                            <p>Bringing Signova to smartphones worldwide</p>
+                            <div class="timeline-preview">
+                                <img src="{% static 'images/mobile-app-preview.jpg' %}" alt="Mobile App Preview">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-year="2026">
+                        <div class="timeline-content">
+                            <h3>Multi-Language Support</h3>
+                            <p>Expanding to 5 additional African sign languages</p>
+                            <div class="timeline-preview">
+                                <img src="{% static 'images/multi-language-preview.jpg' %}" alt="Multi-Language Preview">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-year="2027">
+                        <div class="timeline-content">
+                            <h3>AI Conversation Assistant</h3>
+                            <p>Predictive technology for smoother communication</p>
+                            <div class="timeline-preview">
+                                <video loop muted>
+                                    <source src="{% static 'videos/ai-assistant-preview.mp4' %}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="timeline-item" data-year="2028">
+                        <div class="timeline-content">
+                            <h3>Global Expansion</h3>
+                            <p>Bringing Signova technology to 50+ countries</p>
+                            <div class="timeline-preview">
+                                <img src="{% static 'images/global-expansion-preview.jpg' %}" alt="Global Expansion Preview">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 7: Join the Movement -->
+    <section id="join" class="content-section">
+        <div class="container">
+            <h2 class="section-title">Join the Movement</h2>
+            <div class="join-content">
+                <div class="signup-form">
+                    <h3>Stay Updated</h3>
+                    <form id="newsletter-form">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                            <div class="validation-message"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" required>
+                            <div class="validation-message"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="interest">I'm interested in</label>
+                            <select id="interest" name="interest">
+                                <option value="updates">Receiving Updates</option>
+                                <option value="partnership">Partnership Opportunities</option>
+                                <option value="volunteer">Volunteering</option>
+                                <option value="donation">Supporting Financially</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">
+                            <i class="fas fa-paper-plane"></i> Sign Up
+                        </button>
+                    </form>
+                </div>
+                <div class="join-options">
+                    <div class="join-option">
+                        <h3>Become a Partner</h3>
+                        <p>Join our network of organizations making communication accessible for all.</p>
+                        <button id="partner-btn" class="btn btn-secondary">
+                            <i class="fas fa-handshake"></i> Partner With Us
+                        </button>
+                    </div>
+                    <div class="join-option">
+                        <h3>Support Our Mission</h3>
+                        <p>Your contribution helps bring Signova to those who need it most.</p>
+                        <button id="donate-btn" class="btn btn-accent">
+                            <i class="fas fa-heart"></i> Donate Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="{% static 'images/signova-full.svg' %}" alt="Signova Logo" class="logo">
+                    <span class="logo-text">Signova</span>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Company</h4>
+                        <ul>
+                            <li><a href="#about">About Us</a></li>
+                            <li><a href="#team">Our Team</a></li>
+                            <li><a href="#careers">Careers</a></li>
+                            <li><a href="#contact">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li><a href="#blog">Blog</a></li>
+                            <li><a href="#faq">FAQ</a></li>
+                            <li><a href="#support">Support</a></li>
+                            <li><a href="#developers">Developers</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h4>Legal</h4>
+                        <ul>
+                            <li><a href="#" id="privacy-policy-link">Privacy Policy</a></li>
+                            <li><a href="#" id="terms-link">Terms of Service</a></li>
+                            <li><a href="#cookies">Cookie Policy</a></li>
+                            <li><a href="#accessibility">Accessibility</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p><a href="mailto:info@signova.com"><i class="fas fa-envelope"></i> info@signova.com</a></p>
+                    <p><a href="tel:+250788123456"><i class="fas fa-phone"></i> +250 788 123 456</a></p>
+                    <p><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</p>
+                    <div class="social-icons">
+                        <a href="https://facebook.com" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com" target="_blank" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="https://instagram.com" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="https://youtube.com" target="_blank" class="social-icon"><i class="fab fa-youtube"></i></a>
+                        <a href="https://linkedin.com" target="_blank" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="copyright">&copy; 2025 Signova. All Rights Reserved.</p>
+                <div class="footer-app-links">
+                    <a href="#" class="app-store-badge">
+                        <img src="{% static 'images/app-store-badge.svg' %}" alt="Download on the App Store">
+                    </a>
+                    <a href="#" class="play-store-badge">
+                        <img src="{% static 'images/play-store-badge.svg' %}" alt="Get it on Google Play">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <!-- Sign Translator Modal -->
+    <div id="translator-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Sign Language Translator</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="translator-container">
+                    <div class="video-container">
+                        <video id="translator-video" autoplay playsinline></video>
+                        <div class="video-placeholder">
+                            <i class="fas fa-camera fa-3x"></i>
+                            <p>Camera is currently inactive. Click "Enable Camera" to begin sign detection.</p>
+                        </div>
+                        <div class="controls">
+                            <button id="translator-camera-toggle" class="btn btn-primary">
+                                <i class="fas fa-video"></i> Enable Camera
+                            </button>
+                            <button id="translator-start" class="btn btn-secondary" disabled>
+                                <i class="fas fa-magic"></i> Start Recognition
+                            </button>
+                            <button id="translator-speak" class="btn btn-accent" disabled>
+                                <i class="fas fa-volume-up"></i> Speak Text
+                            </button>
+                        </div>
+                    </div>
+                    <div class="translation-output">
+                        <h3>Recognition Results</h3>
+                        <div id="translator-results" class="results-container">
+                            <p class="typing-text">Sign language detection results will appear here...</p>
+                        </div>
+                        <div class="confidence-meter">
+                            <div class="confidence-label">Confidence:</div>
+                            <div class="confidence-bar">
+                                <div class="confidence-level" style="width: 0%;"></div>
+                            </div>
+                            <div class="confidence-percentage">0%</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sign Library Modal -->
+    <div id="library-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Sign Language Library</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="library-search">
+                    <input type="text" id="library-search-input" placeholder="Search for signs...">
+                    <button id="library-search-btn" class="btn btn-primary">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                <div class="library-categories">
+                    <button class="category-btn active" data-category="all">All</button>
+                    <button class="category-btn" data-category="greetings">Greetings</button>
+                    <button class="category-btn" data-category="questions">Questions</button>
+                    <button class="category-btn" data-category="everyday">Everyday</button>
+                    <button class="category-btn" data-category="emotions">Emotions</button>
+                </div>
+                <div class="library-grid">
+                    <!-- Signs will be dynamically added here -->
+                </div>
+                <div class="library-pagination">
+                    <button class="pagination-btn prev" disabled>
+                        <i class="fas fa-chevron-left"></i> Previous
+                    </button>
+                    <div class="pagination-info">Page <span id="current-page">1</span> of <span id="total-pages">5</span></div>
+                    <button class="pagination-btn next">
+                        Next <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Authentication Modal -->
+    <div id="auth-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="auth-modal-title">Login</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="auth-tabs">
+                    <button id="login-tab" class="auth-tab active">Login</button>
+                    <button id="signup-tab" class="auth-tab">Sign Up</button>
+                </div>
+                <div id="login-form" class="auth-form active">
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" required>
+                        <div class="validation-message"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" required>
+                        <div class="validation-message"></div>
+                    </div>
+                    <div class="form-options">
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="remember-me">
+                            <span class="checkmark"></span>
+                            Remember me
+                        </label>
+                        <a href="#" class="forgot-password">Forgot password?</a>
+                    </div>
+                    <button id="login-submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                    <div class="social-login">
+                        <p>Or login with</p>
+                        <div class="social-buttons">
+                            <button class="btn btn-social btn-google">
+                                <i class="fab fa-google"></i> Google
+                            </button>
+                            <button class="btn btn-social btn-facebook">
+                                <i class="fab fa-facebook-f"></i> Facebook
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="signup-form" class="auth-form">
+                    <div class="form-group">
+                        <label for="signup-name">Full Name</label>
+                        <input type="text" id="signup-name" required>
+                        <div class="validation-message"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email">Email</label>
+                        <input type="email" id="signup-email" required>
+                        <div class="validation-message"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password">Password</label>
+                        <input type="password" id="signup-password" required>
+                        <div class="validation-message"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-confirm">Confirm Password</label>
+                        <input type="password" id="signup-confirm" required>
+                        <div class="validation-message"></div>
+                    </div>
+                    <div class="form-options">
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="terms-agree" required>
+                            <span class="checkmark"></span>
+                            I agree to the <a href="#" id="terms-link-signup">Terms of Service</a> and <a href="#" id="privacy-link-signup">Privacy Policy</a>
+                        </label>
+                    </div>
+                    <button id="signup-submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-user-plus"></i> Create Account
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Privacy Policy Modal -->
+    <div id="privacy-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Privacy Policy</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="policy-content">
+                    <h3>Signova Privacy Policy</h3>
+                    <p>Last updated: January 1, 2025</p>
+                    <p>This Privacy Policy describes how Signova ("we," "us," or "our") collects, uses, and shares your personal information when you use our website, mobile applications, and services.</p>
+                    <!-- More privacy policy content would go here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Terms of Service Modal -->
+    <div id="terms-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Terms of Service</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="policy-content">
+                    <h3>Signova Terms of Service</h3>
+                    <p>Last updated: January 1, 2025</p>
+                    <p>These Terms of Service ("Terms") govern your access to and use of Signova's website, mobile applications, and services. By using our services, you agree to be bound by these Terms.</p>
+                    <!-- More terms of service content would go here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Partner Form Modal -->
+    <div id="partner-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Become a Partner</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="partner-form">
+                    <div class="form-group">
+                        <label for="organization-name">Organization Name</label>
+                        <input type="text" id="organization-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="organization-type">Organization Type</label>
+                        <select id="organization-type">
+                            <option value="">Select organization type</option>
+                            <option value="ngo">Non-Governmental Organization</option>
+                            <option value="school">Educational Institution</option>
+                            <option value="government">Government Agency</option>
+                            <option value="healthcare">Healthcare Provider</option>
+                            <option value="business">Business</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-name">Contact Person</label>
+                        <input type="text" id="contact-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-email">Email</label>
+                        <input type="email" id="contact-email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact-phone">Phone</label>
+                        <input type="tel" id="contact-phone">
+                    </div>
+                    <div class="form-group">
+                        <label for="partnership-interest">How would you like to partner with us?</label>
+                        <textarea id="partnership-interest" rows="4" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-paper-plane"></i> Submit Partnership Request
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Donation Modal -->
+    <div id="donate-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Support Our Mission</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="donation-options">
+                    <h3>Choose Donation Amount</h3>
+                    <div class="donation-amounts">
+                        <button class="donation-amount" data-amount="10">$10</button>
+                        <button class="donation-amount" data-amount="25">$25</button>
+                        <button class="donation-amount" data-amount="50">$50</button>
+                        <button class="donation-amount" data-amount="100">$100</button>
+                        <button class="donation-amount custom" data-amount="custom">Custom</button>
+                    </div>
+                    <div class="custom-amount-container">
+                        <label for="custom-amount">Enter custom amount:</label>
+                        <div class="custom-amount-input">
+                            <span class="currency-symbol">$</span>
+                            <input type="number" id="custom-amount" min="1" placeholder="Enter amount">
+                        </div>
+                    </div>
+                    <div class="donation-frequency">
+                        <h4>Donation Frequency</h4>
+                        <div class="frequency-options">
+                            <label class="radio-container">
+                                <input type="radio" name="frequency" value="one-time" checked>
+                                <span class="radio-checkmark"></span>
+                                One-time
+                            </label>
+                            <label class="radio-container">
+                                <input type="radio" name="frequency" value="monthly">
+                                <span class="radio-checkmark"></span>
+                                Monthly
+                            </label>
+                            <label class="radio-container">
+                                <input type="radio" name="frequency" value="annually">
+                                <span class="radio-checkmark"></span>
+                                Annually
+                            </label>
+                        </div>
+                    </div>
+                    <div class="payment-methods">
+                        <h4>Payment Method</h4>
+                        <div class="payment-options">
+                            <button class="payment-option active" data-method="card">
+                                <i class="fas fa-credit-card"></i> Credit Card
+                            </button>
+                            <button class="payment-option" data-method="paypal">
+                                <i class="fab fa-paypal"></i> PayPal
+                            </button>
+                            <button class="payment-option" data-method="bank">
+                                <i class="fas fa-university"></i> Bank Transfer
+                            </button>
+                        </div>
+                        <div id="card-payment-form" class="payment-form active">
+                            <div class="form-group">
+                                <label for="card-name">Name on Card</label>
+                                <input type="text" id="card-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="card-number">Card Number</label>
+                                <input type="text" id="card-number" placeholder="1234 5678 9012 3456" required>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group half">
+                                    <label for="card-expiry">Expiry Date</label>
+                                    <input type="text" id="card-expiry" placeholder="MM/YY" required>
+                                </div>
+                                <div class="form-group half">
+                                    <label for="card-cvc">CVC</label>
+                                    <input type="text" id="card-cvc" placeholder="123" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="paypal-payment-form" class="payment-form">
+                            <p>You will be redirected to PayPal to complete your donation.</p>
+                        </div>
+                        <div id="bank-payment-form" class="payment-form">
+                            <p>Please use the following bank details for your transfer:</p>
+                            <div class="bank-details">
+                                <p><strong>Bank Name:</strong> International Bank of Rwanda</p>
+                                <p><strong>Account Name:</strong> Signova Foundation</p>
+                                <p><strong>Account Number:</strong> 1234567890</p>
+                                <p><strong>SWIFT/BIC:</strong> INTBRWKGL</p>
+                                <p><strong>Reference:</strong> Donation-[Your Name]</p>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="complete-donation" class="btn btn-accent btn-block">
+                        <i class="fas fa-heart"></i> Complete Donation
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatbot -->
+    <div class="chatbot-container">
+        <button class="chatbot-toggle">
+            <i class="fas fa-comment-dots"></i>
+            <span class="notification-badge">1</span>
+        </button>
+        <div class="chatbot-window">
+            <div class="chatbot-header">
+                <h3><i class="fas fa-robot"></i> Signova Assistant</h3>
+                <button class="chatbot-close">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="chatbot-messages">
+                <div class="message bot">
+                    <div class="message-content">
+                        <p>👋 Hi there! I'm the Signova virtual assistant. How can I help you today?</p>
+                    </div>
+                    <div class="message-time">Just now</div>
+                </div>
+            </div>
+            <div class="chatbot-input">
+                <input type="text" id="chatbot-message" placeholder="Type your question here...">
+                <button id="send-message">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+            <div class="chatbot-suggestions">
+                <button class="suggestion-btn">How does Signova work?</button>
+                <button class="suggestion-btn">Pricing information</button>
+                <button class="suggestion-btn">Contact support</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="{% static 'js/modern-landing.js' %}"></script>
+</body>
+</html>

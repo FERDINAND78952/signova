@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signova - Learning Module</title>
+    <link rel="stylesheet" href="{% static 'css/modern.css' %}">
+    <link rel="stylesheet" href="{% static 'css/learning_module.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            <img src="{% static 'images/signova-full.svg' %}" alt="Signova Logo">
+            <h1>Signova</h1>
+        </div>
+        <nav class="nav">
+            <ul>
+                <li><a href="{% url 'index' %}" class="nav-link">Home</a></li>
+                <li><a href="{% url 'translate' %}" class="nav-link">Translate</a></li>
+                <li><a href="{% url 'learn' %}" class="nav-link">Dictionary</a></li>
+                <li><a href="{% url 'learning_module' %}" class="nav-link active">Learning</a></li>
+                <li><a href="{% url 'dashboard' %}" class="nav-link">Dashboard</a></li>
+                {% if user.is_authenticated %}
+                <li><a href="{% url 'logout' %}" class="nav-link">Logout</a></li>
+                {% else %}
+                <li><a href="{% url 'login' %}" class="nav-link">Login</a></li>
+                <li><a href="{% url 'signup' %}" class="nav-link">Sign Up</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+    </header>
+
+    <main class="learning-container">
+        <div class="sidebar">
+            <div class="course-levels">
+                <h3>Course Levels</h3>
+                <ul class="level-list">
+                    <li class="level active" data-level="beginner">
+                        <i class="fas fa-star"></i> Beginner
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 75%;"></div>
+                        </div>
+                    </li>
+                    <li class="level" data-level="intermediate">
+                        <i class="fas fa-star-half-alt"></i> Intermediate
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 30%;"></div>
+                        </div>
+                    </li>
+                    <li class="level" data-level="advanced">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i> Advanced
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 10%;"></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="categories">
+                <h3>Categories</h3>
+                <ul class="category-list">
+                    <li class="category active" data-category="all">All Lessons</li>
+                    <li class="category" data-category="alphabet">Alphabet</li>
+                    <li class="category" data-category="numbers">Numbers</li>
+                    <li class="category" data-category="greetings">Greetings</li>
+                    <li class="category" data-category="family">Family</li>
+                    <li class="category" data-category="daily">Daily Activities</li>
+                    <li class="category" data-category="emotions">Emotions</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-area">
+            <div class="level-content active" id="beginner-content">
+                <div class="level-header">
+                    <h2>Beginner Level</h2>
+                    <p>Start your journey with Rwandan Sign Language basics</p>
+                </div>
+
+                <div class="lessons-grid">
+                    <div class="lesson-card completed" data-category="alphabet">
+                        <div class="lesson-thumbnail">
+                            <img src="{% static 'images/lessons/alphabet.svg' %}" alt="Alphabet Basics">
+                            <div class="completion-badge"><i class="fas fa-check-circle"></i></div>
+                        </div>
+                        <div class="lesson-info">
+                            <h3>Alphabet Basics</h3>
+                            <p>Learn the RSL alphabet signs</p>
+                            <div class="lesson-meta">
+                                <span><i class="far fa-clock"></i> 15 min</span>
+                                <span><i class="fas fa-signal"></i> Easy</span>
+                            </div>
+                            <a href="#" class="btn btn-primary">Continue</a>
+                        </div>
+                    </div>
+
+                    <div class="lesson-card completed" data-category="numbers">
+                        <div class="lesson-thumbnail">
+                            <img src="{% static 'images/lessons/numbers.svg' %}" alt="Numbers 1-10">
+                            <div class="completion-badge"><i class="fas fa-check-circle"></i></div>
+                        </div>
+                        <div class="lesson-info">
+                            <h3>Numbers 1-10</h3>
+                            <p>Learn to count in RSL</p>
+                            <div class="lesson-meta">
+                                <span><i class="far fa-clock"></i> 10 min</span>
+                                <span><i class="fas fa-signal"></i> Easy</span>
+                            </div>
+                            <a href="#" class="btn btn-primary">Continue</a>
+                        </div>
+                    </div>
+
+                    <div class="lesson-card in-progress" data-category="greetings">
+                        <div class="lesson-thumbnail">
+                            <img src="{% static 'images/lessons/greetings.svg' %}" alt="Basic Greetings">
+                            <div class="progress-indicator">60%</div>
+                        </div>
+                        <div class="lesson-info">
+                            <h3>Basic Greetings</h3>
+                            <p>Learn common RSL greetings</p>
+                            <div class="lesson-meta">
+                                <span><i class="far fa-clock"></i> 20 min</span>
+                                <span><i class="fas fa-signal"></i> Easy</span>
+                            </div>
+                            <a href="#" class="btn btn-accent">Continue</a>
+                        </div>
+                    </div>
+
+                    <div class="lesson-card" data-category="family">
+                        <div class="lesson-thumbnail">
+                            <img src="{% static 'images/lessons/family.svg' %}" alt="Family Members">
+                        </div>
+                        <div class="lesson-info">
+                            <h3>Family Members</h3>
+                            <p>Learn signs for family relations</p>
+                            <div class="lesson-meta">
+                                <span><i class="far fa-clock"></i> 25 min</span>
+                                <span><i class="fas fa-signal"></i> Medium</span>
+                            </div>
+                            <a href="#" class="btn btn-secondary">Start</a>
+                        </div>
+                    </div>
+
+                    <div class="lesson-card" data-category="daily">
+                        <div class="lesson-thumbnail">
+                            <img src="{% static 'images/lessons/daily.svg' %}" alt="Daily Routines">
+                        </div>
+                        <div class="lesson-info">
+                            <h3>Daily Routines</h3>
+                            <p>Signs for everyday activities</p>
+                            <div class="lesson-meta">
+                                <span><i class="far fa-clock"></i> 30 min</span>
+                                <span><i class="fas fa-signal"></i> Medium</span>
+                            </div>
+                            <a href="#" class="btn btn-secondary">Start</a>
+                        </div>
+                    </div>
+
+                    <div class="lesson-card locked" data-category="emotions">
+                        <div class="lesson-thumbnail">
+                            <img src="{% static 'images/lessons/emotions.svg' %}" alt="Basic Emotions">
+                            <div class="lock-indicator"><i class="fas fa-lock"></i></div>
+                        </div>
+                        <div class="lesson-info">
+                            <h3>Basic Emotions</h3>
+                            <p>Express feelings in RSL</p>
+                            <div class="lesson-meta">
+                                <span><i class="far fa-clock"></i> 20 min</span>
+                                <span><i class="fas fa-signal"></i> Medium</span>
+                            </div>
+                            <a href="#" class="btn btn-disabled">Locked</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="level-content" id="intermediate-content">
+                <div class="level-header">
+                    <h2>Intermediate Level</h2>
+                    <p>Enhance your RSL skills with more complex concepts</p>
+                </div>
+
+                <div class="lessons-grid">
+                    <div class="lesson-card completed" data-category="daily">
+                        <div class="lesson-thumbnail">
+                            <img src="{% static 'images/lessons/conversation.svg' %}" alt="Basic Conversations">
+                            <div class="completion-badge"><i class="fas fa-check-circle"></i></div>
+                        </div>
+                        <div class="lesson-info">
+                            <h3>Basic Conversations</h3>
+                            <p>Practice simple dialogues in RSL</p>
+                            <div class="lesson-meta">
+                                <span><i class="far fa-clock"></i> 30 min</span>
+                                <span><i class="fas fa-signal"></i> Medium</span>
+                            </div>
+                            <a href="#" class="btn btn-primary">Continue</a>
+                        </div>
+                    </div>
+
+                    <div class="lesson-card in-progress" data-category="daily">
+                        <div class="lesson-thumbnail">
+                            <img src="{% static 'images/lessons/shopping.svg' %}" alt="Shopping Vocabulary">
+                            <div class="progress-indicator">40%</div>
+                        </div>
+                        <div class="lesson-info">
+                            <h3>Shopping Vocabulary</h3>
+                            <p>Learn signs for shopping scenarios</p>
+                            <div class="lesson-meta">
+                                <span><i class="far fa-clock"></i> 25 min</span>
+                                <span><i class="fas fa-signal"></i> Medium</span>
+                            </div>
+                            <a href="#" class="btn btn-accent">Continue</a>
+                        </div>
+                    </div>
+
+                    <div class="lesson-card locked" data-category="daily">
+                        <div class="lesson-thumbnail">
+                            <img src="{% static 'images/lessons/travel.svg' %}" alt="Travel Phrases">
+                            <div class="lock-indicator"><i class="fas fa-lock"></i></div>
+                        </div>
+                        <div class="lesson-info">
+                            <h3>Travel Phrases</h3>
+                            <p>Essential signs for traveling</p>
+                            <div class="lesson-meta">
+                                <span><i class="far fa-clock"></i> 35 min</span>
+                                <span><i class="fas fa-signal"></i> Hard</span>
+                            </div>
+                            <a href="#" class="btn btn-disabled">Locked</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="level-content" id="advanced-content">
+                <div class="level-header">
+                    <h2>Advanced Level</h2>
+                    <p>Master complex RSL concepts and become fluent</p>
+                </div>
+
+                <div class="lessons-grid">
+                    <div class="lesson-card locked" data-category="daily">
+                        <div class="lesson-thumbnail">
+                            <img src="{% static 'images/lessons/storytelling.svg' %}" alt="Storytelling in RSL">
+                            <div class="lock-indicator"><i class="fas fa-lock"></i></div>
+                        </div>
+                        <div class="lesson-info">
+                            <h3>Storytelling in RSL</h3>
+                            <p>Learn narrative techniques in sign language</p>
+                            <div class="lesson-meta">
+                                <span><i class="far fa-clock"></i> 45 min</span>
+                                <span><i class="fas fa-signal"></i> Hard</span>
+                            </div>
+                            <a href="#" class="btn btn-disabled">Locked</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Signova</h3>
+                <p>Bridging communication gaps between deaf and hearing communities through innovative sign language technologies.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <p>Email: signova2025@gmail.com</p>
+                <p>Phone: 0785617205 / 0727162423</p>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Signova. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Level selection
+            const levels = document.querySelectorAll('.level');
+            const levelContents = document.querySelectorAll('.level-content');
+            
+            levels.forEach(level => {
+                level.addEventListener('click', function() {
+                    // Remove active class from all levels
+                    levels.forEach(l => l.classList.remove('active'));
+                    // Add active class to clicked level
+                    this.classList.add('active');
+                    
+                    // Show corresponding content
+                    const levelId = this.getAttribute('data-level');
+                    levelContents.forEach(content => {
+                        content.classList.remove('active');
+                    });
+                    document.getElementById(`${levelId}-content`).classList.add('active');
+                });
+            });
+            
+            // Category filtering
+            const categories = document.querySelectorAll('.category');
+            const lessonCards = document.querySelectorAll('.lesson-card');
+            
+            categories.forEach(category => {
+                category.addEventListener('click', function() {
+                    // Remove active class from all categories
+                    categories.forEach(c => c.classList.remove('active'));
+                    // Add active class to clicked category
+                    this.classList.add('active');
+                    
+                    // Filter lessons
+                    const categoryId = this.getAttribute('data-category');
+                    lessonCards.forEach(card => {
+                        if (categoryId === 'all' || card.getAttribute('data-category') === categoryId) {
+                            card.style.display = 'flex';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

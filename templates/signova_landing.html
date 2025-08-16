@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signova - Sign Language Translation</title>
+    <link rel="stylesheet" href="{% static 'css/signova-landing.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <meta name="description" content="Signova - Breaking communication barriers through sign language translation technology">
+    <link rel="icon" href="{% static 'images/favicon.ico' %}">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo-container">
+                <img src="{% static 'images/signova-full.svg' %}" alt="Signova Logo" class="logo">
+                <span class="logo-text">Signova</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="nav-link active" data-panel="welcome">Welcome</a></li>
+                <li><a href="#" class="nav-link" data-panel="translate">Sign Translator</a></li>
+                <li><a href="#" class="nav-link" data-panel="learn">Sign Library</a></li>
+                <li><a href="{% url 'learn' %}" class="nav-link">Learning Hub</a></li>
+                <li><a href="{% url 'login' %}" class="nav-link">Login</a></li>
+                <li><a href="{% url 'signup' %}" class="nav-link">Sign Up</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <!-- Hero Section -->
+            <div id="welcome" class="panel active">
+                <div class="welcome-screen">
+                    <h1>Breaking Barriers. Building Bridges.</h1>
+                    <p class="subheadline">Signova transforms gestures into voice, empowering communication beyond boundaries.</p>
+                    <div class="motivational-quote">
+                        <i class="fas fa-quote-left"></i>
+                        <span>When technology speaks, no one is left unheard.</span>
+                        <i class="fas fa-quote-right"></i>
+                    </div>
+                    <div class="cta-buttons">
+                        <button class="btn btn-primary" data-panel="translate">
+                            <i class="fas fa-language"></i> Try Sign Translator
+                        </button>
+                        <button class="btn btn-secondary" data-panel="learn">
+                            <i class="fas fa-graduation-cap"></i> Explore Sign Library
+                        </button>
+                    </div>
+                    <div class="secondary-buttons">
+                        <a href="{% url 'login' %}" class="btn btn-outline">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </a>
+                        <a href="{% url 'signup' %}" class="btn btn-outline">
+                            <i class="fas fa-user-plus"></i> Sign Up
+                        </a>
+                    </div>
+                    <div class="scroll-indicator">
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Section 1: The Problem & Vision -->
+            <section class="content-section" id="vision-section">
+                <h2 class="section-title">A World Without Barriers</h2>
+                <div class="section-content">
+                    <div class="text-content">
+                        <p>Every day, millions of deaf and hard-of-hearing individuals face invisible walls. These barriers limit access to education, job opportunities, and even simple social interactions. In Rwanda and beyond, the challenge is not ability — it's accessibility.</p>
+                        <p>At Signova, we believe that communication should never depend on whether you can hear or speak. Our vision is simple but powerful: a world where every voice — spoken or signed — is heard and understood.</p>
+                        <div class="section-quote">
+                            <i class="fas fa-quote-left"></i>
+                            <span>Accessibility is not a privilege. It's a right.</span>
+                            <i class="fas fa-quote-right"></i>
+                        </div>
+                    </div>
+                    <div class="image-content">
+                        <img src="{% static 'images/inclusivity-illustration.svg' %}" alt="Inclusivity Illustration" class="section-image">
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section 2: What We Do -->
+            <section class="content-section" id="technology-section">
+                <h2 class="section-title">From Gesture to Voice — Instantly</h2>
+                <div class="section-content split-layout">
+                    <div class="image-content">
+                        <img src="{% static 'images/technology-illustration.svg' %}" alt="Signova Technology" class="section-image">
+                    </div>
+                    <div class="text-content">
+                        <p>Signova combines wearable sensor gloves and AI-powered computer vision to translate Rwandan Sign Language into spoken words in real time.</p>
+                        <p>Our hybrid system ensures maximum accuracy, even in low-light or noisy environments.</p>
+                        
+                        <div class="features-grid">
+                            <div class="feature-item">
+                                <i class="fas fa-bolt feature-icon"></i>
+                                <h3>Real-Time Translation</h3>
+                                <p>No delays, just conversation.</p>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-globe-africa feature-icon"></i>
+                                <h3>Rwandan Sign Language Focus</h3>
+                                <p>Localized datasets for higher accuracy.</p>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-volume-up feature-icon"></i>
+                                <h3>Speech Output</h3>
+                                <p>Your signs become words people can hear.</p>
+                            </div>
+                            <div class="feature-item">
+                                <i class="fas fa-mobile-alt feature-icon"></i>
+                                <h3>Portable & Affordable</h3>
+                                <p>Designed for daily use in any environment.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="section-quote">
+                            <i class="fas fa-quote-left"></i>
+                            <span>The future of communication is not spoken. It's understood.</span>
+                            <i class="fas fa-quote-right"></i>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section 3: How It Works -->
+            <section class="content-section" id="how-it-works-section">
+                <h2 class="section-title">Three Simple Steps. One Powerful Connection.</h2>
+                <div class="steps-container">
+                    <div class="step-item">
+                        <div class="step-number">1</div>
+                        <div class="step-icon"><i class="fas fa-hand-paper"></i></div>
+                        <h3>Capture</h3>
+                        <p>Our gloves and camera detect your hand gestures and movements with precision.</p>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">2</div>
+                        <div class="step-icon"><i class="fas fa-brain"></i></div>
+                        <h3>Understand</h3>
+                        <p>AI-powered models interpret the meaning behind each sign.</p>
+                    </div>
+                    <div class="step-item">
+                        <div class="step-number">3</div>
+                        <div class="step-icon"><i class="fas fa-comment-alt"></i></div>
+                        <h3>Speak</h3>
+                        <p>Instantly, your signs are transformed into clear, audible speech.</p>
+                    </div>
+                </div>
+                <div class="animation-container">
+                    <img src="{% static 'images/gesture-to-speech.gif' %}" alt="Gesture to Speech Animation" class="process-animation">
+                </div>
+            </section>
+            
+            <!-- Section 4: Social Impact -->
+            <section class="content-section" id="impact-section">
+                <h2 class="section-title">Changing Lives, One Conversation at a Time</h2>
+                <div class="section-content">
+                    <div class="text-content">
+                        <p>From classrooms to hospitals, workplaces to family gatherings, Signova is creating new possibilities.</p>
+                        <p>We empower deaf and hard-of-hearing individuals to participate fully in life's most important moments, breaking the silence that has kept them apart from the world.</p>
+                        
+                        <div class="testimonials">
+                            <div class="testimonial-item">
+                                <div class="testimonial-quote">
+                                    <p>"Signova has transformed how I communicate with my hearing colleagues. For the first time, I feel truly included in workplace discussions."</p>
+                                </div>
+                                <div class="testimonial-author">- Jean, Teacher in Kigali</div>
+                            </div>
+                            <div class="testimonial-item">
+                                <div class="testimonial-quote">
+                                    <p>"As an educator working with deaf students, Signova has bridged a gap we've struggled with for years. The impact on my students' confidence is remarkable."</p>
+                                </div>
+                                <div class="testimonial-author">- Marie, Special Education Coordinator</div>
+                            </div>
+                        </div>
+                        
+                        <div class="section-quote">
+                            <i class="fas fa-quote-left"></i>
+                            <span>Every voice matters, whether spoken or signed.</span>
+                            <i class="fas fa-quote-right"></i>
+                        </div>
+                        
+                        <div class="partner-cta">
+                            <h3>Join Our Mission</h3>
+                            <p>Are you an NGO, school, or organization working with the deaf community? Partner with us to bring Signova to those who need it most.</p>
+                            <button class="btn btn-secondary" onclick="window.location.href='{% url "contact" %}'">
+                                <i class="fas fa-handshake"></i> Become a Partner
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section 5: Learning Hub -->
+            <section class="content-section" id="learning-section">
+                <h2 class="section-title">Learn Sign Language. Connect with the World.</h2>
+                <div class="section-content">
+                    <div class="text-content">
+                        <p>We believe technology should not just bridge gaps — it should also inspire learning.</p>
+                        <p>Our Signova Learning Hub offers:</p>
+                        
+                        <div class="learning-features">
+                            <div class="learning-feature">
+                                <i class="fas fa-laptop-code"></i>
+                                <h3>Interactive Tutorials</h3>
+                                <p>For Rwandan Sign Language (RSL) basics.</p>
+                            </div>
+                            <div class="learning-feature">
+                                <i class="fas fa-calendar-check"></i>
+                                <h3>Daily Sign Challenges</h3>
+                                <p>To help you practice consistently.</p>
+                            </div>
+                            <div class="learning-feature">
+                                <i class="fas fa-clone"></i>
+                                <h3>Gesture-to-Meaning Flashcards</h3>
+                                <p>For quick reference and memorization.</p>
+                            </div>
+                            <div class="learning-feature">
+                                <i class="fas fa-video"></i>
+                                <h3>Video Lessons</h3>
+                                <p>Taught by experienced RSL educators.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="section-quote">
+                            <i class="fas fa-quote-left"></i>
+                            <span>The first step to inclusion is understanding the language of others.</span>
+                            <i class="fas fa-quote-right"></i>
+                        </div>
+                        
+                        <div class="learning-cta">
+                            <button class="btn btn-primary" data-panel="learn">
+                                <i class="fas fa-graduation-cap"></i> Start Learning Now
+                            </button>
+                            <a href="{% url 'learn' %}" class="btn btn-secondary">
+                                <i class="fas fa-crown"></i> View Subscription Plans
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <div id="translate" class="panel">
+                <div class="demo-notice">
+                    <i class="fas fa-info-circle"></i> Interactive Demo — Try our sign language recognition technology
+                </div>
+                <h2>Sign Language Translator</h2>
+                <div class="translation-container">
+                    <div class="video-container">
+                        <video id="videoFeed" autoplay playsinline></video>
+                        <div class="video-placeholder">
+                            <i class="fas fa-camera fa-3x"></i>
+                            <p>Camera is currently inactive. Click "Enable Camera" to begin sign detection.</p>
+                        </div>
+                        <div class="controls">
+                            <button id="cameraToggle" class="camera-toggle">
+                                <i class="fas fa-video"></i> Enable Camera
+                            </button>
+                            <button id="autoTranslate" class="auto-translate" disabled>
+                                <i class="fas fa-magic"></i> Start Recognition
+                            </button>
+                            <button id="speakText" class="audio-button" disabled>
+                                <i class="fas fa-volume-up"></i> Speak Text
+                            </button>
+                        </div>
+                    </div>
+                    <div class="translation-input">
+                        <div class="input-box">
+                            <label for="textInput">Enter text to convert to sign language:</label>
+                            <textarea id="textInput" placeholder="Example: Hello, how are you? Thank you..."></textarea>
+                        </div>
+                        <button id="textToSign" class="btn btn-primary">
+                            <i class="fas fa-hands"></i> Convert to Signs
+                        </button>
+                        <div class="output-container">
+                            <div class="output-header">
+                                <h3>Recognition Results</h3>
+                                <button id="speakOutput" class="btn btn-small btn-secondary">
+                                    <i class="fas fa-volume-up"></i> Speak
+                                </button>
+                            </div>
+                            <div class="output-text" id="translationOutput">
+                                Sign language detection results will appear here...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Section 6: Future Roadmap -->
+            <section class="content-section" id="roadmap-section">
+                <h2 class="section-title">Where We're Headed</h2>
+                <div class="section-content">
+                    <p class="roadmap-intro">We are building for today, but our eyes are on tomorrow. Our future plans include:</p>
+                    
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-icon">
+                                <i class="fas fa-mobile-alt"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h3>Mobile App & Web Integration</h3>
+                                <p>For anytime, anywhere communication.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-icon">
+                                <i class="fas fa-database"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h3>Expanded Sign Language Datasets</h3>
+                                <p>Covering multiple African sign languages.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-icon">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h3>AI Predictive Conversational Support</h3>
+                                <p>Anticipating communication needs in context.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-icon">
+                                <i class="fas fa-globe"></i>
+                            </div>
+                            <div class="timeline-content">
+                                <h3>Multi-language Expansion</h3>
+                                <p>Bridging sign languages across continents.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section-quote">
+                        <i class="fas fa-quote-left"></i>
+                        <span>Today we break barriers. Tomorrow we erase them.</span>
+                        <i class="fas fa-quote-right"></i>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Section 7: Join the Movement -->
+            <section class="content-section" id="join-section">
+                <h2 class="section-title">Let's create a world where communication knows no limits.</h2>
+                <div class="join-buttons">
+                    <button class="btn btn-primary" onclick="window.location.href='{% url "signup" %}'">
+                        <i class="fas fa-envelope"></i> Sign Up for Updates
+                    </button>
+                    <button class="btn btn-secondary" onclick="window.location.href='{% url "contact" %}'">
+                        <i class="fas fa-handshake"></i> Become a Partner
+                    </button>
+                    <button class="btn btn-accent">
+                        <i class="fas fa-heart"></i> Donate to Support
+                    </button>
+                </div>
+            </section>
+            
+            <div id="learn" class="panel">
+                <h2>Sign Language Library</h2>
+                <p class="section-intro">Explore our collection of common signs to start building your sign language vocabulary.</p>
+                <div class="demo-notice">
+                    <i class="fas fa-lightbulb"></i> Tip: Click on any sign to see a demonstration video and learn how to perform it correctly.
+                </div>
+                <div class="search-box">
+                    <label for="signSearch">Find specific signs:</label>
+                    <input type="text" id="signSearch" placeholder="Search by name or description (e.g., 'hello', 'thank you')">
+                </div>
+                <div class="signs-grid" id="signsGrid">
+                    <!-- Sign cards will be inserted here by JavaScript -->
+                </div>
+            </div>
+
+            <div class="loading" id="loading">
+                <div class="loading-spinner"></div>
+                <p>Loading content...</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="{% static 'images/signova-full.svg' %}" alt="Signova Logo" class="logo">
+                    <span class="logo-text">Signova</span>
+                </div>
+                <div class="footer-links">
+                    <a href="{% url 'about' %}">About Us</a>
+                    <a href="{% url 'contact' %}">Contact</a>
+                    <a href="{% url 'privacy_policy' %}">Privacy Policy</a>
+                    <a href="{% url 'terms_of_service' %}">Terms of Service</a>
+                </div>
+                <div class="footer-contact">
+                    <p><i class="fas fa-envelope"></i> info@signova.com</p>
+                    <p><i class="fas fa-phone"></i> +250 788 123 456</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</p>
+                </div>
+                <div class="social-icons">
+                    <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                </div>
+                <p class="copyright">&copy; 2025 Signova. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Navigation between panels
+            const navLinks = document.querySelectorAll('.nav-link');
+            const panels = document.querySelectorAll('.panel');
+            const loadingElement = document.getElementById('loading');
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const panelId = this.getAttribute('data-panel');
+                    
+                    // Show loading
+                    loadingElement.style.display = 'block';
+                    
+                    // Hide all panels
+                    panels.forEach(panel => {
+                        panel.classList.remove('active');
+                    });
+                    
+                    // Remove active class from all nav links
+                    navLinks.forEach(navLink => {
+                        navLink.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked nav link
+                    this.classList.add('active');
+                    
+                    // Simulate loading delay
+                    setTimeout(() => {
+                        // Show selected panel
+                        document.getElementById(panelId).classList.add('active');
+                        loadingElement.style.display = 'none';
+
+                        // If switching to translate panel, stop camera if it's running
+                        if (panelId !== 'translate' && stream) {
+                            stopCamera();
+                        }
+                    }, 500);
+                });
+            });
+
+            // CTA buttons also navigate to panels
+            document.querySelectorAll('[data-panel]').forEach(btn => {
+                if (btn.classList.contains('nav-link')) return;
+                
+                btn.addEventListener('click', function() {
+                    const panelId = this.getAttribute('data-panel');
+                    document.querySelector(`.nav-link[data-panel="${panelId}"]`).click();
+                });
+            });
+
+            // Video feed and translation simulation
+            const videoElement = document.getElementById('videoFeed');
+            const cameraToggleBtn = document.getElementById('cameraToggle');
+            const autoTranslateBtn = document.getElementById('autoTranslate');
+            const speakTextBtn = document.getElementById('speakText');
+            const speakOutputBtn = document.getElementById('speakOutput');
+            const translationOutput = document.getElementById('translationOutput');
+            let stream = null;
+            let autoTranslateInterval = null;
+            let isCameraOn = false;
+
+            // Toggle camera function
+            async function toggleCamera() {
+                if (isCameraOn) {
+                    stopCamera();
+                } else {
+                    await startCamera();
+                }
+            }
+
+            // Start camera function
+            async function startCamera() {
+                try {
+                    cameraToggleBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Starting...';
+                    cameraToggleBtn.disabled = true;
+                    
+                    stream = await navigator.mediaDevices.getUserMedia({ 
+                        video: {
+                            width: { ideal: 1280 },
+                            height: { ideal: 720 },
+                            facingMode: 'user'
+                        },
+                        audio: false
+                    });
+                    
+                    videoElement.srcObject = stream;
+                    videoElement.style.display = 'block'; // Ensure video element is visible
+                    document.querySelector('.video-placeholder').style.display = 'none'; // Hide placeholder
+                    isCameraOn = true;
+                    
+                    cameraToggleBtn.innerHTML = '<i class="fas fa-video-slash"></i> Stop Camera';
+                    cameraToggleBtn.disabled = false;
+                    autoTranslateBtn.disabled = false;
+                    speakTextBtn.disabled = false;
+                    
+                    // Simulate initial detection
+                    setTimeout(() => {
+                        translationOutput.textContent = "Sign detected: Hello! (Hand waves from side to side)";
+                    }, 1500);
+                } catch (err) {
+                    console.error("Error accessing camera:", err);
+                    cameraToggleBtn.innerHTML = '<i class="fas fa-video"></i> Start Camera';
+                    cameraToggleBtn.disabled = false;
+                    isCameraOn = false;
+                }
+            }
+
+            // Stop camera function
+            function stopCamera() {
+                cameraToggleBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Stopping...';
+                cameraToggleBtn.disabled = true;
+                
+                setTimeout(() => {
+                    if (stream) {
+                        stream.getTracks().forEach(track => track.stop());
+                        videoElement.srcObject = null;
+                        stream = null;
+                    }
+                    
+                    videoElement.style.display = 'none'; // Hide video element
+                    document.querySelector('.video-placeholder').style.display = 'flex'; // Show placeholder
+                    
+                    isCameraOn = false;
+                    cameraToggleBtn.innerHTML = '<i class="fas fa-video"></i> Start Camera';
+                    cameraToggleBtn.disabled = false;
+                    autoTranslateBtn.disabled = true;
+                    speakTextBtn.disabled = true;
+                    
+                    // Clear auto translate if running
+                    if (autoTranslateInterval) {
+                        clearInterval(autoTranslateInterval);
+                        autoTranslateInterval = null;
+                        autoTranslateBtn.innerHTML = '<i class="fas fa-robot"></i> Auto Translate';
+                    }
+                    
+                    translationOutput.textContent = "Translation will appear here...";
+                }, 500);
+            }
+
+            // Camera toggle button
+            cameraToggleBtn.addEventListener('click', toggleCamera);
+
+            // Auto translate simulation
+            autoTranslateBtn.addEventListener('click', function() {
+                if (autoTranslateInterval) {
+                    clearInterval(autoTranslateInterval);
+                    autoTranslateInterval = null;
+                    this.innerHTML = '<i class="fas fa-robot"></i> Auto Translate';
+                    translationOutput.textContent = "Auto translation stopped";
+                } else {
+                    this.innerHTML = '<i class="fas fa-stop-circle"></i> Stop Auto Translate';
+                    
+                    const sampleSigns = [
+                        "Hello! (Hand waves from side to side)",
+                        "Thank you! (Hand moves from chin outward)",
+                        "Yes (Hand nods up and down)",
+                        "No (Hand shakes side to side)",
+                        "I love you (Hand forms 'ILY' sign)"
+                    ];
+                    
+                    let counter = 0;
+                    autoTranslateInterval = setInterval(() => {
+                        translationOutput.textContent = "Sign detected: " + sampleSigns[counter % sampleSigns.length];
+                        counter++;
+                    }, 3000);
+                    
+                    // Show first detection immediately
+                    translationOutput.textContent = "Sign detected: " + sampleSigns[0];
+                }
+            });
+
+            // Text to sign language
+            document.getElementById('textToSign').addEventListener('click', function() {
+                const text = document.getElementById('textInput').value.trim();
+                if (text) {
+                    const sampleSigns = {
+                        "hello": "Hello! (Hand waves from side to side)",
+                        "thank you": "Thank you! (Hand moves from chin outward)",
+                        "yes": "Yes (Hand nods up and down)",
+                        "no": "No (Hand shakes side to side)",
+                        "love": "I love you (Hand forms 'ILY' sign)"
+                    };
+                    
+                    const matchedKey = Object.keys(sampleSigns).find(key => 
+                        text.toLowerCase().includes(key)
+                    );
+                    
+                    if (matchedKey) {
+                        translationOutput.textContent = `Sign for "${text}": ${sampleSigns[matchedKey]}`;
+                    } else {
+                        translationOutput.textContent = `For the demo, try words like: ${Object.keys(sampleSigns).join(', ')}`;
+                    }
+                } else {
+                    translationOutput.textContent = "Please enter some text to translate";
+                }
+            });
+            
+            // Function to speak text
+            function speakText(text, button) {
+                if (text && text !== "Translation will appear here..." && text !== "Sign language detection results will appear here...") {
+                    // Use the Web Speech API for text-to-speech
+                    const utterance = new SpeechSynthesisUtterance(text);
+                    speechSynthesis.speak(utterance);
+                    
+                    // Visual feedback
+                    const originalText = button.innerHTML;
+                    button.innerHTML = '<i class="fas fa-volume-up fa-beat"></i> Speaking...';
+                    button.disabled = true;
+                    
+                    utterance.onend = () => {
+                        button.innerHTML = originalText;
+                        button.disabled = false;
+                    };
+                }
+            }
+            
+            // Speak text button in controls
+            speakTextBtn.addEventListener('click', function() {
+                speakText(translationOutput.textContent, this);
+            });
+            
+            // Speak output button in output container
+            speakOutputBtn.addEventListener('click', function() {
+                speakText(translationOutput.textContent, this);
+            });
+
+            // Learn section - sign library
+            const signsGrid = document.getElementById('signsGrid');
+            const signSearch = document.getElementById('signSearch');
+            
+            // Sample sign library data
+            const signLibrary = [
+                { name: "Hello", video: "hello.mp4", description: "Wave hand side to side" },
+                { name: "Thank you", video: "thankyou.mp4", description: "Hand moves from chin outward" },
+                { name: "Yes", video: "yes.mp4", description: "Hand nods up and down" },
+                { name: "No", video: "no.mp4", description: "Hand shakes side to side" },
+                { name: "I love you", video: "ily.mp4", description: "Hand forms 'ILY' sign" },
+                { name: "Please", video: "please.mp4", description: "Flat hand circles on chest" },
+                { name: "Sorry", video: "sorry.mp4", description: "Fist circles on chest" },
+                { name: "Help", video: "help.mp4", description: "Thumbs up on palm, lift both" },
+                { name: "Water", video: "water.mp4", description: "Wiggling fingers near mouth" },
+                { name: "Food", video: "food.mp4", description: "Fingers to mouth" },
+                { name: "Home", video: "home.mp4", description: "Fingers together at cheek then forehead" },
+                { name: "Friend", video: "friend.mp4", description: "Interlock index fingers twice" },
+                { name: "Family", video: "family.mp4", description: "Make 'F' hands circle around" },
+                { name: "Time", video: "time.mp4", description: "Tap wrist where watch would be" },
+                { name: "Work", video: "work.mp4", description: "Tap wrists together" }
+            ];
+            
+            // Display sign library
+            function displaySigns(signs) {
+                signsGrid.innerHTML = '';
+                
+                signs.forEach(sign => {
+                    const signCard = document.createElement('div');
+                    signCard.className = 'sign-card';
+                    
+                    // Map sign names to actual video files if available
+                    let videoSrc = '';
+                    const videoName = sign.name.toLowerCase().replace(/\s+/g, '_');
+                    
+                    // Check if we have a matching video in our Flask routes
+                    // The keys must match the keys in the VIDEO_FILES dictionary in signova_app.py
+                    const videoMapping = {
+                        'hello': 'hello',
+                        'thank you': 'thank_you',
+                        'how are you': 'how_are_you',
+                        'forget': 'forget',
+                        'remember': 'remember',
+                        'i love you': 'i_want', // Use i_want as a placeholder
+                        'i want': 'i_want',
+                        'my name is': 'my_name_is',
+                        'same to you': 'same_to_you',
+                        'you': 'you',
+                        'please': 'hello', // Use hello as a placeholder
+                        'sorry': 'forget', // Use forget as a placeholder
+                        'help': 'how_are_you', // Use how_are_you as a placeholder
+                        'water': 'remember', // Use remember as a placeholder
+                        'food': 'my_name_is', // Use my_name_is as a placeholder
+                        'home': 'same_to_you', // Use same_to_you as a placeholder
+                        'friend': 'you', // Use you as a placeholder
+                        'family': 'thank_you', // Use thank_you as a placeholder
+                        'time': 'i_want', // Use i_want as a placeholder
+                        'work': 'hello' // Use hello as a placeholder
+                    };
+                    
+                    // Find the matching video key
+                    const signNameLower = sign.name.toLowerCase();
+                    if (videoMapping[signNameLower]) {
+                        videoSrc = `/video/${videoMapping[signNameLower]}`;
+                    } else {
+                        // Fallback to a placeholder video
+                        videoSrc = `/video/hello`;
+                    }
+                    
+                    signCard.innerHTML = `
+                        <div class="sign-video">
+                            <video autoplay loop muted playsinline>
+                                <source src="${videoSrc}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <div class="sign-info">
+                            <h3>${sign.name}</h3>
+                            <p>${sign.description}</p>
+                        </div>
+                    `;
+                    signsGrid.appendChild(signCard);
+                });
+            }
+            
+            // Search functionality
+            if (signSearch) {
+                signSearch.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase();
+                    const filteredSigns = signLibrary.filter(sign => 
+                        sign.name.toLowerCase().includes(searchTerm) || 
+                        sign.description.toLowerCase().includes(searchTerm)
+                    );
+                    displaySigns(filteredSigns);
+                });
+            }
+            
+            // Initial display of all signs
+            if (signsGrid) {
+                displaySigns(signLibrary);
+            }
+
+            // Stop camera when page is hidden to save resources
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden && isCameraOn) {
+                    stopCamera();
+                }
+            });
+        });
+    </script>
+    <script src="{% static 'js/signova-utils.js' %}"></script>
+</body>
+</html>

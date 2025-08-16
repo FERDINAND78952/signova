@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signova - Translate</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/translate.css' %}">
+    <link rel="stylesheet" href="{% static 'css/modern.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo-container">
+                <a href="{% url 'index' %}">
+                    <img src="{% static 'images/signova-full.svg' %}" alt="Signova Logo">
+                </a>
+                <span class="logo-text">Signova</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'index' %}">Home</a></li>
+                    <li><a href="{% url 'translate' %}" class="active">Translate</a></li>
+                    <li><a href="{% url 'learn' %}">Learn</a></li>
+                    <li><a href="{% url 'learning_module' %}">Learning Module</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                    {% else %}
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                    <li><a href="{% url 'signup' %}">Sign Up</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="demo-notice">
+                <i class="fas fa-info-circle"></i> This is a demonstration version. Some features may be limited.
+            </div>
+            
+            <h2>Sign Language Translator</h2>
+            
+            <div class="translation-container">
+                <div class="video-container">
+                    <img id="videoFeed" src="{% url 'video_feed' %}" style="display: none;">
+                    <div id="cameraPlaceholder" class="video-placeholder">
+                        <i class="fas fa-camera fa-3x"></i>
+                        <p>Camera is off. Click "Start Camera" to begin.</p>
+                    </div>
+                    
+                    <div class="controls">
+                        <button id="startCamera" class="camera-toggle">
+                            <i class="fas fa-video"></i> Start Camera
+                        </button>
+                        <button id="stopCamera" class="camera-toggle" style="display: none;">
+                            <i class="fas fa-video-slash"></i> Stop Camera
+                        </button>
+                        <button id="clearSentence" class="btn btn-secondary" disabled>
+                            <i class="fas fa-eraser"></i> Clear
+                        </button>
+                        <button id="speakSentence" class="btn btn-secondary" disabled>
+                            <i class="fas fa-volume-up"></i> Speak
+                        </button>
+                        <div class="language-selector">
+                            <label for="languageSelect">Translation:</label>
+                            <select id="languageSelect" disabled>
+                                <option value="english">English</option>
+                                <option value="kinyarwanda">Kinyarwanda</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="translation-input">
+                    <div class="output-container">
+                        <h3>Current Sign: <span class="confidence-indicator" id="confidenceIndicator"></span></h3>
+                        <div id="currentSign" class="output-text">None</div>
+                    </div>
+                    
+                    <div class="output-container">
+                        <h3>Current Sentence:</h3>
+                        <div id="currentSentence" class="output-text">No sentence yet</div>
+                        <div class="sentence-actions">
+                            <button id="copyText" class="btn btn-sm" title="Copy to clipboard">
+                                <i class="fas fa-copy"></i> Copy
+                            </button>
+                            <button id="downloadText" class="btn btn-sm" title="Download as text file">
+                                <i class="fas fa-download"></i> Save
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="output-container">
+                        <h3>Recent Signs:</h3>
+                        <ul id="recentSigns" class="signs-list"></ul>
+                    </div>
+                    
+                    <div class="recognition-status">
+                        <div id="recognitionStatus" class="status-indicator">
+                            <i class="fas fa-circle-notch fa-spin"></i> Ready for signs
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="subscription-plans">
+                <h3>Subscription Plans</h3>
+                <div class="plans-container">
+                    <div class="plan">
+                        <h4>Free</h4>
+                        <p>Basic access to sign language translation</p>
+                        <ul>
+                            <li>Limited learning materials</li>
+                            <li>Basic translation features</li>
+                            <li>Community support</li>
+                        </ul>
+                        <a href="#" class="btn btn-primary">Current Plan</a>
+                    </div>
+                    <div class="plan">
+                        <h4>Advanced</h4>
+                        <p>Enhanced learning experience</p>
+                        <ul>
+                            <li>Full access to learning materials</li>
+                            <li>Advanced translation features</li>
+                            <li>Email support</li>
+                        </ul>
+                        <a href="#" class="btn btn-primary">Upgrade - 5,000 RWF/month</a>
+                    </div>
+                    <div class="plan">
+                        <h4>Pro</h4>
+                        <p>Complete professional package</p>
+                        <ul>
+                            <li>Premium learning materials</li>
+                            <li>Offline translation capabilities</li>
+                            <li>Priority support</li>
+                        </ul>
+                        <a href="#" class="btn btn-primary">Upgrade - 10,000 RWF/month</a>
+                    </div>
+                </div>
+                <div class="payment-info">
+                    <h4>Payment Method</h4>
+                    <p>Mobile Money: +250785617205</p>
+                    <p>After payment, please email your transaction ID to <a href="mailto:support@signova.com">support@signova.com</a></p>
+                </div>
+            </div>
+            <p>&copy; 2025 Signova. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const startCameraBtn = document.getElementById('startCamera');
+            const stopCameraBtn = document.getElementById('stopCamera');
+            const clearSentenceBtn = document.getElementById('clearSentence');
+            const speakSentenceBtn = document.getElementById('speakSentence');
+            const languageSelect = document.getElementById('languageSelect');
+            const videoFeed = document.getElementById('videoFeed');
+            const cameraPlaceholder = document.getElementById('cameraPlaceholder');
+            const currentSign = document.getElementById('currentSign');
+            const currentSentence = document.getElementById('currentSentence');
+            const recentSigns = document.getElementById('recentSigns');
+            
+            let updateInterval = null;
+            let currentLanguage = 'english';
+            
+            startCameraBtn.addEventListener('click', function() {
+                fetch('{% url "start_camera" %}')
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Camera started:', data);
+                        videoFeed.style.display = 'block';
+                        cameraPlaceholder.style.display = 'none';
+                        startCameraBtn.style.display = 'none';
+                        stopCameraBtn.style.display = 'inline-flex';
+                        clearSentenceBtn.disabled = false;
+                        speakSentenceBtn.disabled = false;
+                        languageSelect.disabled = false;
+                        
+                        // Start polling for recognized signs
+                        updateInterval = setInterval(updateRecognizedSigns, 500);
+                    })
+                    .catch(error => console.error('Error starting camera:', error));
+            });
+            
+            stopCameraBtn.addEventListener('click', function() {
+                fetch('{% url "stop_camera" %}')
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Camera stopped:', data);
+                        videoFeed.style.display = 'none';
+                        cameraPlaceholder.style.display = 'flex';
+                        startCameraBtn.style.display = 'inline-flex';
+                        stopCameraBtn.style.display = 'none';
+                        clearSentenceBtn.disabled = true;
+                        speakSentenceBtn.disabled = true;
+                        languageSelect.disabled = true;
+                        
+                        // Stop polling
+                        if (updateInterval) {
+                            clearInterval(updateInterval);
+                            updateInterval = null;
+                        }
+                    })
+                    .catch(error => console.error('Error stopping camera:', error));
+            });
+            
+            clearSentenceBtn.addEventListener('click', function() {
+                fetch('{% url "clear_sentence" %}')
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log('Sentence cleared:', data);
+                        currentSentence.textContent = 'No sentence yet';
+                    })
+                    .catch(error => console.error('Error clearing sentence:', error));
+            });
+            
+            speakSentenceBtn.addEventListener('click', function() {
+                fetch('{% url "speak_sentence" %}')
+                    .then(response => response.json())
+                    .then(data => console.log('Speaking sentence:', data))
+                    .catch(error => console.error('Error speaking sentence:', error));
+            });
+            
+            languageSelect.addEventListener('change', function() {
+                currentLanguage = this.value;
+                
+                // Send language preference to the server
+                const formData = new FormData();
+                formData.append('language', currentLanguage);
+                
+                fetch('{% url "set_language" %}', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => console.log('Language set:', data))
+                .catch(error => console.error('Error setting language:', error));
+            });
+            
+
+            
+            function updateRecognizedSigns() {
+                fetch('{% url "get_recognized_signs" %}')
+                    .then(response => response.json())
+                    .then(data => {
+                        // Update current sentence
+                        currentSentence.textContent = data.current_sentence || 'No sentence yet';
+                        
+                        // Update recent signs list
+                        recentSigns.innerHTML = '';
+                        if (data.signs && data.signs.length > 0) {
+                            currentSign.textContent = data.signs[data.signs.length - 1];
+                            
+                            data.signs.slice().reverse().forEach(sign => {
+                                const li = document.createElement('li');
+                                li.textContent = sign;
+                                recentSigns.appendChild(li);
+                            });
+                        } else {
+                            currentSign.textContent = 'None';
+                        }
+                    })
+                    .catch(error => console.error('Error getting recognized signs:', error));
+            }
+        });
+    </script>
+    <script src="{% static 'js/signova-utils.js' %}"></script>
+</body>
+</html>

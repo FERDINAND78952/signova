@@ -1,0 +1,242 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Signova - Smart Sign Language Translation{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+<link rel="stylesheet" href="{% static 'css/modern-landing.css' %}">
+{% endblock %}
+
+{% block breadcrumbs %}
+<li><a href="#">Home</a></li>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section id="welcome" class="hero-section">
+    <div class="container">
+        <h1 class="headline">Breaking Barriers. Building Bridges.</h1>
+        <p class="subheadline">Signova transforms gestures into voice, empowering communication beyond boundaries.</p>
+        <div class="animated-quote">
+            <i class="fas fa-quote-left"></i>
+            <span>When technology speaks, no one is left unheard.</span>
+            <i class="fas fa-quote-right"></i>
+        </div>
+        <div class="hero-buttons">
+            <a href="{% url 'translate' %}" class="btn btn-primary btn-lg">
+                <i class="fas fa-language"></i> Try Sign Translator
+            </a>
+            <a href="{% url 'learn' %}" class="btn btn-secondary btn-lg">
+                <i class="fas fa-book-open"></i> Explore Sign Library
+            </a>
+            <a href="{% url 'about' %}" class="btn btn-outline btn-lg smooth-scroll">
+                <i class="fas fa-info-circle"></i> About Signova
+            </a>
+        </div>
+        <div class="scroll-indicator">
+            <div class="mouse">
+                <div class="wheel"></div>
+            </div>
+            <div class="arrows">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section 1: A World Without Barriers -->
+<section id="barriers" class="content-section parallax-section">
+    <div class="parallax-bg"></div>
+    <div class="container">
+        <h2 class="section-title fade-in">A World Without Barriers</h2>
+        <div class="section-content fade-in">
+            <p>Every day, millions of deaf and hard-of-hearing individuals face invisible walls. These barriers limit access to education, job opportunities, and even simple social interactions. In Rwanda and beyond, the challenge is not ability — it's accessibility.</p>
+            <p class="hidden-content">At Signova, we believe that communication should never depend on whether you can hear or speak. Our vision is simple but powerful: a world where every voice — spoken or signed — is heard and understood.</p>
+            <p class="hidden-content">Through innovative technology and a deep commitment to inclusivity, we're breaking down these barriers one conversation at a time. Our sign language recognition system doesn't just translate gestures; it bridges worlds, connects communities, and opens doors that were previously closed.</p>
+            <button id="read-more-btn" class="btn btn-text">
+                <span class="read-more-text">Read More</span>
+                <span class="read-less-text">Read Less</span>
+                <i class="fas fa-chevron-down"></i>
+            </button>
+        </div>
+    </div>
+</section>
+
+<!-- Section 2: What We Do -->
+<section id="technology" class="content-section">
+    <div class="container">
+        <h2 class="section-title">What We Do</h2>
+        <p class="section-subtitle">Current Technology</p>
+        <div class="feature-cards">
+            <div class="feature-card" data-feature="realtime">
+                <div class="card-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3>Real-Time Translation</h3>
+                <p>Instant sign language recognition and voice output with minimal delay.</p>
+                <div class="card-hover">
+                    <div class="hover-content">
+                        <video class="feature-video" loop muted>
+                            <source src="{% static 'videos/realtime-demo.mp4' %}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <p>Our technology processes sign language in milliseconds, allowing for natural conversation flow.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="feature-card" data-feature="rwandan">
+                <div class="card-icon">
+                    <i class="fas fa-globe-africa"></i>
+                </div>
+                <h3>Rwandan Sign Language Focus</h3>
+                <p>Specialized for Rwandan Sign Language with high accuracy and cultural relevance.</p>
+                <div class="card-hover">
+                    <div class="hover-content">
+                        <video class="feature-video" loop muted>
+                            <source src="{% static 'videos/rwandan-demo.mp4' %}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <p>Our system is trained on thousands of Rwandan Sign Language examples to ensure cultural accuracy.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="feature-card" data-feature="speech">
+                <div class="card-icon">
+                    <i class="fas fa-volume-up"></i>
+                </div>
+                <h3>Speech Output</h3>
+                <p>Clear, natural voice synthesis that speaks the translated signs aloud.</p>
+                <div class="card-hover">
+                    <div class="hover-content">
+                        <video class="feature-video" loop muted>
+                            <source src="{% static 'videos/speech-demo.mp4' %}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <p>Our voice synthesis technology produces natural-sounding speech in multiple languages and dialects.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="feature-card" data-feature="portable">
+                <div class="card-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3>Affordable & Portable</h3>
+                <p>Accessible technology designed to work on everyday devices.</p>
+                <div class="card-hover">
+                    <div class="hover-content">
+                        <video class="feature-video" loop muted>
+                            <source src="{% static 'videos/portable-demo.mp4' %}" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
+                        <p>Our solution works on smartphones, tablets, and low-cost dedicated devices to ensure accessibility for all.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section 3: How It Works -->
+<section id="how-it-works" class="content-section">
+    <div class="container">
+        <h2 class="section-title">How It Works</h2>
+        <div class="steps-container">
+            <div class="step" data-step="capture">
+                <div class="step-icon">
+                    <i class="fas fa-camera"></i>
+                </div>
+                <h3>Capture</h3>
+                <p>Our technology detects and tracks hand movements with precision.</p>
+                <button class="btn btn-text step-demo-btn">See Demo</button>
+            </div>
+            <div class="step-arrow">
+                <i class="fas fa-arrow-right"></i>
+            </div>
+            <div class="step" data-step="understand">
+                <div class="step-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3>Understand</h3>
+                <p>AI algorithms interpret the meaning behind each gesture.</p>
+                <button class="btn btn-text step-demo-btn">See Demo</button>
+            </div>
+            <div class="step-arrow">
+                <i class="fas fa-arrow-right"></i>
+            </div>
+            <div class="step" data-step="speak">
+                <div class="step-icon">
+                    <i class="fas fa-comment-alt"></i>
+                </div>
+                <h3>Speak</h3>
+                <p>Signs are transformed into clear, audible speech.</p>
+                <button class="btn btn-text step-demo-btn">See Demo</button>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Section 4: Social Impact -->
+<section id="impact" class="content-section">
+    <div class="container">
+        <h2 class="section-title">Social Impact</h2>
+        <div class="testimonial-slider">
+            <div class="testimonial-track">
+                <div class="testimonial">
+                    <div class="testimonial-image">
+                        <img src="{% static 'images/testimonial1.jpg' %}" alt="Jean, Teacher in Kigali">
+                        <button class="audio-play-btn">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                    <div class="testimonial-content">
+                        <p>"Signova has transformed how I communicate with my hearing colleagues. For the first time, I feel truly included in workplace discussions."</p>
+                        <div class="testimonial-author">- Jean, Teacher in Kigali</div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-image">
+                        <img src="{% static 'images/testimonial2.jpg' %}" alt="Marie, Special Education Coordinator">
+                        <button class="audio-play-btn">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                    <div class="testimonial-content">
+                        <p>"As an educator working with deaf students, Signova has bridged a gap we've struggled with for years. The impact on my students' confidence is remarkable."</p>
+                        <div class="testimonial-author">- Marie, Special Education Coordinator</div>
+                    </div>
+                </div>
+                <div class="testimonial">
+                    <div class="testimonial-image">
+                        <img src="{% static 'images/testimonial3.jpg' %}" alt="David, Software Developer">
+                        <button class="audio-play-btn">
+                            <i class="fas fa-play"></i>
+                        </button>
+                    </div>
+                    <div class="testimonial-content">
+                        <p>"The technology behind Signova is impressive, but what truly matters is seeing my deaf brother communicate effortlessly with our family for the first time."</p>
+                        <div class="testimonial-author">- David, Software Developer</div>
+                    </div>
+                </div>
+            </div>
+            <div class="slider-controls">
+                <button class="slider-arrow prev">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <div class="slider-dots"></div>
+                <button class="slider-arrow next">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/main.js' %}"></script>
+<script src="{% static 'js/modern-landing.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,18 @@
+<svg width="300" height="200" xmlns="http://www.w3.org/2000/svg">
+  <rect width="100%" height="100%" fill="#ff9800"/>
+  <text x="50%" y="40%" font-family="Arial" font-size="24" fill="white" text-anchor="middle" dominant-baseline="middle">Emotions</text>
+  <g transform="translate(100, 120)">
+    <!-- Happy face -->
+    <circle cx="0" cy="0" r="25" fill="none" stroke="white" stroke-width="2"/>
+    <circle cx="-10" cy="-8" r="3" fill="white"/>
+    <circle cx="10" cy="-8" r="3" fill="white"/>
+    <path d="M-15,8 C-10,18 10,18 15,8" fill="none" stroke="white" stroke-width="2"/>
+  </g>
+  <g transform="translate(200, 120)">
+    <!-- Sad face -->
+    <circle cx="0" cy="0" r="25" fill="none" stroke="white" stroke-width="2"/>
+    <circle cx="-10" cy="-8" r="3" fill="white"/>
+    <circle cx="10" cy="-8" r="3" fill="white"/>
+    <path d="M-15,15 C-10,5 10,5 15,15" fill="none" stroke="white" stroke-width="2"/>
+  </g>
+</svg>

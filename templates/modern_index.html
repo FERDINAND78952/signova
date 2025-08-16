@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signova - Sign Language Translation</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/modern.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo-container">
+                <a href="{% url 'index' %}">
+                    <img src="{% static 'images/signova-full.svg' %}" alt="Signova Logo">
+                </a>
+                <span class="logo-text">Signova</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#" data-panel="welcome-panel" class="active">Home</a></li>
+                    <li><a href="#" data-panel="translate-panel">Translate</a></li>
+                    <li><a href="#" data-panel="learn-panel">Learn</a></li>
+                    <li><a href="{% url 'learning_module' %}" class="nav-link">Learning Module</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'dashboard' %}" class="nav-link">Dashboard</a></li>
+                    <li><a href="{% url 'logout' %}" class="nav-link">Logout</a></li>
+                    {% else %}
+                    <li><a href="{% url 'login' %}" class="nav-link">Login</a></li>
+                    <li><a href="{% url 'signup' %}" class="nav-link">Sign Up</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <!-- Loading Spinner -->
+            <div class="loading">
+                <div class="loading-spinner"></div>
+                <p>Loading...</p>
+            </div>
+            
+            <!-- Welcome Panel -->
+            <div id="welcome-panel" class="panel active">
+                <div class="welcome-screen">
+                    <h1>Sign Language Translation Made Easy</h1>
+                    <p>Real-time translation between sign language and spoken/written words. Our advanced AI technology helps bridge communication gaps.</p>
+                    
+                    <div class="demo-notice">
+                        <i class="fas fa-info-circle"></i> This is a demonstration version. Some features may be limited.
+                    </div>
+                    
+                    <div class="cta-buttons">
+                        <button class="btn btn-primary" id="start-translating-btn" onclick="navigateTo('translate-panel')">
+                            <i class="fas fa-camera"></i> Start Translating
+                        </button>
+                        <button class="btn btn-secondary" id="learn-sign-btn" onclick="navigateTo('learn-panel')">
+                            <i class="fas fa-graduation-cap"></i> Learn Sign Language
+                        </button>
+                        <button class="btn btn-secondary" id="about-signova-btn" onclick="window.location.href='{% url 'about' %}'">
+                            <i class="fas fa-info-circle"></i> About Signova
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Translate Panel -->
+            <div id="translate-panel" class="panel">
+                <div class="demo-notice">
+                    <i class="fas fa-info-circle"></i> This is a demonstration version. Some features may be limited.
+                </div>
+                
+                <h2>Sign Language Translator</h2>
+                
+                <div class="translation-container">
+                    <div class="video-container">
+                        <video id="videoFeed" autoplay style="display: none;"></video>
+                        <div class="video-placeholder">
+                            <i class="fas fa-camera fa-3x"></i>
+                            <p>Camera is off. Click "Start Camera" to begin.</p>
+                        </div>
+                        
+                        <div class="controls">
+                            <button class="camera-toggle">
+                                <i class="fas fa-video"></i> Start Camera
+                            </button>
+                            <button class="auto-translate" disabled>
+                                <i class="fas fa-language"></i> Auto Translate
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="translation-input">
+                        <div class="input-box">
+                            <label for="textInput">Text to Translate:</label>
+                            <textarea id="textInput" placeholder="Type text to translate to sign language..."></textarea>
+                        </div>
+                        
+                        <button id="showSignBtn" class="btn btn-primary">
+                            <i class="fas fa-sign-language"></i> Show Sign Language
+                        </button>
+                        
+                        <div class="output-container">
+                            <h3>Translation:</h3>
+                            <div class="output-text">Translation will appear here...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Learn Panel -->
+            <div id="learn-panel" class="panel">
+                <h2>Learn Sign Language</h2>
+                <p>Browse our library of sign language gestures and practice at your own pace.</p>
+                
+                <div class="search-box">
+                    <input type="text" placeholder="Search for signs...">
+                </div>
+                
+                <div class="signs-grid">
+                    <!-- Sign cards will be dynamically added here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Signova. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/main.js' %}"></script>
+    <script src="{% static 'js/signova-utils.js' %}"></script>
+    <script src="{% static 'js/modern.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Signova - About Us{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/about.css' %}">
+{% endblock %}
+
+{% block breadcrumbs %}
+<li><a href="{% url 'about' %}">About</a></li>
+{% endblock %}
+
+{% block content %}
+
+    <main>
+        <section class="hero-section">
+            <div class="container">
+                <h1>About Signova</h1>
+                <p class="subtitle">Breaking communication barriers through innovation</p>
+            </div>
+        </section>
+
+        <section class="about-section">
+            <div class="container">
+                <div class="about-card">
+                    <h2>Who We Are</h2>
+                    <p>Signova is a Rwandan-born innovation initiative developing advanced sign language recognition and learning technologies to bridge communication gaps between deaf and hearing communities. Founded by engineers, accessibility advocates, and AI specialists, we combine electronics, telecommunications, and computer vision to make communication inclusive, secure, and real-time.</p>
+                    <p>While our ultimate vision spans multiple global sign languages, our current focus is delivering accurate, privacy-conscious Rwandan Sign Language (RSL) translation and education—empowering communities and creating equal access to information.</p>
+                </div>
+
+                <div class="about-card">
+                    <h2>Our Technology Focus</h2>
+                    <ul class="feature-list">
+                        <li><strong>Core Development:</strong> Real-time RSL gesture recognition powered by deep learning and computer vision.</li>
+                        <li><strong>Language Expansion:</strong> Progressive addition of African and international sign languages.</li>
+                        <li><strong>Learning System:</strong> Interactive, accessible tools for sign language learning in schools, communities, and online.</li>
+                        <li><strong>Cybersecurity Integration:</strong> End-to-end encryption and on-device AI processing to ensure user privacy and safety.</li>
+                    </ul>
+                </div>
+
+                <div class="about-card">
+                    <h2>Current Language Support</h2>
+                    <ul class="feature-list">
+                        <li><span class="check-mark">✅</span> <strong>Rwandan Sign Language (RSL):</strong> Full camera-based translation to text and speech.</li>
+                        <li><span class="check-mark">✅</span> <strong>English:</strong> Text-to-sign conversion for inclusive communication.</li>
+                        <li><span class="check-mark">✅</span> <strong>Learning Materials:</strong> Structured lessons, sign dictionaries, and practice tools for both RSL and international sign languages.</li>
+                    </ul>
+                </div>
+
+                <div class="about-card">
+                    <h2>Key Features</h2>
+                    <div class="features-container">
+                        <div class="feature-box">
+                            <h3><i class="fas fa-language"></i> Real-Time Translation</h3>
+                            <ul>
+                                <li>AI-powered RSL interpretation via camera.</li>
+                                <li>Text-to-sign conversion with animated avatars.</li>
+                                <li>Voice output for sign-to-speech.</li>
+                            </ul>
+                        </div>
+                        <div class="feature-box">
+                            <h3><i class="fas fa-graduation-cap"></i> Learning Platform</h3>
+                            <ul>
+                                <li>Step-by-step RSL and sign language lessons.</li>
+                                <li>Interactive video dictionary with common signs.</li>
+                                <li>Practice exercises with instant feedback.</li>
+                                <li>Cultural and linguistic context for RSL users.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-card">
+                    <h2>Community & Partnerships</h2>
+                    <p>We proudly collaborate with:</p>
+                    <ul class="partners-list">
+                        <li>Rwanda National Union of the Deaf (RNUD)</li>
+                        <li>Deaf-inclusive schools across Rwanda</li>
+                        <li>Local RSL interpreters, linguists, and accessibility advocates</li>
+                        <li>International sign language research networks</li>
+                    </ul>
+                </div>
+
+                <div class="about-card">
+                    <h2>Our Roadmap</h2>
+                    <div class="roadmap">
+                        <div class="roadmap-item">
+                            <h3>2024–2025</h3>
+                            <ul>
+                                <li>Achieve over 95% RSL recognition accuracy</li>
+                                <li>Launch full RSL learning curriculum</li>
+                                <li>Integrate Kinyarwanda language support</li>
+                            </ul>
+                        </div>
+                        <div class="roadmap-item">
+                            <h3>2026 and Beyond</h3>
+                            <ul>
+                                <li>Add 3+ African sign languages</li>
+                                <li>Develop offline-ready mobile applications</li>
+                                <li>Integrate classroom-ready teaching tools</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="about-card">
+                    <h2>Get Involved</h2>
+                    <p>We welcome:</p>
+                    <ul class="feature-list">
+                        <li>RSL speakers to refine translations</li>
+                        <li>Educators to design learning materials</li>
+                        <li>Tech partners to advance AI & accessibility features</li>
+                        <li>Volunteers to test and give feedback</li>
+                    </ul>
+                    <div class="contact-info">
+                        <p><i class="fas fa-phone"></i> 0785617205 / 0727162423</p>
+                        <p><i class="fas fa-envelope"></i> ferdin17205@gmail.com / signova2025@gmail.com</p>
+                    </div>
+                </div>
+
+                <div class="about-card">
+                    <h2>Our Mission</h2>
+                    <p>Signova exists to break down communication barriers through engineering innovation and ethical AI. We believe language accessibility is a basic human right—not a privilege—and are committed to building tools that make communication inclusive for everyone, everywhere.</p>
+                </div>
+
+                <div class="about-card">
+                    <h2>Our Team</h2>
+                    <p>Signova unites:</p>
+                    <ul class="feature-list">
+                        <li>Deaf community advocates and ASL/RSL linguists</li>
+                        <li>AI & computer vision engineers</li>
+                        <li>Accessibility design specialists</li>
+                        <li>UX researchers with cultural expertise</li>
+                    </ul>
+                    <p>30% of our team are deaf or hard-of-hearing, ensuring the technology serves the community authentically.</p>
+                </div>
+
+                <div class="about-card">
+                    <h2>Our Technology</h2>
+                    <p>We use:</p>
+                    <ul class="feature-list">
+                        <li>Neural networks trained on diverse sign datasets</li>
+                        <li>Gesture recognition algorithms optimized for African sign languages</li>
+                        <li>Privacy-first design with local device processing</li>
+                        <li>Continuous learning from community feedback</li>
+                    </ul>
+                </div>
+
+                <div class="about-card">
+                    <h2>Partners & Recognition</h2>
+                    <ul class="partners-list">
+                        <li>National Association of the Deaf</li>
+                        <li>Gallaudet University Research Institute</li>
+                        <li>Accessibility Tech Foundation</li>
+                        <li>2024 MIT Inclusive Innovation Award recipient</li>
+                    </ul>
+                </div>
+
+                <div class="about-card">
+                    <h2>Privacy & Security</h2>
+                    <p>We follow strict data security practices, including end-to-end encryption, regular security audits, and minimal data retention. All AI processing for translation happens locally on your device, ensuring no raw video data is stored or shared.</p>
+                </div>
+
+                <div class="about-card">
+                    <h2>Contact Us</h2>
+                    <div class="contact-info">
+                        <p><i class="fas fa-envelope"></i> <strong>Email:</strong> ferdin17205@gmail.com / signova2025@gmail.com</p>
+                        <p><i class="fas fa-phone"></i> <strong>Phone:</strong> 0785617205 / 0727162423</p>
+                        <p><i class="fas fa-clock"></i> <strong>Hours:</strong> Monday–Friday, 9 AM – 5 PM EAT</p>
+                        <p><i class="fas fa-map-marker-alt"></i> <strong>HQ:</strong> Kigali, Rwanda</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+{% endblock %}

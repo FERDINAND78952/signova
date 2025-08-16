@@ -1,0 +1,134 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Signova - Login{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+<link rel="stylesheet" href="{% static 'css/login-custom.css' %}">
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+{% endblock %}
+
+{% block breadcrumbs %}
+<li><a href="{% url 'login' %}">Login</a></li>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1 class="text-center" style="color: var(--primary-color); font-size: 3rem; margin-bottom: 20px; text-align: center; padding-top: 30px;">Breaking Barriers with Sign Language</h1>
+    <p style="font-size: 1.3rem; max-width: 700px; margin: 0 auto 30px; color: var(--text-color); line-height: 1.7; text-align: center;">Experience seamless communication through our innovative sign language translation platform. Connect, learn, and communicate without boundaries.</p>
+            
+            <div class="auth-container">                
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <h2>Welcome Back</h2>
+                        <p>Sign in to continue to Signova</p>
+                    </div>
+                    
+                    <form class="auth-form" action="{% url 'login' %}" method="post">
+                        {% csrf_token %}
+                        {% if messages %}
+                        <div class="messages">
+                            {% for message in messages %}
+                            <div class="{% if message.tags %}{{ message.tags }}{% endif %}-message">
+                                <i class="fas fa-exclamation-circle"></i> {{ message }}
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
+                        
+                        {% if form.errors %}
+                        <div class="error-message">
+                            <i class="fas fa-exclamation-circle"></i> Your username and password didn't match. Please try again.
+                        </div>
+                        {% endif %}
+                        
+                        <div class="form-group">
+                            <label for="id_username"><i class="fas fa-user"></i> Username</label>
+                            <input type="text" id="id_username" name="username" placeholder="Enter your username" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="id_password"><i class="fas fa-lock"></i> Password</label>
+                            <input type="password" id="id_password" name="password" placeholder="Enter your password" required>
+                        </div>
+                        
+                        <div class="form-options">
+                            <div class="remember-me">
+                                <input type="checkbox" id="id_remember" name="remember">
+                                <label for="id_remember">Remember me</label>
+                            </div>
+                            <a href="{% url 'password_reset' %}" class="forgot-password">Forgot password?</a>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-block" id="login-btn">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </button>
+                        
+                        <script>
+                            document.getElementById('login-btn').addEventListener('click', function(e) {
+                                // Only add loading state if form is valid
+                                if (this.form.checkValidity()) {
+                                    const originalText = this.innerHTML;
+                                    this.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Logging in...';
+                                    this.disabled = true;
+                                    
+                                    // Ensure form submits
+                                    setTimeout(() => {
+                                        this.form.submit();
+                                    }, 100);
+                                }
+                            });
+                        </script>
+                    </form>
+                    
+                    <div class="auth-footer">
+                        <p>Don't have an account? <a href="{% url 'signup' %}">Sign up</a></p>
+                        
+                        <div class="social-login">
+                            <p>Or login with</p>
+                            <div class="social-buttons">
+                                <button class="social-btn google">
+                                    <i class="fab fa-google"></i>
+                                </button>
+                                <button class="social-btn facebook">
+                                    <i class="fab fa-facebook-f"></i>
+                                </button>
+                                <button class="social-btn twitter">
+                                    <i class="fab fa-twitter"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="auth-buttons-container">
+                <a href="{% url 'login' %}" class="auth-button login-button">
+                    <i class="fas fa-sign-in-alt" style="margin-right: 8px;"></i> Login
+                </a>
+                <a href="{% url 'signup' %}" class="auth-button signup-button">
+                    <i class="fas fa-user-plus" style="margin-right: 8px;"></i> Sign Up
+                </a>
+            </div>
+        </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const loginButton = document.getElementById('loginButton');
+        
+        if (loginButton) {
+            loginButton.addEventListener('click', function() {
+                this.classList.add('loading');
+                this.disabled = true;
+                this.textContent = 'Logging in...';
+                
+                // Submit the form
+                document.getElementById('loginForm').submit();
+            });
+        }
+    });
+</script>
+{% endblock %}

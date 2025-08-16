@@ -1,0 +1,259 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Signova - Rwandan Sign Language Translator (English/Kinyarwanda){% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/translate.css' %}">
+<link rel="stylesheet" href="{% static 'css/base.css' %}">
+{% endblock %}
+
+{% block breadcrumbs %}
+<li><a href="#">Translate</a></li>
+{% endblock %}
+
+{% block content %}
+<main class="translate-container">
+        <div class="translate-header">
+            <h2>Rwandan Sign Language (RSL) Real-time Translator</h2>
+            <p>Use hand gestures to communicate in Rwandan Sign Language. Choose between English and Kinyarwanda translations.</p>
+        </div>
+        <div class="translate-controls">
+            <button id="startCamera" class="btn btn-primary">Start Camera</button>
+            <button id="stopCamera" class="btn btn-secondary" disabled>Stop Camera</button>
+            <button id="clearSentence" class="btn btn-secondary" disabled>Clear Sentence</button>
+            <button id="speakSentence" class="btn btn-secondary" disabled>Speak Sentence</button>
+            <select id="languageSelect" class="btn btn-secondary" disabled>
+                <option value="english">English</option>
+                <option value="kinyarwanda">Kinyarwanda</option>
+            </select>
+        </div>
+
+        <div class="translate-content">
+            <div class="video-container">
+                <img id="videoFeed" src="{% url 'video_feed' %}" style="display: none;">
+                <div id="cameraPlaceholder" class="camera-placeholder">
+                    <img src="{% static 'images/camera-placeholder.svg' %}" alt="Camera placeholder">
+                    <p>Click "Start Camera" to begin translation</p>
+                </div>
+            </div>
+
+            <div class="translation-results">
+            <div class="current-sign">
+                <h3>Current Sign</h3>
+                <div id="currentSign" class="sign-display">None</div>
+                <div class="sign-confidence">
+                    <span>Confidence: </span>
+                    <span id="signConfidence">0%</span>
+                </div>
+            </div>
+
+            <div class="sentence-container">
+                <h3>Current Sentence</h3>
+                <div id="currentSentence" class="sentence-display"></div>
+                <div id="translatedSentence" class="translated-display"></div>
+            </div>
+
+            <div class="recent-signs">
+                <h3>Recent Signs</h3>
+                <ul id="recentSigns" class="signs-list"></ul>
+            </div>
+            
+            <div class="rsl-info">
+                <h3>About RSL</h3>
+                <p>Rwandan Sign Language (RSL) is the sign language used by the deaf community in Rwanda. This translator is being trained on the full Kinyarwanda vocabulary.</p>
+                <p>Currently recognized signs: Muraho (Hello), Murakoze (Thank you), Byiza (Good), and basic hand gestures.</p>
+                <p>You can switch between English and Kinyarwanda translations using the language selector. When Kinyarwanda is selected, recognized signs will be translated to Kinyarwanda words.</p>
+            </div>
+        </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Signova. All rights reserved.</p>
+        </div>
+    </footer>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const startCameraBtn = document.getElementById('startCamera');
+        const stopCameraBtn = document.getElementById('stopCamera');
+        const clearSentenceBtn = document.getElementById('clearSentence');
+        const speakSentenceBtn = document.getElementById('speakSentence');
+        const languageSelect = document.getElementById('languageSelect');
+        const videoFeed = document.getElementById('videoFeed');
+        const cameraPlaceholder = document.getElementById('cameraPlaceholder');
+        const currentSign = document.getElementById('currentSign');
+        const signConfidence = document.getElementById('signConfidence');
+        const currentSentence = document.getElementById('currentSentence');
+        const translatedSentence = document.getElementById('translatedSentence');
+        const recentSigns = document.getElementById('recentSigns');
+        
+        let updateInterval = null;
+        let currentLanguage = 'english';
+        
+        // Translations are now handled on the server side
+        // This object is kept for reference but no longer used
+        const kinyarwandaTranslations = {
+            'Open': 'Gufungura',
+            'Close': 'Gufunga',
+            'Pointer': 'Kwerekana',
+            'OK': 'Nibyo',
+            'Hello': 'Muraho',
+            'Thank you': 'Murakoze',
+            'Good': 'Byiza',
+            'I am': 'Ndi',
+            'Milk': 'Amata',
+            'Tea': 'Icyayi',
+            'Bread': 'Ifunga',
+            'Sorghum': 'Uburo',
+            'Water': 'Amazi',
+            'I know': 'Ndabizi',
+            'I don\'t understand': 'Simbyumva',
+            'I want': 'Nshaka',
+            'No': 'Nta'
+        };
+        
+        startCameraBtn.addEventListener('click', function() {
+            fetch('{% url "start_camera" %}')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Camera started:', data);
+                    videoFeed.style.display = 'block';
+                    cameraPlaceholder.style.display = 'none';
+                    startCameraBtn.disabled = true;
+                    stopCameraBtn.disabled = false;
+                    clearSentenceBtn.disabled = false;
+                    speakSentenceBtn.disabled = false;
+                    languageSelect.disabled = false;
+                    
+                    // Start polling for recognized signs
+                    updateInterval = setInterval(updateRecognizedSigns, 300); // Faster updates for real-time
+                })
+                .catch(error => console.error('Error starting camera:', error));
+        });
+        
+        stopCameraBtn.addEventListener('click', function() {
+            fetch('{% url "stop_camera" %}')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Camera stopped:', data);
+                    videoFeed.style.display = 'none';
+                    cameraPlaceholder.style.display = 'flex';
+                    startCameraBtn.disabled = false;
+                    stopCameraBtn.disabled = true;
+                    clearSentenceBtn.disabled = true;
+                    speakSentenceBtn.disabled = true;
+                    languageSelect.disabled = true;
+                    
+                    // Stop polling
+                    if (updateInterval) {
+                        clearInterval(updateInterval);
+                        updateInterval = null;
+                    }
+                })
+                .catch(error => console.error('Error stopping camera:', error));
+        });
+        
+        clearSentenceBtn.addEventListener('click', function() {
+            fetch('{% url "clear_sentence" %}')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Sentence cleared:', data);
+                    currentSentence.textContent = '';
+                    translatedSentence.textContent = '';
+                    translatedSentence.style.display = 'none';
+                })
+                .catch(error => console.error('Error clearing sentence:', error));
+        });
+        
+        speakSentenceBtn.addEventListener('click', function() {
+            fetch('{% url "speak_sentence" %}')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Speaking sentence:', data);
+                    // Add visual feedback for speaking
+                    speakSentenceBtn.classList.add('speaking');
+                    setTimeout(() => {
+                        speakSentenceBtn.classList.remove('speaking');
+                    }, 2000);
+                })
+                .catch(error => console.error('Error speaking sentence:', error));
+        });
+        
+        languageSelect.addEventListener('change', function() {
+            currentLanguage = this.value;
+            
+            // Send language preference to the server
+            const formData = new FormData();
+            formData.append('language', currentLanguage);
+            
+            fetch('{% url "set_language" %}', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Language set:', data);
+                // Update the translated sentence
+                if (data.translated_sentence) {
+                    translatedSentence.textContent = data.translated_sentence;
+                    translatedSentence.style.display = currentLanguage === 'english' ? 'none' : 'block';
+                }
+            })
+            .catch(error => console.error('Error setting language:', error));
+        });
+        
+        // Translation is now handled on the server side
+        
+        function updateRecognizedSigns() {
+            fetch('{% url "get_recognized_signs" %}?language=' + currentLanguage)
+                .then(response => response.json())
+                .then(data => {
+                    // Update current sentence
+                    const sentenceText = data.current_sentence || 'No sentence yet';
+                    currentSentence.textContent = sentenceText;
+                    
+                    // Update translated sentence if available
+                    if (data.translated_sentence && currentLanguage !== 'english') {
+                        translatedSentence.textContent = data.translated_sentence;
+                        translatedSentence.style.display = 'block';
+                    } else {
+                        translatedSentence.style.display = 'none';
+                    }
+                    
+                    // Update recent signs list
+                    recentSigns.innerHTML = '';
+                    if (data.signs && data.signs.length > 0) {
+                        const latestSign = data.signs[data.signs.length - 1];
+                        currentSign.textContent = latestSign;
+                        
+                        // Use confidence from backend if available, otherwise use default
+                        const confidence = data.confidence || 85;
+                        signConfidence.textContent = confidence + '%';
+                        
+                        // Add visual feedback for new sign detection
+                        currentSign.classList.add('detected');
+                        setTimeout(() => {
+                            currentSign.classList.remove('detected');
+                        }, 500);
+                        
+                        data.signs.slice().reverse().forEach(sign => {
+                            const li = document.createElement('li');
+                            li.textContent = sign;
+                            recentSigns.appendChild(li);
+                        });
+                    } else {
+                        currentSign.textContent = 'None';
+                        signConfidence.textContent = '0%';
+                    }
+                })
+                .catch(error => console.error('Error getting recognized signs:', error));
+        }
+    });
+</script>
+{% endblock %}

@@ -1,0 +1,276 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Signova - Dashboard{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+    <a href="{% url 'index' %}">Home</a> / <span>Dashboard</span>
+</div>
+{% endblock %}
+
+{% block content %}
+    <div class="dashboard-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo-container">
+                    <img src="{% static 'images/signova-logo.svg' %}" alt="Signova Logo">
+                    <span class="logo-text">Signova</span>
+                </div>
+                <button class="sidebar-toggle" id="sidebarToggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="{% url 'dashboard' %}" class="active">
+                            <i class="fas fa-home"></i>
+                            <span>Dashboard</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'translate' %}">
+                            <i class="fas fa-language"></i>
+                            <span>Translator</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'modern_learn' %}">
+                            <i class="fas fa-graduation-cap"></i>
+                            <span>Learning</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-book"></i>
+                            <span>Dictionary</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Progress</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fas fa-cog"></i>
+                            <span>Settings</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <a href="{% url 'logout' %}" class="logout-btn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Header -->
+            <header class="dashboard-header">
+                <div class="header-left">
+                    <h1>Dashboard</h1>
+                </div>
+                <div class="header-right">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search...">
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="notifications">
+                        <button class="icon-btn">
+                            <i class="fas fa-bell"></i>
+                            <span class="badge">3</span>
+                        </button>
+                    </div>
+                    <div class="user-profile">
+                        <div class="user-avatar">
+                            <img src="https://ui-avatars.com/api/?name={{ current_user.first_name }}+{{ current_user.last_name }}&background=4a6fa5&color=fff" alt="User Avatar">
+                        </div>
+                        <div class="user-info">
+                            <span class="user-name">{{ current_user.first_name }} {{ current_user.last_name }}</span>
+                            <span class="user-role">Student</span>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            
+            <!-- Dashboard Content -->
+            <div class="dashboard-content">
+                <!-- Welcome Section -->
+                <section class="welcome-section">
+                    <div class="welcome-card">
+                        <div class="welcome-text">
+                            <h2>Welcome back, {{ current_user.first_name }}!</h2>
+                            <p>Continue your sign language journey with Signova. Track your progress and learn new signs every day.</p>
+                            <a href="{% url 'modern_learn' %}" class="btn btn-primary">
+                                <i class="fas fa-play"></i> Continue Learning
+                            </a>
+                        </div>
+                        <div class="welcome-image">
+                            <img src="{% static 'images/learn-icon.svg' %}" alt="Learning Illustration">
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Stats Section -->
+                <section class="stats-section">
+                    <div class="section-header">
+                        <h3>Your Progress</h3>
+                    </div>
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-check-circle"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4>Signs Learned</h4>
+                                <p class="stat-value">12</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4>Days Streak</h4>
+                                <p class="stat-value">5</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4>Learning Time</h4>
+                                <p class="stat-value">3.5 hrs</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <div class="stat-info">
+                                <h4>Achievements</h4>
+                                <p class="stat-value">4</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Recent Activity & Recommended Sections -->
+                <div class="two-column-grid">
+                    <!-- Recent Activity -->
+                    <section class="recent-activity">
+                        <div class="section-header">
+                            <h3>Recent Activity</h3>
+                        </div>
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <div class="activity-icon">
+                                    <i class="fas fa-graduation-cap"></i>
+                                </div>
+                                <div class="activity-details">
+                                    <h4>Completed Lesson</h4>
+                                    <p>Basic Greetings</p>
+                                    <span class="activity-time">2 hours ago</span>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon">
+                                    <i class="fas fa-language"></i>
+                                </div>
+                                <div class="activity-details">
+                                    <h4>Used Translator</h4>
+                                    <p>Practiced 5 new signs</p>
+                                    <span class="activity-time">Yesterday</span>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon">
+                                    <i class="fas fa-trophy"></i>
+                                </div>
+                                <div class="activity-details">
+                                    <h4>Earned Achievement</h4>
+                                    <p>First Week Completed</p>
+                                    <span class="activity-time">3 days ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    
+                    <!-- Recommended Learning -->
+                    <section class="recommended-learning">
+                        <div class="section-header">
+                            <h3>Recommended for You</h3>
+                        </div>
+                        <div class="recommended-list">
+                            <div class="recommended-item">
+                                <div class="recommended-image">
+                                    <img src="{% static 'images/video-thumbnail.svg' %}" alt="Video thumbnail">
+                                </div>
+                                <div class="recommended-details">
+                                    <h4>Common Phrases</h4>
+                                    <p>Learn everyday conversational signs</p>
+                                    <a href="#" class="btn btn-sm btn-secondary">Start Learning</a>
+                                </div>
+                            </div>
+                            <div class="recommended-item">
+                                <div class="recommended-image">
+                                    <img src="{% static 'images/video-thumbnail.svg' %}" alt="Video thumbnail">
+                                </div>
+                                <div class="recommended-details">
+                                    <h4>Numbers & Counting</h4>
+                                    <p>Master numerical signs in RSL</p>
+                                    <a href="#" class="btn btn-sm btn-secondary">Start Learning</a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </main>
+    </div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const sidebarToggle = document.getElementById('sidebarToggle');
+        const sidebar = document.querySelector('.sidebar');
+        const mainContent = document.querySelector('.main-content');
+        
+        sidebarToggle.addEventListener('click', function() {
+            sidebar.classList.toggle('collapsed');
+            mainContent.classList.toggle('expanded');
+        });
+        
+        // Responsive sidebar behavior
+        function handleResize() {
+            if (window.innerWidth < 768) {
+                sidebar.classList.add('collapsed');
+                mainContent.classList.add('expanded');
+            } else {
+                sidebar.classList.remove('collapsed');
+                mainContent.classList.remove('expanded');
+            }
+        }
+        
+        // Initial check and event listener for resize
+        handleResize();
+        window.addEventListener('resize', handleResize);
+    });
+</script>
+{% endblock %}

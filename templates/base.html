@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Signova{% endblock %}</title>
+    <!-- Preload critical assets -->
+    <link rel="preload" href="{% static 'images/signova-logo.svg' %}" as="image" type="image/svg+xml">
+    <!-- Critical CSS first -->
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/modern.css' %}">
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <!-- Fonts and icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <header class="main-header">
+        <div class="container header-content">
+            <div class="logo-container">
+                <a href="{% url 'index' %}">
+                    <img src="{% static 'images/signova-full.svg' %}" alt="Signova Logo">
+                </a>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="{% url 'index' %}" {% if request.path == '/' %}class="active"{% endif %}>Home</a></li>
+                    <li><a href="{% url 'translate' %}" {% if 'translate' in request.path %}class="active"{% endif %}>Translate</a></li>
+                    <li><a href="{% url 'modern_learn' %}" {% if 'learn' in request.path %}class="active"{% endif %}>Learn</a></li>
+                    <li><a href="{% url 'about' %}" {% if 'about' in request.path %}class="active"{% endif %}>About</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'dashboard' %}" {% if 'dashboard' in request.path %}class="active"{% endif %}>Dashboard</a></li>
+                    <li><a href="{% url 'logout' %}" class="btn-logout">Logout</a></li>
+                    {% else %}
+                    <li><a href="{% url 'login' %}" {% if 'login' in request.path %}class="active"{% endif %}>Login</a></li>
+                    <li><a href="{% url 'signup' %}" {% if 'signup' in request.path %}class="active"{% endif %}>Sign Up</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+            <button class="mobile-menu-toggle" aria-label="Toggle menu">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <div class="breadcrumbs">
+        <div class="container">
+            <ul>
+                <li><a href="{% url 'index' %}">Home</a></li>
+                {% block breadcrumbs %}{% endblock %}
+            </ul>
+        </div>
+    </div>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="{% static 'images/signova-logo.svg' %}" alt="Signova Logo">
+                    <span>Signova</span>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h3>Navigation</h3>
+                        <ul>
+                            <li><a href="{% url 'index' %}">Home</a></li>
+                            <li><a href="{% url 'translate' %}">Translate</a></li>
+                            <li><a href="{% url 'modern_learn' %}">Learn</a></li>
+                            <li><a href="{% url 'about' %}">About</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Account</h3>
+                        <ul>
+                            {% if user.is_authenticated %}
+                            <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+                            <li><a href="{% url 'logout' %}">Logout</a></li>
+                            {% else %}
+                            <li><a href="{% url 'login' %}">Login</a></li>
+                            <li><a href="{% url 'signup' %}">Sign Up</a></li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                    <div class="footer-column">
+                        <h3>Legal</h3>
+                        <ul>
+                            <li><a href="#">Terms of Service</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; {% now "Y" %} Signova. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const menuToggle = document.querySelector('.mobile-menu-toggle');
+            const mainNav = document.querySelector('.main-nav');
+            
+            if (menuToggle && mainNav) {
+                menuToggle.addEventListener('click', function() {
+                    mainNav.classList.toggle('active');
+                    this.classList.toggle('active');
+                });
+            }
+        });
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

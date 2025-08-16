@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+{% load static %}
+{% load custom_filters %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signova - Learn Sign Language</title>
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/learn.css' %}">
+    <link rel="stylesheet" href="{% static 'css/modern.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo-container">
+                <a href="{% url 'index' %}">
+                    <img src="{% static 'images/signova-full.svg' %}" alt="Signova Logo">
+                </a>
+                <span class="logo-text">Signova</span>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="{% url 'index' %}">Home</a></li>
+                    <li><a href="{% url 'translate' %}">Translate</a></li>
+                    <li><a href="{% url 'learn' %}" class="active">Learn</a></li>
+                    <li><a href="{% url 'learning_module' %}" class="nav-link">Learning Module</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="{% url 'dashboard' %}" class="nav-link">Dashboard</a></li>
+                    <li><a href="{% url 'logout' %}" class="nav-link">Logout</a></li>
+                    {% else %}
+                    <li><a href="{% url 'login' %}" class="nav-link">Login</a></li>
+                    <li><a href="{% url 'signup' %}" class="nav-link">Sign Up</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="demo-notice">
+                <i class="fas fa-info-circle"></i> This is a demonstration version. Some features may be limited.
+            </div>
+            
+            <h2>Learn Sign Language</h2>
+            <p class="learn-intro">Watch these videos to learn common signs. Practice them with our translation tool!</p>
+            
+            <div class="subscription-notice">
+                <h3>Choose Your Learning Plan</h3>
+                <p>Select a subscription plan to access our learning materials:</p>
+                
+                <div class="plans-container">
+                    <div class="plan">
+                        <h4>Free</h4>
+                        <p>Basic access to sign language learning</p>
+                        <ul>
+                            <li>Limited learning materials</li>
+                            <li>Basic translation features</li>
+                            <li>Community support</li>
+                        </ul>
+                        <button class="btn btn-primary subscription-btn" data-plan="free">Start Learning Now</button>
+                    </div>
+                    <div class="plan">
+                        <h4>Advanced</h4>
+                        <p>Enhanced learning experience</p>
+                        <ul>
+                            <li>Full access to learning materials</li>
+                            <li>Advanced translation features</li>
+                            <li>Email support</li>
+                        </ul>
+                        <button class="btn btn-primary subscription-btn" data-plan="advanced">Upgrade - 5,000 RWF/month</button>
+                    </div>
+                    <div class="plan">
+                        <h4>Pro</h4>
+                        <p>Complete professional package</p>
+                        <ul>
+                            <li>Premium learning materials</li>
+                            <li>Offline translation capabilities</li>
+                            <li>Priority support</li>
+                        </ul>
+                        <button class="btn btn-primary subscription-btn" data-plan="pro">Upgrade - 10,000 RWF/month</button>
+                    </div>
+                </div>
+                
+                <div class="payment-info">
+                    <h4>Payment Method</h4>
+                    <p>Mobile Money: +250785617205</p>
+                    <p>After payment, please email your transaction ID to <a href="mailto:support@signova.com">support@signova.com</a></p>
+                </div>
+            </div>
+            
+            <div class="video-selection" style="display: none;">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search for signs...">
+                </div>
+                
+                <div class="signs-grid">
+                    {% for video in videos %}
+                    <div class="sign-card" data-video="{{ video }}">
+                        <div class="sign-video">
+                            <img src="{% static 'images/video-thumbnail.svg' %}" alt="Video thumbnail">
+                        </div>
+                        <div class="sign-info">
+                            <h3>{{ video|replace:"_"," "|title }}</h3>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            
+            <div class="video-player" style="display: none;">
+                <div class="video-container">
+                    <img id="videoStream" src="" alt="Sign language video">
+                </div>
+                <div class="controls">
+                    <button id="replayVideo" class="btn btn-primary">
+                        <i class="fas fa-redo"></i> Replay
+                    </button>
+                    <button id="backToList" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to List
+                    </button>
+                </div>
+                <div class="output-container">
+                    <h3 id="videoTitle">Sign Name</h3>
+                    <p id="videoDescription" class="output-text">Learn how to sign this word by following the movements shown in the video.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="subscription-plans">
+                <h3>Subscription Plans</h3>
+                <div class="plans-container">
+                    <div class="plan">
+                        <h4>Free</h4>
+                        <p>Basic access to sign language translation</p>
+                        <ul>
+                            <li>Limited learning materials</li>
+                            <li>Basic translation features</li>
+                            <li>Community support</li>
+                        </ul>
+                        <a href="#" class="btn btn-primary">Current Plan</a>
+                    </div>
+                    <div class="plan">
+                        <h4>Advanced</h4>
+                        <p>Enhanced learning experience</p>
+                        <ul>
+                            <li>Full access to learning materials</li>
+                            <li>Advanced translation features</li>
+                            <li>Email support</li>
+                        </ul>
+                        <a href="#" class="btn btn-primary">Upgrade - 5,000 RWF/month</a>
+                    </div>
+                    <div class="plan">
+                        <h4>Pro</h4>
+                        <p>Complete professional package</p>
+                        <ul>
+                            <li>Premium learning materials</li>
+                            <li>Offline translation capabilities</li>
+                            <li>Priority support</li>
+                        </ul>
+                        <a href="#" class="btn btn-primary">Upgrade - 10,000 RWF/month</a>
+                    </div>
+                </div>
+                <div class="payment-info">
+                    <h4>Payment Method</h4>
+                    <p>Mobile Money: +250785617205</p>
+                    <p>After payment, please email your transaction ID to <a href="mailto:support@signova.com">support@signova.com</a></p>
+                </div>
+            </div>
+            <p>&copy; 2025 Signova. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const signCards = document.querySelectorAll('.sign-card');
+            const videoSelection = document.querySelector('.video-selection');
+            const videoPlayer = document.querySelector('.video-player');
+            const videoStream = document.getElementById('videoStream');
+            const videoTitle = document.getElementById('videoTitle');
+            const videoDescription = document.getElementById('videoDescription');
+            const replayButton = document.getElementById('replayVideo');
+            const backButton = document.getElementById('backToList');
+            const searchInput = document.getElementById('searchInput');
+            
+            let currentVideo = '';
+            
+            // Video descriptions
+            const descriptions = {
+                'hello': 'Wave your hand with palm facing outward in a greeting motion.',
+                'how_are_you': 'Point to the other person, then make a questioning gesture.',
+                'forget': 'Brush your fingers across your forehead from right to left.',
+                'remember': 'Touch your temple with your index finger and then move it forward.',
+                'i_want': 'Point to yourself and then make a pulling motion toward yourself.',
+                'my_name_is': 'Point to yourself, then make the sign for "name" by tapping your index fingers together.',
+                'thank_you': 'Touch your lips with your fingertips and then move your hand outward.',
+                'same_to_you': 'Point to the other person and then make the sign for "same".',
+                'you': 'Point directly at the person you are addressing.'
+            };
+            
+            // Add click event to each sign card
+            signCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const videoName = this.getAttribute('data-video');
+                    currentVideo = videoName;
+                    
+                    // Update video player
+                    videoStream.src = "{% url 'video' %}" + videoName;
+                    videoTitle.textContent = videoName.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                    videoDescription.textContent = descriptions[videoName] || 'Learn this sign by following the video.';
+                    
+                    // Show video player, hide selection
+                    videoSelection.style.display = 'none';
+                    videoPlayer.style.display = 'block';
+                });
+            });
+            
+            // Replay button
+            replayButton.addEventListener('click', function() {
+                videoStream.src = "{% url 'video' %}" + currentVideo;
+            });
+            
+            // Back button
+            backButton.addEventListener('click', function() {
+                videoPlayer.style.display = 'none';
+                videoSelection.style.display = 'block';
+            });
+            
+            // Subscription buttons
+            const subscriptionButtons = document.querySelectorAll('.subscription-btn');
+            const subscriptionNotice = document.querySelector('.subscription-notice');
+            const videoSelectionDiv = document.querySelector('.video-selection');
+            
+            subscriptionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const plan = this.getAttribute('data-plan');
+                    console.log(`Selected plan: ${plan}`);
+                    
+                    // Show loading state on button
+                    const originalText = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Processing...';
+                    this.disabled = true;
+                    
+                    // Simulate processing with a short delay
+                    setTimeout(() => {
+                        // Hide subscription notice and show video selection
+                        subscriptionNotice.style.display = 'none';
+                        videoSelectionDiv.style.display = 'block';
+                        
+                        // Reset button state
+                        this.innerHTML = originalText;
+                        this.disabled = false;
+                        
+                        // If this is a paid plan, you could redirect to payment page
+                        // or show payment instructions
+                        if (plan !== 'free') {
+                            alert('Please complete payment using Mobile Money: +250785617205 and email your transaction ID to support@signova.com');
+                        }
+                    }, 800);
+                });
+            });
+            
+            // Search functionality
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    const searchTerm = this.value.toLowerCase();
+                    
+                    signCards.forEach(card => {
+                        const videoName = card.getAttribute('data-video');
+                        const displayName = videoName.replace(/_/g, ' ').toLowerCase();
+                        
+                        if (displayName.includes(searchTerm) || searchTerm === '') {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            }
+        });
+    </script>
+    <script src="{% static 'js/signova-utils.js' %}"></script>
+</body>
+</html>

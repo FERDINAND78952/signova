@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: signova
+    env: python
+    buildCommand: pip install -r requirements_django.txt
+    startCommand: gunicorn signova.wsgi:application
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: signova.settings
+      - key: SECRET_KEY
+        generateValue: true
+      - key: RENDER
+        value: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: signova_db
+          property: connectionString
+
+databases:
+  - name: signova_db
+    databaseName: signova
+    user: signova_user
