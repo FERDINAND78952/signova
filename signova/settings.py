@@ -113,6 +113,7 @@ LOGIN_URL = 'login'
 
 # Crispy Forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
+ALLOWED_HOSTS = ["Signova.onrender.com"]
 
 # Production security settings
 if not DEBUG:
