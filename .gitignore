@@ -10,6 +10,10 @@ venv*/
 *.pyc
 __pycache__/
 *.db
+venv310/
+venv/
+.env/
+
 
 # Django
 *.sqlite3
