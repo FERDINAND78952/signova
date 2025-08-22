@@ -38,13 +38,14 @@ markdown-it-py==3.0.0
 MarkupSafe==3.0.2
 matplotlib==3.10.5
 mdurl==0.1.2
-mediapipe==0.10.21
+mediapipe>=0.10.21
 ml_dtypes==0.5.3
 mysqlclient==2.2.7
 namex==0.1.0
 numpy==1.26.4
 opencv-contrib-python==4.11.0.86
-opencv-python==4.11.0.86
+opencv-python-headless==4.11.0.86
+
 opt_einsum==3.4.0
 optree==0.17.0
 packaging==25.0
