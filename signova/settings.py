@@ -13,11 +13,17 @@ SECRET_KEY = config('SECRET_KEY', default='django-insecure-your-secret-key-here'
 DEBUG = config('DEBUG', default=True, cast=bool)
 
 # Allowed hosts
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+
+# Render hostname
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
-    ALLOWED_HOSTS.append('.render.com')
+    ALLOWED_HOSTS.append(".render.com")
+
+# Add production host safely
+if not DEBUG:
+    ALLOWED_HOSTS += ["signova.onrender.com"]
 
 # Application definition
 INSTALLED_APPS = [
@@ -113,7 +119,6 @@ LOGIN_URL = 'login'
 
 # Crispy Forms
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
-ALLOWED_HOSTS = ["Signova.onrender.com"]
 
 # Production security settings
 if not DEBUG:
