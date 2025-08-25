@@ -1,754 +1,645 @@
 <!DOCTYPE html>
-{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signova - Sign Language Translation</title>
-    <link rel="stylesheet" href="{% static 'css/signova-landing.css' %}">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <meta name="description" content="Signova - Breaking communication barriers through sign language translation technology">
-    <link rel="icon" href="{% static 'images/favicon.ico' %}">
+    <title>Signova - Sign Language Translation Made Easy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        background: 'oklch(1 0 0)',
+                        foreground: 'oklch(0.318 0.013 258.338)',
+                        card: 'oklch(0.985 0.002 106.423)',
+                        'card-foreground': 'oklch(0.318 0.013 258.338)',
+                        popover: 'oklch(1 0 0)',
+                        'popover-foreground': 'oklch(0.318 0.013 258.338)',
+                        primary: 'oklch(0.567 0.149 198.618)',
+                        'primary-foreground': 'oklch(1 0 0)',
+                        secondary: 'oklch(0.701 0.167 70.67)',
+                        'secondary-foreground': 'oklch(1 0 0)',
+                        muted: 'oklch(0.985 0.002 106.423)',
+                        'muted-foreground': 'oklch(0.318 0.013 258.338)',
+                        accent: 'oklch(0.701 0.167 70.67)',
+                        'accent-foreground': 'oklch(1 0 0)',
+                        destructive: 'oklch(0.576 0.214 27.325)',
+                        'destructive-foreground': 'oklch(1 0 0)',
+                        border: 'oklch(0.922 0.013 106.423)',
+                        input: 'oklch(1 0 0)',
+                        ring: 'oklch(0.567 0.149 198.618 / 0.5)',
+                        'chart-1': 'oklch(0.567 0.149 198.618)',
+                        'chart-2': 'oklch(0.701 0.167 70.67)',
+                        'chart-3': 'oklch(0.576 0.214 27.325)',
+                        'chart-4': 'oklch(0.318 0.013 258.338)',
+                        'chart-5': 'oklch(0.697 0.136 164.988)',
+                        sidebar: 'oklch(0.985 0.002 106.423)',
+                        'sidebar-foreground': 'oklch(0.318 0.013 258.338)',
+                        'sidebar-primary': 'oklch(0.567 0.149 198.618)',
+                        'sidebar-primary-foreground': 'oklch(1 0 0)',
+                        'sidebar-accent': 'oklch(0.701 0.167 70.67)',
+                        'sidebar-accent-foreground': 'oklch(1 0 0)',
+                        'sidebar-border': 'oklch(0.922 0.013 106.423)',
+                        'sidebar-ring': 'oklch(0.567 0.149 198.618 / 0.5)',
+                      },
+                    fontFamily: {
+                        serif: ['Playfair Display', 'serif'],
+                        sans: ['Source Sans 3', 'sans-serif'],
+                    },
+                    borderRadius: {
+                        sm: 'calc(0.5rem - 4px)',
+                        md: 'calc(0.5rem - 2px)',
+                        lg: '0.5rem',
+                        xl: 'calc(0.5rem + 4px)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            border-color: oklch(0.922 0.013 106.423);
+            outline-color: oklch(0.567 0.149 198.618 / 0.5);
+        }
+        body {
+            background-color: oklch(1 0 0);
+            color: oklch(0.318 0.013 258.338);
+            font-family: 'Source Sans 3', sans-serif;
+        }
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+        .animate-slide-up {
+            animation: slideUp 0.8s ease-out;
+        }
+        .animate-bounce-gentle {
+            animation: bounceGentle 2s infinite;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes bounceGentle {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        .focus-visible:focus-visible {
+            outline: 2px solid oklch(0.567 0.149 198.618);
+            outline-offset: 2px;
+        }
+        .gradient-primary {
+            background: linear-gradient(135deg, oklch(0.567 0.149 198.618) 0%, oklch(0.701 0.167 70.67) 100%);
+        }
+        .gradient-subtle {
+            background: linear-gradient(135deg, oklch(0.567 0.149 198.618) 0%, transparent 100%);
+        }
+        .hero-pattern {
+            background-color: #ffffff;
+            background-image: radial-gradient(oklch(0.567 0.149 198.618 / 0.1) 2px, transparent 2px);
+            background-size: 40px 40px;
+        }
+    </style>
 </head>
-<body>
-    <header>
-        <div class="container header-content">
-            <div class="logo-container">
-                <img src="{% static 'images/signova-full.svg' %}" alt="Signova Logo" class="logo">
-                <span class="logo-text">Signova</span>
+<body class="min-h-screen flex flex-col">
+    <!-- Navigation -->
+    <nav class="bg-background border-b border-border sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <a href="#" class="text-2xl font-serif font-bold text-primary">Signova</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="text-foreground hover:text-primary transition-colors">Home</a>
+                    <a href="#" class="text-foreground hover:text-primary transition-colors">Translate</a>
+                    <a href="#" class="text-foreground hover:text-primary transition-colors">Learn</a>
+                    <a href="#" class="text-foreground hover:text-primary transition-colors">Learning Module</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="text-foreground hover:text-primary transition-colors">Login</a>
+                    <a href="#" class="bg-primary text-primary-foreground px-4 py-2 rounded-lg hover:opacity-90 transition-opacity">Sign Up</a>
+                </div>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="#" class="nav-link active" data-panel="welcome">Welcome</a></li>
-                <li><a href="#" class="nav-link" data-panel="translate">Sign Translator</a></li>
-                <li><a href="#" class="nav-link" data-panel="learn">Sign Library</a></li>
-                <li><a href="{% url 'learn' %}" class="nav-link">Learning Hub</a></li>
-                <li><a href="{% url 'login' %}" class="nav-link">Login</a></li>
-                <li><a href="{% url 'signup' %}" class="nav-link">Sign Up</a></li>
-                </ul>
-            </nav>
         </div>
-    </header>
+    </nav>
 
-    <main>
-        <div class="container">
-            <!-- Hero Section -->
-            <div id="welcome" class="panel active">
-                <div class="welcome-screen">
-                    <h1>Breaking Barriers. Building Bridges.</h1>
-                    <p class="subheadline">Signova transforms gestures into voice, empowering communication beyond boundaries.</p>
-                    <div class="motivational-quote">
-                        <i class="fas fa-quote-left"></i>
-                        <span>When technology speaks, no one is left unheard.</span>
-                        <i class="fas fa-quote-right"></i>
-                    </div>
-                    <div class="cta-buttons">
-                        <button class="btn btn-primary" data-panel="translate">
-                            <i class="fas fa-language"></i> Try Sign Translator
-                        </button>
-                        <button class="btn btn-secondary" data-panel="learn">
-                            <i class="fas fa-graduation-cap"></i> Explore Sign Library
-                        </button>
-                    </div>
-                    <div class="secondary-buttons">
-                        <a href="{% url 'login' %}" class="btn btn-outline">
-                            <i class="fas fa-sign-in-alt"></i> Login
-                        </a>
-                        <a href="{% url 'signup' %}" class="btn btn-outline">
-                            <i class="fas fa-user-plus"></i> Sign Up
-                        </a>
-                    </div>
-                    <div class="scroll-indicator">
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
+    <!-- Hero Section -->
+    <section class="hero-pattern flex-grow flex items-center py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-10 md:mb-0 animate-fade-in">
+                <h1 class="text-4xl md:text-5xl font-serif font-bold text-foreground mb-6">
+                    Sign Language Translation Made Easy
+                </h1>
+                <p class="text-lg text-muted-foreground mb-8">
+                    Real-time translation between sign language and spoken/written words. Our advanced AI technology helps bridge communication gaps.
+                </p>
+                <div class="bg-card p-4 rounded-lg mb-8 border border-border">
+                    <p class="text-muted-foreground text-sm">
+                        This is a demonstration version. Some features may be limited.
+                    </p>
                 </div>
-            </div>
-            
-            <!-- Section 1: The Problem & Vision -->
-            <section class="content-section" id="vision-section">
-                <h2 class="section-title">A World Without Barriers</h2>
-                <div class="section-content">
-                    <div class="text-content">
-                        <p>Every day, millions of deaf and hard-of-hearing individuals face invisible walls. These barriers limit access to education, job opportunities, and even simple social interactions. In Rwanda and beyond, the challenge is not ability — it's accessibility.</p>
-                        <p>At Signova, we believe that communication should never depend on whether you can hear or speak. Our vision is simple but powerful: a world where every voice — spoken or signed — is heard and understood.</p>
-                        <div class="section-quote">
-                            <i class="fas fa-quote-left"></i>
-                            <span>Accessibility is not a privilege. It's a right.</span>
-                            <i class="fas fa-quote-right"></i>
-                        </div>
-                    </div>
-                    <div class="image-content">
-                        <img src="{% static 'images/inclusivity-illustration.svg' %}" alt="Inclusivity Illustration" class="section-image">
-                    </div>
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <a href="#" class="bg-primary text-primary-foreground px-6 py-3 rounded-lg font-medium hover:opacity-90 transition-opacity text-center">
+                        Start Translating
+                    </a>
+                    <a href="#" class="bg-secondary text-secondary-foreground px-6 py-3 rounded-lg font-medium hover:opacity-90 transition-opacity text-center">
+                        Learn Sign Language
+                    </a>
+                    <a href="#" class="border border-border px-6 py-3 rounded-lg font-medium hover:bg-card transition-colors text-center">
+                        About Signova
+                    </a>
                 </div>
-            </section>
-            
-            <!-- Section 2: What We Do -->
-            <section class="content-section" id="technology-section">
-                <h2 class="section-title">From Gesture to Voice — Instantly</h2>
-                <div class="section-content split-layout">
-                    <div class="image-content">
-                        <img src="{% static 'images/technology-illustration.svg' %}" alt="Signova Technology" class="section-image">
-                    </div>
-                    <div class="text-content">
-                        <p>Signova combines wearable sensor gloves and AI-powered computer vision to translate Rwandan Sign Language into spoken words in real time.</p>
-                        <p>Our hybrid system ensures maximum accuracy, even in low-light or noisy environments.</p>
-                        
-                        <div class="features-grid">
-                            <div class="feature-item">
-                                <i class="fas fa-bolt feature-icon"></i>
-                                <h3>Real-Time Translation</h3>
-                                <p>No delays, just conversation.</p>
+                
+                <!-- Scrollable Content Section -->
+                <div class="mt-8 max-h-80 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-primary scrollbar-track-muted" style="scrollbar-width: thin;">
+                    <!-- Signova Overview -->
+                    <div class="p-6 bg-card rounded-lg border border-border animate-fade-in mb-4">
+                        <h2 class="text-2xl font-serif font-bold text-primary mb-4">Signova: Breaking Communication Barriers</h2>
+                        <p class="text-muted-foreground mb-6">
+                            Signova is an innovative hybrid assistive communication system designed to bridge the communication gap for the deaf and hard-of-hearing community in Rwanda and beyond. Leveraging both wearable sensor technology and computer vision, Signova translates Rwandan Sign Language (RSL) gestures into audible speech in real-time, enabling seamless interaction with hearing individuals in everyday scenarios.
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                            <div class="p-4 bg-muted rounded-lg hover:bg-muted/80 transition-colors">
+                                <h3 class="text-lg font-medium text-accent mb-2">Innovative Technology</h3>
+                                <p class="text-sm text-muted-foreground">
+                                    Wearable sensor gloves and camera-based vision system working together for precise gesture recognition and real-time vocalization.
+                                </p>
                             </div>
-                            <div class="feature-item">
-                                <i class="fas fa-globe-africa feature-icon"></i>
-                                <h3>Rwandan Sign Language Focus</h3>
-                                <p>Localized datasets for higher accuracy.</p>
+                            <div class="p-4 bg-muted rounded-lg hover:bg-muted/80 transition-colors">
+                                <h3 class="text-lg font-medium text-accent mb-2">Social Impact</h3>
+                                <p class="text-sm text-muted-foreground">
+                                    Empowering users to communicate confidently in social, educational, and professional settings, enhancing inclusion and independence.
+                                </p>
                             </div>
-                            <div class="feature-item">
-                                <i class="fas fa-volume-up feature-icon"></i>
-                                <h3>Speech Output</h3>
-                                <p>Your signs become words people can hear.</p>
-                            </div>
-                            <div class="feature-item">
-                                <i class="fas fa-mobile-alt feature-icon"></i>
-                                <h3>Portable & Affordable</h3>
-                                <p>Designed for daily use in any environment.</p>
+                            <div class="p-4 bg-muted rounded-lg hover:bg-muted/80 transition-colors">
+                                <h3 class="text-lg font-medium text-accent mb-2">Key Features</h3>
+                                <p class="text-sm text-muted-foreground">
+                                    Real-time translation, specialized for Rwandan Sign Language, hybrid technology, user-friendly interface, and continuous learning.
+                                </p>
                             </div>
                         </div>
-                        
-                        <div class="section-quote">
-                            <i class="fas fa-quote-left"></i>
-                            <span>The future of communication is not spoken. It's understood.</span>
-                            <i class="fas fa-quote-right"></i>
+                    </div>
+                    
+                    <!-- Problem Statement Section -->
+                    <div class="p-6 bg-card rounded-lg border border-border animate-fade-in mb-4">
+                        <h2 class="text-2xl font-serif font-bold text-primary mb-4">The Challenge We're Solving</h2>
+                        <p class="text-muted-foreground mb-4">
+                            Communication barriers remain a significant challenge for deaf and hard-of-hearing individuals, limiting access to education, employment, and social inclusion. Traditional sign language interpreters are not always available, and existing automated systems often lack localization for regional sign languages such as RSL, reducing their accessibility and effectiveness.
+                        </p>
+                        <div class="flex items-center justify-center my-4">
+                            <div class="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto">
+                                <svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M9.09 9C9.3251 8.33167 9.78915 7.76811 10.4 7.40913C11.0108 7.05016 11.7289 6.91894 12.4272 7.03871C13.1255 7.15848 13.7588 7.52152 14.2151 8.06353C14.6713 8.60553 14.9211 9.29152 14.92 10C14.92 12 11.92 13 11.92 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M12 17H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </section>
-
-            <!-- Section 3: How It Works -->
-            <section class="content-section" id="how-it-works-section">
-                <h2 class="section-title">Three Simple Steps. One Powerful Connection.</h2>
-                <div class="steps-container">
-                    <div class="step-item">
-                        <div class="step-number">1</div>
-                        <div class="step-icon"><i class="fas fa-hand-paper"></i></div>
-                        <h3>Capture</h3>
-                        <p>Our gloves and camera detect your hand gestures and movements with precision.</p>
+                    
+                    <!-- Technology Section -->
+                    <div class="p-6 bg-card rounded-lg border border-border animate-fade-in mb-4">
+                        <h2 class="text-2xl font-serif font-bold text-primary mb-4">Our Innovative Technology</h2>
+                        <p class="text-muted-foreground mb-4">
+                            Signova integrates a dual-input system that combines the best of wearable technology and computer vision:
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                            <div class="p-4 bg-muted rounded-lg hover:bg-muted/80 transition-colors">
+                                <h3 class="text-lg font-medium text-accent mb-2">Wearable Sensor Module</h3>
+                                <p class="text-sm text-muted-foreground">
+                                    Lightweight gloves embedded with motion sensors (accelerometers, gyroscopes) capture hand orientation, finger positions, and motion dynamics with precision.
+                                </p>
+                            </div>
+                            <div class="p-4 bg-muted rounded-lg hover:bg-muted/80 transition-colors">
+                                <h3 class="text-lg font-medium text-accent mb-2">Camera-Based Vision System</h3>
+                                <p class="text-sm text-muted-foreground">
+                                    Using real-time hand gesture recognition through MediaPipe and machine learning models (MobileNetV2 and DenseNet121), the system interprets gestures from visual input.
+                                </p>
+                            </div>
+                        </div>
+                        <p class="text-muted-foreground">
+                            The system processes these inputs through a trained neural network model to classify gestures accurately. Once recognized, gestures are converted into synthesized voice output using text-to-speech modules, facilitating instant communication with hearing individuals.
+                        </p>
                     </div>
-                    <div class="step-item">
-                        <div class="step-number">2</div>
-                        <div class="step-icon"><i class="fas fa-brain"></i></div>
-                        <h3>Understand</h3>
-                        <p>AI-powered models interpret the meaning behind each sign.</p>
+                    
+                    <!-- Target Users Section -->
+                    <div class="p-6 bg-card rounded-lg border border-border animate-fade-in mb-4">
+                        <h2 class="text-2xl font-serif font-bold text-primary mb-4">Who Benefits from Signova</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="p-4 bg-muted rounded-lg hover:bg-muted/80 transition-colors">
+                                <h3 class="text-lg font-medium text-accent mb-2">Deaf & Hard-of-Hearing</h3>
+                                <p class="text-sm text-muted-foreground">
+                                    Individuals who use sign language as their primary means of communication gain a powerful tool for everyday interactions.
+                                </p>
+                            </div>
+                            <div class="p-4 bg-muted rounded-lg hover:bg-muted/80 transition-colors">
+                                <h3 class="text-lg font-medium text-accent mb-2">Educational Institutions</h3>
+                                <p class="text-sm text-muted-foreground">
+                                    Schools and universities can provide better accessibility and inclusion for deaf students in mainstream classrooms.
+                                </p>
+                            </div>
+                            <div class="p-4 bg-muted rounded-lg hover:bg-muted/80 transition-colors">
+                                <h3 class="text-lg font-medium text-accent mb-2">Public Services</h3>
+                                <p class="text-sm text-muted-foreground">
+                                    Government offices, healthcare facilities, and businesses can offer more accessible services to deaf clients and customers.
+                                </p>
+                            </div>
+                            <div class="p-4 bg-muted rounded-lg hover:bg-muted/80 transition-colors">
+                                <h3 class="text-lg font-medium text-accent mb-2">Families & Caregivers</h3>
+                                <p class="text-sm text-muted-foreground">
+                                    Those supporting deaf individuals can communicate more effectively without needing to learn sign language completely.
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="step-item">
-                        <div class="step-number">3</div>
-                        <div class="step-icon"><i class="fas fa-comment-alt"></i></div>
-                        <h3>Speak</h3>
-                        <p>Instantly, your signs are transformed into clear, audible speech.</p>
+                    
+                    <!-- Unique Value Proposition -->
+                    <div class="p-6 bg-card rounded-lg border border-border animate-fade-in mb-4">
+                        <h2 class="text-2xl font-serif font-bold text-primary mb-4">What Makes Signova Different</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="p-4 bg-muted rounded-lg hover:bg-muted/80 transition-colors">
+                                <h3 class="text-lg font-medium text-accent mb-2">Localized for Rwanda</h3>
+                                <p class="text-sm text-muted-foreground">
+                                    Tailored datasets ensure higher accuracy for local users of Rwandan Sign Language, unlike generic solutions.
+                                </p>
+                            </div>
+                            <div class="p-4 bg-muted rounded-lg hover:bg-muted/80 transition-colors">
+                                <h3 class="text-lg font-medium text-accent mb-2">Hybrid Approach</h3>
+                                <p class="text-sm text-muted-foreground">
+                                    Our unique combination of wearables and camera vision provides higher precision and robustness than single-input systems.
+                                </p>
+                            </div>
+                            <div class="p-4 bg-muted rounded-lg hover:bg-muted/80 transition-colors">
+                                <h3 class="text-lg font-medium text-accent mb-2">Real-Time Translation</h3>
+                                <p class="text-sm text-muted-foreground">
+                                    Immediate conversion of gestures to speech improves day-to-day usability in real-world situations.
+                                </p>
+                            </div>
+                            <div class="p-4 bg-muted rounded-lg hover:bg-muted/80 transition-colors">
+                                <h3 class="text-lg font-medium text-accent mb-2">Community-Centric</h3>
+                                <p class="text-sm text-muted-foreground">
+                                    Affordable, portable, and user-friendly solution suitable for both urban and rural communities across Rwanda.
+                                </p>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="animation-container">
-                    <img src="{% static 'images/gesture-to-speech.gif' %}" alt="Gesture to Speech Animation" class="process-animation">
-                </div>
-            </section>
-            
-            <!-- Section 4: Social Impact -->
-            <section class="content-section" id="impact-section">
-                <h2 class="section-title">Changing Lives, One Conversation at a Time</h2>
-                <div class="section-content">
-                    <div class="text-content">
-                        <p>From classrooms to hospitals, workplaces to family gatherings, Signova is creating new possibilities.</p>
-                        <p>We empower deaf and hard-of-hearing individuals to participate fully in life's most important moments, breaking the silence that has kept them apart from the world.</p>
-                        
-                        <div class="testimonials">
-                            <div class="testimonial-item">
-                                <div class="testimonial-quote">
-                                    <p>"Signova has transformed how I communicate with my hearing colleagues. For the first time, I feel truly included in workplace discussions."</p>
+                    
+                    <!-- Future Enhancements -->
+                    <div class="p-6 bg-card rounded-lg border border-border animate-fade-in mb-4">
+                        <h2 class="text-2xl font-serif font-bold text-primary mb-4">The Future of Signova</h2>
+                        <p class="text-muted-foreground mb-4">
+                            We're continuously improving our technology to make communication even more seamless:
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="p-4 bg-muted rounded-lg hover:bg-muted/80 transition-colors">
+                                <h3 class="text-lg font-medium text-accent mb-2">Standalone Gloves</h3>
+                                <p class="text-sm text-muted-foreground">
+                                    Development of glove-based standalone prototype for higher mobility without camera dependency.
+                                </p>
+                            </div>
+                            <div class="p-4 bg-muted rounded-lg hover:bg-muted/80 transition-colors">
+                                <h3 class="text-lg font-medium text-accent mb-2">Multi-Language Support</h3>
+                                <p class="text-sm text-muted-foreground">
+                                    Expanding to support additional sign languages for regional and international accessibility.
+                                </p>
+                            </div>
+                            <div class="p-4 bg-muted rounded-lg hover:bg-muted/80 transition-colors">
+                                <h3 class="text-lg font-medium text-accent mb-2">AI-Powered Prediction</h3>
+                                <p class="text-sm text-muted-foreground">
+                                    Integration with predictive text and contextual understanding to improve conversational fluency.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Technical Specifications -->
+                    <div class="p-6 bg-card rounded-lg border border-border animate-fade-in mb-4">
+                        <h2 class="text-2xl font-serif font-bold text-primary mb-4">Technical Specifications</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="p-4 bg-muted rounded-lg hover:bg-muted/80 transition-colors">
+                                <h3 class="text-lg font-medium text-accent mb-2">Hand Tracking</h3>
+                                <p class="text-sm text-muted-foreground">
+                                    Utilizes MediaPipe for precise real-time hand tracking and gesture recognition.
+                                </p>
+                            </div>
+                            <div class="p-4 bg-muted rounded-lg hover:bg-muted/80 transition-colors">
+                                <h3 class="text-lg font-medium text-accent mb-2">AI Models</h3>
+                                <p class="text-sm text-muted-foreground">
+                                    Implements MobileNetV2 and DenseNet121 models for efficient and accurate gesture classification.
+                                </p>
+                            </div>
+                            <div class="p-4 bg-muted rounded-lg hover:bg-muted/80 transition-colors">
+                                <h3 class="text-lg font-medium text-accent mb-2">Sensor Technology</h3>
+                                <p class="text-sm text-muted-foreground">
+                                    Wearable sensors with accelerometers and gyroscopes capture precise hand movements and positions.
+                                </p>
+                            </div>
+                            <div class="p-4 bg-muted rounded-lg hover:bg-muted/80 transition-colors">
+                                <h3 class="text-lg font-medium text-accent mb-2">Voice Output</h3>
+                                <p class="text-sm text-muted-foreground">
+                                    Advanced text-to-speech integration provides natural-sounding voice output in multiple languages.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Get Involved Section -->
+                    <div class="p-6 bg-card rounded-lg border border-border animate-fade-in mb-4">
+                        <h2 class="text-2xl font-serif font-bold text-primary mb-4">Join Our Mission</h2>
+                        <p class="text-muted-foreground mb-6">
+                            We're always looking for partners, supporters, and testers to help us improve and expand Signova's capabilities. Your support helps us continue development, provide devices to those who need them most, and expand our impact across Rwanda and beyond.
+                        </p>
+                        <div class="flex justify-center">
+                            <a href="#" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 mr-4">Become a Partner</a>
+                            <a href="#" class="inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">Contact Us</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Testimonials Section -->
+                    <div class="p-6 bg-card rounded-lg border border-border animate-fade-in mb-4">
+                        <h2 class="text-2xl font-serif font-bold text-primary mb-4">Testimonials</h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="p-4 bg-muted rounded-lg border border-border">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mr-4">
+                                        <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-medium">Marie N.</h3>
+                                        <p class="text-sm text-muted-foreground">Teacher at Rwanda School for the Deaf</p>
+                                    </div>
                                 </div>
-                                <div class="testimonial-author">- Jean, Teacher in Kigali</div>
+                                <p class="text-muted-foreground italic">
+                                    "Signova has transformed how our students interact with the wider community. For the first time, many of them can communicate independently without an interpreter present."
+                                </p>
                             </div>
-                            <div class="testimonial-item">
-                                <div class="testimonial-quote">
-                                    <p>"As an educator working with deaf students, Signova has bridged a gap we've struggled with for years. The impact on my students' confidence is remarkable."</p>
+                            <div class="p-4 bg-muted rounded-lg border border-border">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 bg-primary/20 rounded-full flex items-center justify-center mr-4">
+                                        <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-medium">Jean P.</h3>
+                                        <p class="text-sm text-muted-foreground">Signova User</p>
+                                    </div>
                                 </div>
-                                <div class="testimonial-author">- Marie, Special Education Coordinator</div>
+                                <p class="text-muted-foreground italic">
+                                    "I can now go to shops, banks, and government offices without bringing someone to interpret for me. It gives me independence I never thought possible."
+                                </p>
                             </div>
-                        </div>
-                        
-                        <div class="section-quote">
-                            <i class="fas fa-quote-left"></i>
-                            <span>Every voice matters, whether spoken or signed.</span>
-                            <i class="fas fa-quote-right"></i>
-                        </div>
-                        
-                        <div class="partner-cta">
-                            <h3>Join Our Mission</h3>
-                            <p>Are you an NGO, school, or organization working with the deaf community? Partner with us to bring Signova to those who need it most.</p>
-                            <button class="btn btn-secondary" onclick="window.location.href='{% url "contact" %}'">
-                                <i class="fas fa-handshake"></i> Become a Partner
-                            </button>
                         </div>
                     </div>
-                </div>
-            </section>
-            
-            <!-- Section 5: Learning Hub -->
-            <section class="content-section" id="learning-section">
-                <h2 class="section-title">Learn Sign Language. Connect with the World.</h2>
-                <div class="section-content">
-                    <div class="text-content">
-                        <p>We believe technology should not just bridge gaps — it should also inspire learning.</p>
-                        <p>Our Signova Learning Hub offers:</p>
-                        
-                        <div class="learning-features">
-                            <div class="learning-feature">
-                                <i class="fas fa-laptop-code"></i>
-                                <h3>Interactive Tutorials</h3>
-                                <p>For Rwandan Sign Language (RSL) basics.</p>
+                    
+                    <!-- Research & Development Section -->
+                    <div class="p-6 bg-card rounded-lg border border-border animate-fade-in mb-4">
+                        <h2 class="text-2xl font-serif font-bold text-primary mb-4">Research & Development</h2>
+                        <p class="text-muted-foreground mb-4">
+                            Our ongoing R&D efforts focus on improving accuracy, expanding vocabulary, and adapting to regional variations in sign language. We collaborate with linguistic experts, disability advocates, and the deaf community to ensure our technology meets real-world needs.
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div class="p-4 bg-muted rounded-lg hover:bg-muted/80 transition-colors">
+                                <h3 class="text-lg font-medium text-accent mb-2">Linguistic Research</h3>
+                                <p class="text-sm text-muted-foreground">
+                                    Documenting and analyzing regional variations in Rwandan Sign Language to improve recognition accuracy.
+                                </p>
                             </div>
-                            <div class="learning-feature">
-                                <i class="fas fa-calendar-check"></i>
-                                <h3>Daily Sign Challenges</h3>
-                                <p>To help you practice consistently.</p>
+                            <div class="p-4 bg-muted rounded-lg hover:bg-muted/80 transition-colors">
+                                <h3 class="text-lg font-medium text-accent mb-2">Model Training</h3>
+                                <p class="text-sm text-muted-foreground">
+                                    Continuously expanding our dataset and refining our AI models for better gesture recognition.
+                                </p>
                             </div>
-                            <div class="learning-feature">
-                                <i class="fas fa-clone"></i>
-                                <h3>Gesture-to-Meaning Flashcards</h3>
-                                <p>For quick reference and memorization.</p>
-                            </div>
-                            <div class="learning-feature">
-                                <i class="fas fa-video"></i>
-                                <h3>Video Lessons</h3>
-                                <p>Taught by experienced RSL educators.</p>
+                            <div class="p-4 bg-muted rounded-lg hover:bg-muted/80 transition-colors">
+                                <h3 class="text-lg font-medium text-accent mb-2">Hardware Innovation</h3>
+                                <p class="text-sm text-muted-foreground">
+                                    Developing more comfortable, durable, and affordable sensor gloves for everyday use.
+                                </p>
                             </div>
                         </div>
-                        
-                        <div class="section-quote">
-                            <i class="fas fa-quote-left"></i>
-                            <span>The first step to inclusion is understanding the language of others.</span>
-                            <i class="fas fa-quote-right"></i>
+                    </div>
+                    
+                    <!-- Scalability and Sustainability Section -->
+                    <div class="p-6 bg-card rounded-lg border border-border animate-fade-in mb-4">
+                        <h2 class="text-2xl font-serif font-bold text-primary mb-4">Scalability and Sustainability</h2>
+                        <p class="text-muted-foreground mb-4">
+                            Signova is designed with growth and long-term impact in mind:
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="p-4 bg-muted rounded-lg hover:bg-muted/80 transition-colors">
+                                <h3 class="text-lg font-medium text-accent mb-2">Platform Integration</h3>
+                                <p class="text-sm text-muted-foreground">
+                                    Future integration with mobile and web platforms for broader accessibility across devices.
+                                </p>
+                            </div>
+                            <div class="p-4 bg-muted rounded-lg hover:bg-muted/80 transition-colors">
+                                <h3 class="text-lg font-medium text-accent mb-2">Dataset Expansion</h3>
+                                <p class="text-sm text-muted-foreground">
+                                    Continuous growth of our phrase and context-based gesture database for more natural communication.
+                                </p>
+                            </div>
+                            <div class="p-4 bg-muted rounded-lg hover:bg-muted/80 transition-colors">
+                                <h3 class="text-lg font-medium text-accent mb-2">Strategic Partnerships</h3>
+                                <p class="text-sm text-muted-foreground">
+                                    Collaborations with educational institutions and government agencies for wider deployment.
+                                </p>
+                            </div>
+                            <div class="p-4 bg-muted rounded-lg hover:bg-muted/80 transition-colors">
+                                <h3 class="text-lg font-medium text-accent mb-2">Modular Design</h3>
+                                <p class="text-sm text-muted-foreground">
+                                    Cost-effective production and maintenance through modular components that can be individually upgraded.
+                                </p>
+                            </div>
                         </div>
-                        
-                        <div class="learning-cta">
-                            <button class="btn btn-primary" data-panel="learn">
-                                <i class="fas fa-graduation-cap"></i> Start Learning Now
-                            </button>
-                            <a href="{% url 'learn' %}" class="btn btn-secondary">
-                                <i class="fas fa-crown"></i> View Subscription Plans
+                    </div>
+                    
+                    <!-- Call to Action Section -->
+                    <div class="p-6 bg-card rounded-lg border border-border animate-fade-in">
+                        <h2 class="text-2xl font-serif font-bold text-primary mb-4">Break Down Communication Barriers</h2>
+                        <p class="text-muted-foreground mb-6">
+                            Join us in breaking down communication barriers. Try Signova today or contact us to learn how our technology can make a difference in your community.
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                            <a href="#" class="bg-primary text-primary-foreground px-6 py-3 rounded-lg font-medium hover:opacity-90 transition-opacity text-center">
+                                Become a Partner
+                            </a>
+                            <a href="#" class="bg-secondary text-secondary-foreground px-6 py-3 rounded-lg font-medium hover:opacity-90 transition-opacity text-center">
+                                Support Our Mission
                             </a>
                         </div>
                     </div>
                 </div>
-            </section>
-            
-            <div id="translate" class="panel">
-                <div class="demo-notice">
-                    <i class="fas fa-info-circle"></i> Interactive Demo — Try our sign language recognition technology
-                </div>
-                <h2>Sign Language Translator</h2>
-                <div class="translation-container">
-                    <div class="video-container">
-                        <video id="videoFeed" autoplay playsinline></video>
-                        <div class="video-placeholder">
-                            <i class="fas fa-camera fa-3x"></i>
-                            <p>Camera is currently inactive. Click "Enable Camera" to begin sign detection.</p>
-                        </div>
-                        <div class="controls">
-                            <button id="cameraToggle" class="camera-toggle">
-                                <i class="fas fa-video"></i> Enable Camera
-                            </button>
-                            <button id="autoTranslate" class="auto-translate" disabled>
-                                <i class="fas fa-magic"></i> Start Recognition
-                            </button>
-                            <button id="speakText" class="audio-button" disabled>
-                                <i class="fas fa-volume-up"></i> Speak Text
-                            </button>
-                        </div>
-                    </div>
-                    <div class="translation-input">
-                        <div class="input-box">
-                            <label for="textInput">Enter text to convert to sign language:</label>
-                            <textarea id="textInput" placeholder="Example: Hello, how are you? Thank you..."></textarea>
-                        </div>
-                        <button id="textToSign" class="btn btn-primary">
-                            <i class="fas fa-hands"></i> Convert to Signs
-                        </button>
-                        <div class="output-container">
-                            <div class="output-header">
-                                <h3>Recognition Results</h3>
-                                <button id="speakOutput" class="btn btn-small btn-secondary">
-                                    <i class="fas fa-volume-up"></i> Speak
-                                </button>
-                            </div>
-                            <div class="output-text" id="translationOutput">
-                                Sign language detection results will appear here...
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
-
-            <!-- Section 6: Future Roadmap -->
-            <section class="content-section" id="roadmap-section">
-                <h2 class="section-title">Where We're Headed</h2>
-                <div class="section-content">
-                    <p class="roadmap-intro">We are building for today, but our eyes are on tomorrow. Our future plans include:</p>
-                    
-                    <div class="timeline">
-                        <div class="timeline-item">
-                            <div class="timeline-icon">
-                                <i class="fas fa-mobile-alt"></i>
-                            </div>
-                            <div class="timeline-content">
-                                <h3>Mobile App & Web Integration</h3>
-                                <p>For anytime, anywhere communication.</p>
-                            </div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-icon">
-                                <i class="fas fa-database"></i>
-                            </div>
-                            <div class="timeline-content">
-                                <h3>Expanded Sign Language Datasets</h3>
-                                <p>Covering multiple African sign languages.</p>
-                            </div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-icon">
-                                <i class="fas fa-robot"></i>
-                            </div>
-                            <div class="timeline-content">
-                                <h3>AI Predictive Conversational Support</h3>
-                                <p>Anticipating communication needs in context.</p>
-                            </div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-icon">
-                                <i class="fas fa-globe"></i>
-                            </div>
-                            <div class="timeline-content">
-                                <h3>Multi-language Expansion</h3>
-                                <p>Bridging sign languages across continents.</p>
-                            </div>
-                        </div>
+            <div class="md:w-1/2 flex justify-center animate-slide-up">
+                <div class="relative">
+                    <div class="w-80 h-80 bg-gradient-primary rounded-full flex items-center justify-center shadow-xl">
+                        <svg class="w-40 h-40 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 15C13.6569 15 15 13.6569 15 12C15 10.3431 13.6569 9 12 9C10.3431 9 9 10.3431 9 12C9 13.6569 10.3431 15 12 15Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M17 7H19C19.5304 7 20.0391 7.21071 20.4142 7.58579C20.7893 7.96086 21 8.46957 21 9V15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H17M7 7H5C4.46957 7 3.96086 7.21071 3.58579 7.58579C3.21071 7.96086 3 8.46957 3 9V15C3 15.5304 3.21071 16.0391 3.58579 16.4142C3.96086 16.7893 4.46957 17 5 17H7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 5V19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
                     </div>
-                    
-                    <div class="section-quote">
-                        <i class="fas fa-quote-left"></i>
-                        <span>Today we break barriers. Tomorrow we erase them.</span>
-                        <i class="fas fa-quote-right"></i>
+                    <div class="absolute -top-4 -right-4 w-24 h-24 bg-secondary rounded-full flex items-center justify-center animate-bounce-gentle">
+                        <svg class="w-12 h-12 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 6V12L16 14M21 12C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
                     </div>
                 </div>
-            </section>
-            
-            <!-- Section 7: Join the Movement -->
-            <section class="content-section" id="join-section">
-                <h2 class="section-title">Let's create a world where communication knows no limits.</h2>
-                <div class="join-buttons">
-                    <button class="btn btn-primary" onclick="window.location.href='{% url "signup" %}'">
-                        <i class="fas fa-envelope"></i> Sign Up for Updates
-                    </button>
-                    <button class="btn btn-secondary" onclick="window.location.href='{% url "contact" %}'">
-                        <i class="fas fa-handshake"></i> Become a Partner
-                    </button>
-                    <button class="btn btn-accent">
-                        <i class="fas fa-heart"></i> Donate to Support
-                    </button>
-                </div>
-            </section>
-            
-            <div id="learn" class="panel">
-                <h2>Sign Language Library</h2>
-                <p class="section-intro">Explore our collection of common signs to start building your sign language vocabulary.</p>
-                <div class="demo-notice">
-                    <i class="fas fa-lightbulb"></i> Tip: Click on any sign to see a demonstration video and learn how to perform it correctly.
-                </div>
-                <div class="search-box">
-                    <label for="signSearch">Find specific signs:</label>
-                    <input type="text" id="signSearch" placeholder="Search by name or description (e.g., 'hello', 'thank you')">
-                </div>
-                <div class="signs-grid" id="signsGrid">
-                    <!-- Sign cards will be inserted here by JavaScript -->
-                </div>
-            </div>
-
-            <div class="loading" id="loading">
-                <div class="loading-spinner"></div>
-                <p>Loading content...</p>
             </div>
         </div>
-    </main>
+    </section>
 
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">
-                    <img src="{% static 'images/signova-full.svg' %}" alt="Signova Logo" class="logo">
-                    <span class="logo-text">Signova</span>
+    <!-- Features Section -->
+    <section class="py-16 bg-card">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl font-serif font-bold text-center text-foreground mb-12">How Signova Works</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-background p-6 rounded-lg shadow-md text-center">
+                    <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 3H21V9M21 3L13 11M10 9H7C5.34315 9 4 10.3431 4 12V19C4 20.6569 5.34315 22 7 22H17C18.6569 22 20 20.6569 20 19V14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Real-time Translation</h3>
+                    <p class="text-muted-foreground">Instantly translate between sign language and spoken language with our advanced AI technology.</p>
                 </div>
-                <div class="footer-links">
-                    <a href="{% url 'about' %}">About Us</a>
-                    <a href="{% url 'contact' %}">Contact</a>
-                    <a href="{% url 'privacy_policy' %}">Privacy Policy</a>
-                    <a href="{% url 'terms_of_service' %}">Terms of Service</a>
+                <div class="bg-background p-6 rounded-lg shadow-md text-center">
+                    <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9.09 9C9.3251 8.33167 9.78915 7.76811 10.4 7.40913C11.0108 7.05016 11.7289 6.91894 12.4272 7.03871C13.1255 7.15848 13.7588 7.52152 14.2151 8.06353C14.6713 8.60553 14.9211 9.29152 14.92 10C14.92 12 11.92 13 11.92 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M12 17H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Learning Resources</h3>
+                    <p class="text-muted-foreground">Access comprehensive learning modules to master sign language at your own pace.</p>
                 </div>
-                <div class="footer-contact">
-                    <p><i class="fas fa-envelope"></i> info@signova.com</p>
-                    <p><i class="fas fa-phone"></i> +250 788 123 456</p>
-                    <p><i class="fas fa-map-marker-alt"></i> Kigali, Rwanda</p>
+                <div class="bg-background p-6 rounded-lg shadow-md text-center">
+                    <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                        <svg class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M17 21V19C17 17.9391 16.5786 16.9217 15.8284 16.1716C15.0783 15.4214 14.0609 15 13 15H5C3.93913 15 2.92172 15.4214 2.17157 16.1716C1.42143 16.9217 1 17.9391 1 19V21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M9 11C11.2091 11 13 9.20914 13 7C13 4.79086 11.2091 3 9 3C6.79086 3 5 4.79086 5 7C5 9.20914 6.79086 11 9 11Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M23 21V19C22.9993 18.1137 22.7044 17.2528 22.1614 16.5523C21.6184 15.8519 20.8581 15.3516 20 15.13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M16 3.13C16.8604 3.3503 17.623 3.8507 18.1676 4.55231C18.7122 5.25392 19.0078 6.11683 19.0078 7.005C19.0078 7.89317 18.7122 8.75608 18.1676 9.45769C17.623 10.1593 16.8604 10.6597 16 10.88" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Inclusive Communication</h3>
+                    <p class="text-muted-foreground">Break down communication barriers and create more inclusive environments for everyone.</p>
                 </div>
-                <div class="social-icons">
-                    <a href="#" class="social-icon"><i class="fab fa-facebook"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-                    <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 gradient-primary">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-serif font-bold text-white mb-6">Ready to Start Your Sign Language Journey?</h2>
+            <p class="text-primary-foreground/90 mb-8 max-w-3xl mx-auto">Join thousands of users who are already breaking down communication barriers with Signova's powerful translation technology.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#" class="bg-white text-primary px-8 py-3 rounded-lg font-medium hover:opacity-90 transition-opacity">
+                    Get Started for Free
+                </a>
+                <a href="#" class="bg-transparent border border-white text-white px-8 py-3 rounded-lg font-medium hover:bg-white/10 transition-colors">
+                    Learn More
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-background border-t border-border py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Signova</h3>
+                    <p class="text-muted-foreground">Breaking communication barriers through AI-powered sign language translation.</p>
                 </div>
-                <p class="copyright">&copy; 2025 Signova. All Rights Reserved.</p>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Product</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">Translation</a></li>
+                        <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">Learning</a></li>
+                        <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">Pricing</a></li>
+                        <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">API</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Company</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">About</a></li>
+                        <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">Blog</a></li>
+                        <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">Careers</a></li>
+                        <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Connect</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">Twitter</a></li>
+                        <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">Facebook</a></li>
+                        <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">Instagram</a></li>
+                        <li><a href="#" class="text-muted-foreground hover:text-primary transition-colors">LinkedIn</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-border mt-12 pt-8 text-center text-muted-foreground">
+                <p>&copy; 2023 Signova. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
     <script>
+        // Simple animation for demo purposes
         document.addEventListener('DOMContentLoaded', function() {
-            // Navigation between panels
-            const navLinks = document.querySelectorAll('.nav-link');
-            const panels = document.querySelectorAll('.panel');
-            const loadingElement = document.getElementById('loading');
-
-            navLinks.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const panelId = this.getAttribute('data-panel');
-                    
-                    // Show loading
-                    loadingElement.style.display = 'block';
-                    
-                    // Hide all panels
-                    panels.forEach(panel => {
-                        panel.classList.remove('active');
-                    });
-                    
-                    // Remove active class from all nav links
-                    navLinks.forEach(navLink => {
-                        navLink.classList.remove('active');
-                    });
-                    
-                    // Add active class to clicked nav link
-                    this.classList.add('active');
-                    
-                    // Simulate loading delay
-                    setTimeout(() => {
-                        // Show selected panel
-                        document.getElementById(panelId).classList.add('active');
-                        loadingElement.style.display = 'none';
-
-                        // If switching to translate panel, stop camera if it's running
-                        if (panelId !== 'translate' && stream) {
-                            stopCamera();
-                        }
-                    }, 500);
-                });
-            });
-
-            // CTA buttons also navigate to panels
-            document.querySelectorAll('[data-panel]').forEach(btn => {
-                if (btn.classList.contains('nav-link')) return;
-                
-                btn.addEventListener('click', function() {
-                    const panelId = this.getAttribute('data-panel');
-                    document.querySelector(`.nav-link[data-panel="${panelId}"]`).click();
-                });
-            });
-
-            // Video feed and translation simulation
-            const videoElement = document.getElementById('videoFeed');
-            const cameraToggleBtn = document.getElementById('cameraToggle');
-            const autoTranslateBtn = document.getElementById('autoTranslate');
-            const speakTextBtn = document.getElementById('speakText');
-            const speakOutputBtn = document.getElementById('speakOutput');
-            const translationOutput = document.getElementById('translationOutput');
-            let stream = null;
-            let autoTranslateInterval = null;
-            let isCameraOn = false;
-
-            // Toggle camera function
-            async function toggleCamera() {
-                if (isCameraOn) {
-                    stopCamera();
-                } else {
-                    await startCamera();
-                }
-            }
-
-            // Start camera function
-            async function startCamera() {
-                try {
-                    cameraToggleBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Starting...';
-                    cameraToggleBtn.disabled = true;
-                    
-                    stream = await navigator.mediaDevices.getUserMedia({ 
-                        video: {
-                            width: { ideal: 1280 },
-                            height: { ideal: 720 },
-                            facingMode: 'user'
-                        },
-                        audio: false
-                    });
-                    
-                    videoElement.srcObject = stream;
-                    videoElement.style.display = 'block'; // Ensure video element is visible
-                    document.querySelector('.video-placeholder').style.display = 'none'; // Hide placeholder
-                    isCameraOn = true;
-                    
-                    cameraToggleBtn.innerHTML = '<i class="fas fa-video-slash"></i> Stop Camera';
-                    cameraToggleBtn.disabled = false;
-                    autoTranslateBtn.disabled = false;
-                    speakTextBtn.disabled = false;
-                    
-                    // Simulate initial detection
-                    setTimeout(() => {
-                        translationOutput.textContent = "Sign detected: Hello! (Hand waves from side to side)";
-                    }, 1500);
-                } catch (err) {
-                    console.error("Error accessing camera:", err);
-                    cameraToggleBtn.innerHTML = '<i class="fas fa-video"></i> Start Camera';
-                    cameraToggleBtn.disabled = false;
-                    isCameraOn = false;
-                }
-            }
-
-            // Stop camera function
-            function stopCamera() {
-                cameraToggleBtn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Stopping...';
-                cameraToggleBtn.disabled = true;
-                
-                setTimeout(() => {
-                    if (stream) {
-                        stream.getTracks().forEach(track => track.stop());
-                        videoElement.srcObject = null;
-                        stream = null;
+            const elements = document.querySelectorAll('.animate-fade-in, .animate-slide-up');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.visibility = 'visible';
+                        observer.unobserve(entry.target);
                     }
-                    
-                    videoElement.style.display = 'none'; // Hide video element
-                    document.querySelector('.video-placeholder').style.display = 'flex'; // Show placeholder
-                    
-                    isCameraOn = false;
-                    cameraToggleBtn.innerHTML = '<i class="fas fa-video"></i> Start Camera';
-                    cameraToggleBtn.disabled = false;
-                    autoTranslateBtn.disabled = true;
-                    speakTextBtn.disabled = true;
-                    
-                    // Clear auto translate if running
-                    if (autoTranslateInterval) {
-                        clearInterval(autoTranslateInterval);
-                        autoTranslateInterval = null;
-                        autoTranslateBtn.innerHTML = '<i class="fas fa-robot"></i> Auto Translate';
-                    }
-                    
-                    translationOutput.textContent = "Translation will appear here...";
-                }, 500);
-            }
-
-            // Camera toggle button
-            cameraToggleBtn.addEventListener('click', toggleCamera);
-
-            // Auto translate simulation
-            autoTranslateBtn.addEventListener('click', function() {
-                if (autoTranslateInterval) {
-                    clearInterval(autoTranslateInterval);
-                    autoTranslateInterval = null;
-                    this.innerHTML = '<i class="fas fa-robot"></i> Auto Translate';
-                    translationOutput.textContent = "Auto translation stopped";
-                } else {
-                    this.innerHTML = '<i class="fas fa-stop-circle"></i> Stop Auto Translate';
-                    
-                    const sampleSigns = [
-                        "Hello! (Hand waves from side to side)",
-                        "Thank you! (Hand moves from chin outward)",
-                        "Yes (Hand nods up and down)",
-                        "No (Hand shakes side to side)",
-                        "I love you (Hand forms 'ILY' sign)"
-                    ];
-                    
-                    let counter = 0;
-                    autoTranslateInterval = setInterval(() => {
-                        translationOutput.textContent = "Sign detected: " + sampleSigns[counter % sampleSigns.length];
-                        counter++;
-                    }, 3000);
-                    
-                    // Show first detection immediately
-                    translationOutput.textContent = "Sign detected: " + sampleSigns[0];
-                }
-            });
-
-            // Text to sign language
-            document.getElementById('textToSign').addEventListener('click', function() {
-                const text = document.getElementById('textInput').value.trim();
-                if (text) {
-                    const sampleSigns = {
-                        "hello": "Hello! (Hand waves from side to side)",
-                        "thank you": "Thank you! (Hand moves from chin outward)",
-                        "yes": "Yes (Hand nods up and down)",
-                        "no": "No (Hand shakes side to side)",
-                        "love": "I love you (Hand forms 'ILY' sign)"
-                    };
-                    
-                    const matchedKey = Object.keys(sampleSigns).find(key => 
-                        text.toLowerCase().includes(key)
-                    );
-                    
-                    if (matchedKey) {
-                        translationOutput.textContent = `Sign for "${text}": ${sampleSigns[matchedKey]}`;
-                    } else {
-                        translationOutput.textContent = `For the demo, try words like: ${Object.keys(sampleSigns).join(', ')}`;
-                    }
-                } else {
-                    translationOutput.textContent = "Please enter some text to translate";
-                }
-            });
-            
-            // Function to speak text
-            function speakText(text, button) {
-                if (text && text !== "Translation will appear here..." && text !== "Sign language detection results will appear here...") {
-                    // Use the Web Speech API for text-to-speech
-                    const utterance = new SpeechSynthesisUtterance(text);
-                    speechSynthesis.speak(utterance);
-                    
-                    // Visual feedback
-                    const originalText = button.innerHTML;
-                    button.innerHTML = '<i class="fas fa-volume-up fa-beat"></i> Speaking...';
-                    button.disabled = true;
-                    
-                    utterance.onend = () => {
-                        button.innerHTML = originalText;
-                        button.disabled = false;
-                    };
-                }
-            }
-            
-            // Speak text button in controls
-            speakTextBtn.addEventListener('click', function() {
-                speakText(translationOutput.textContent, this);
-            });
-            
-            // Speak output button in output container
-            speakOutputBtn.addEventListener('click', function() {
-                speakText(translationOutput.textContent, this);
-            });
-
-            // Learn section - sign library
-            const signsGrid = document.getElementById('signsGrid');
-            const signSearch = document.getElementById('signSearch');
-            
-            // Sample sign library data
-            const signLibrary = [
-                { name: "Hello", video: "hello.mp4", description: "Wave hand side to side" },
-                { name: "Thank you", video: "thankyou.mp4", description: "Hand moves from chin outward" },
-                { name: "Yes", video: "yes.mp4", description: "Hand nods up and down" },
-                { name: "No", video: "no.mp4", description: "Hand shakes side to side" },
-                { name: "I love you", video: "ily.mp4", description: "Hand forms 'ILY' sign" },
-                { name: "Please", video: "please.mp4", description: "Flat hand circles on chest" },
-                { name: "Sorry", video: "sorry.mp4", description: "Fist circles on chest" },
-                { name: "Help", video: "help.mp4", description: "Thumbs up on palm, lift both" },
-                { name: "Water", video: "water.mp4", description: "Wiggling fingers near mouth" },
-                { name: "Food", video: "food.mp4", description: "Fingers to mouth" },
-                { name: "Home", video: "home.mp4", description: "Fingers together at cheek then forehead" },
-                { name: "Friend", video: "friend.mp4", description: "Interlock index fingers twice" },
-                { name: "Family", video: "family.mp4", description: "Make 'F' hands circle around" },
-                { name: "Time", video: "time.mp4", description: "Tap wrist where watch would be" },
-                { name: "Work", video: "work.mp4", description: "Tap wrists together" }
-            ];
-            
-            // Display sign library
-            function displaySigns(signs) {
-                signsGrid.innerHTML = '';
-                
-                signs.forEach(sign => {
-                    const signCard = document.createElement('div');
-                    signCard.className = 'sign-card';
-                    
-                    // Map sign names to actual video files if available
-                    let videoSrc = '';
-                    const videoName = sign.name.toLowerCase().replace(/\s+/g, '_');
-                    
-                    // Check if we have a matching video in our Flask routes
-                    // The keys must match the keys in the VIDEO_FILES dictionary in signova_app.py
-                    const videoMapping = {
-                        'hello': 'hello',
-                        'thank you': 'thank_you',
-                        'how are you': 'how_are_you',
-                        'forget': 'forget',
-                        'remember': 'remember',
-                        'i love you': 'i_want', // Use i_want as a placeholder
-                        'i want': 'i_want',
-                        'my name is': 'my_name_is',
-                        'same to you': 'same_to_you',
-                        'you': 'you',
-                        'please': 'hello', // Use hello as a placeholder
-                        'sorry': 'forget', // Use forget as a placeholder
-                        'help': 'how_are_you', // Use how_are_you as a placeholder
-                        'water': 'remember', // Use remember as a placeholder
-                        'food': 'my_name_is', // Use my_name_is as a placeholder
-                        'home': 'same_to_you', // Use same_to_you as a placeholder
-                        'friend': 'you', // Use you as a placeholder
-                        'family': 'thank_you', // Use thank_you as a placeholder
-                        'time': 'i_want', // Use i_want as a placeholder
-                        'work': 'hello' // Use hello as a placeholder
-                    };
-                    
-                    // Find the matching video key
-                    const signNameLower = sign.name.toLowerCase();
-                    if (videoMapping[signNameLower]) {
-                        videoSrc = `/video/${videoMapping[signNameLower]}`;
-                    } else {
-                        // Fallback to a placeholder video
-                        videoSrc = `/video/hello`;
-                    }
-                    
-                    signCard.innerHTML = `
-                        <div class="sign-video">
-                            <video autoplay loop muted playsinline>
-                                <source src="${videoSrc}" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
-                        </div>
-                        <div class="sign-info">
-                            <h3>${sign.name}</h3>
-                            <p>${sign.description}</p>
-                        </div>
-                    `;
-                    signsGrid.appendChild(signCard);
                 });
-            }
+            }, { threshold: 0.1 });
             
-            // Search functionality
-            if (signSearch) {
-                signSearch.addEventListener('input', function() {
-                    const searchTerm = this.value.toLowerCase();
-                    const filteredSigns = signLibrary.filter(sign => 
-                        sign.name.toLowerCase().includes(searchTerm) || 
-                        sign.description.toLowerCase().includes(searchTerm)
-                    );
-                    displaySigns(filteredSigns);
-                });
-            }
-            
-            // Initial display of all signs
-            if (signsGrid) {
-                displaySigns(signLibrary);
-            }
-
-            // Stop camera when page is hidden to save resources
-            document.addEventListener('visibilitychange', function() {
-                if (document.hidden && isCameraOn) {
-                    stopCamera();
-                }
+            elements.forEach(el => {
+                el.style.visibility = 'hidden';
+                observer.observe(el);
             });
         });
     </script>
-    <script src="{% static 'js/signova-utils.js' %}"></script>
 </body>
 </html>
