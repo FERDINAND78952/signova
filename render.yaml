@@ -4,15 +4,10 @@ services:
     env: python
     plan: free
     region: frankfurt # or oregon, pick closest
-    buildCommand: pip install -r requirements_django.txt && python manage.py migrate && python manage.py collectstatic --noinput
-    startCommand: gunicorn signova.wsgi:application
-    envVars:
-       services:
-  - type: web
-    name: signova
-    env: python
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "python app.py"
+    buildCommand: pip install -r requirements_web.txt && python manage.py migrate && python manage.py collectstatic --noinput
+    startCommand: gunicorn signova.wsgi:application --timeout 120 --workers 2
+    healthCheckPath: /
+    autoDeploy: true
     envVars:
       - key: PYTHON_VERSION
         value: 3.10.11

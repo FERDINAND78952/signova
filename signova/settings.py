@@ -9,21 +9,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Security key (use env variable in production)
 SECRET_KEY = config('SECRET_KEY', default='django-insecure-your-secret-key-here')
 
-# Debug mode
-DEBUG = config('DEBUG', default=True, cast=bool)
+# Debug mode - set to False in production
+DEBUG = config('DEBUG', default=False, cast=bool)
 
 # Allowed hosts
-ALLOWED_HOSTS = ["127.0.0.1", "localhost"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "signova.onrender.com"]
 
 # Render hostname
 RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
     ALLOWED_HOSTS.append(".render.com")
-
-# Add production host safely
-if not DEBUG:
-    ALLOWED_HOSTS += ["signova.onrender.com"]
 
 # Application definition
 INSTALLED_APPS = [
@@ -103,7 +99,11 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+
+# Configure whitenoise for better performance
+WHITENOISE_MAX_AGE = 31536000 # 1 year in seconds
+WHITENOISE_AUTOREFRESH = False
 
 # Media files
 MEDIA_URL = '/media/'
