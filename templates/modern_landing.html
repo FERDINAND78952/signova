@@ -42,23 +42,32 @@
     <!-- Hero Section -->
     <section id="welcome" class="hero-section">
         <div class="container">
-            <h1 class="headline">Breaking Barriers. Building Bridges.</h1>
-            <p class="subheadline">Signova transforms gestures into voice, empowering communication beyond boundaries.</p>
+            <h1 class="headline">Signova – Bridging Hands and Voices.</h1>
+            <p class="subheadline">Making communication accessible to everyone, everywhere.</p>
             <div class="animated-quote">
                 <i class="fas fa-quote-left"></i>
-                <span>When technology speaks, no one is left unheard.</span>
+                <span>A universal sign language translation and learning platform, turning gestures into voice/text and voice/text into sign.</span>
                 <i class="fas fa-quote-right"></i>
             </div>
             <div class="hero-buttons">
                 <button id="try-translator-btn" class="btn btn-primary btn-lg">
-                    <i class="fas fa-language"></i> Try Sign Translator
+                    <i class="fas fa-language"></i> Start Translation
                 </button>
                 <button id="explore-library-btn" class="btn btn-secondary btn-lg">
-                    <i class="fas fa-book-open"></i> Explore Sign Library
+                    <i class="fas fa-book-open"></i> Learn Sign Language
                 </button>
                 <a href="#about" class="btn btn-outline btn-lg smooth-scroll">
                     <i class="fas fa-info-circle"></i> About Signova
                 </a>
+            </div>
+            <div class="impact-section">
+                <h2>Expected Worldwide Impact</h2>
+                <ul>
+                    <li>Millions of deaf individuals will gain independence in communication.</li>
+                    <li>Service providers (healthcare, government offices, schools) will serve inclusively.</li>
+                    <li>Creation of jobs (dataset labeling, training interpreters, local assembly).</li>
+                    <li>Rwanda positioned as a hub for inclusive tech innovation.</li>
+                </ul>
             </div>
             <div class="scroll-indicator">
                 <div class="mouse">
@@ -91,18 +100,18 @@
         </div>
     </section>
 
-    <!-- Section 2: What We Do -->
+    <!-- Section 2: Core Features -->
     <section id="technology" class="content-section">
         <div class="container">
-            <h2 class="section-title">What We Do</h2>
-            <p class="section-subtitle">Current Technology</p>
+            <h2 class="section-title">Core Features</h2>
+            <p class="section-subtitle">Making Communication Accessible</p>
             <div class="feature-cards">
-                <div class="feature-card" data-feature="realtime">
+                <div class="feature-card" data-feature="translate">
                     <div class="card-icon">
-                        <i class="fas fa-bolt"></i>
+                        <i class="fas fa-language"></i>
                     </div>
-                    <h3>Real-Time Translation</h3>
-                    <p>Instant sign language recognition and voice output with minimal delay.</p>
+                    <h3>Translate Now</h3>
+                    <p>Camera input, audio input, or typing - multiple ways to communicate.</p>
                     <div class="card-hover">
                         <div class="hover-content">
                             <video class="feature-video" loop muted>
@@ -113,51 +122,51 @@
                         </div>
                     </div>
                 </div>
-                <div class="feature-card" data-feature="rwandan">
+                <div class="feature-card" data-feature="learn">
                     <div class="card-icon">
-                        <i class="fas fa-globe-africa"></i>
+                        <i class="fas fa-graduation-cap"></i>
                     </div>
-                    <h3>Rwandan Sign Language Focus</h3>
-                    <p>Specialized for Rwandan Sign Language with high accuracy and cultural relevance.</p>
+                    <h3>Learn Sign Language</h3>
+                    <p>Modules for RSL, ASL, KSL, and more sign languages (subscription tier).</p>
                     <div class="card-hover">
                         <div class="hover-content">
                             <video class="feature-video" loop muted>
                                 <source src="{% static 'videos/rwandan-demo.mp4' %}" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
-                            <p>Our system is trained on thousands of Rwandan Sign Language examples to ensure cultural accuracy.</p>
+                            <p>Our learning modules are designed to help you master sign language quickly and effectively.</p>
                         </div>
                     </div>
                 </div>
-                <div class="feature-card" data-feature="speech">
+                <div class="feature-card" data-feature="dictionary">
                     <div class="card-icon">
-                        <i class="fas fa-volume-up"></i>
+                        <i class="fas fa-book"></i>
                     </div>
-                    <h3>Speech Output</h3>
-                    <p>Clear, natural voice synthesis that speaks the translated signs aloud.</p>
+                    <h3>Dictionary Access</h3>
+                    <p>Search & save signs for quick reference and learning.</p>
                     <div class="card-hover">
                         <div class="hover-content">
                             <video class="feature-video" loop muted>
                                 <source src="{% static 'videos/speech-demo.mp4' %}" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
-                            <p>Our voice synthesis technology produces natural-sounding speech in multiple languages and dialects.</p>
+                            <p>Our comprehensive dictionary allows you to search for signs and save them for future reference.</p>
                         </div>
                     </div>
                 </div>
-                <div class="feature-card" data-feature="portable">
+                <div class="feature-card" data-feature="cross-language">
                     <div class="card-icon">
-                        <i class="fas fa-mobile-alt"></i>
+                        <i class="fas fa-globe"></i>
                     </div>
-                    <h3>Affordable & Portable</h3>
-                    <p>Accessible technology designed to work on everyday devices.</p>
+                    <h3>Cross-Language Output</h3>
+                    <p>Choose English, Kinyarwanda, French, and more languages coming soon.</p>
                     <div class="card-hover">
                         <div class="hover-content">
                             <video class="feature-video" loop muted>
                                 <source src="{% static 'videos/portable-demo.mp4' %}" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
-                            <p>Our solution works on smartphones, tablets, and low-cost dedicated devices to ensure accessibility for all.</p>
+                            <p>Our solution supports multiple languages to ensure accessibility for diverse communities.</p>
                         </div>
                     </div>
                 </div>
@@ -419,7 +428,54 @@
         </div>
     </section>
 
-    <!-- Section 7: Join the Movement -->
+    <!-- Section 7: About - Vision & Mission -->
+    <section id="about" class="content-section">
+        <div class="container">
+            <h2 class="section-title">Vision & Mission</h2>
+            <div class="vision-mission-container">
+                <div class="vision-box">
+                    <h3><i class="fas fa-eye"></i> Our Vision</h3>
+                    <p>To make communication inclusive and barrier-free for every deaf and hard-of-hearing person worldwide.</p>
+                </div>
+                <div class="mission-box">
+                    <h3><i class="fas fa-bullseye"></i> Our Mission</h3>
+                    <p>To build intelligent, accessible, and affordable tools that translate, teach, and empower sign language across cultures.</p>
+                </div>
+            </div>
+            <div class="partnerships-section">
+                <h3>Partnerships We Seek</h3>
+                <div class="partnership-categories">
+                    <div class="partnership-category">
+                        <h4>Local</h4>
+                        <ul>
+                            <li>RNUD</li>
+                            <li>Ministry of Education Rwanda</li>
+                            <li>UR CST</li>
+                            <li>Local schools</li>
+                        </ul>
+                    </div>
+                    <div class="partnership-category">
+                        <h4>Regional</h4>
+                        <ul>
+                            <li>East African Deaf associations</li>
+                            <li>NGOs</li>
+                            <li>Africa Union's digital inclusion programs</li>
+                        </ul>
+                    </div>
+                    <div class="partnership-category">
+                        <h4>Global</h4>
+                        <ul>
+                            <li>WHO</li>
+                            <li>UNESCO</li>
+                            <li>Accessibility tech companies (Google AI, Microsoft AI for Accessibility)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 8: Join the Movement -->
     <section id="join" class="content-section">
         <div class="container">
             <h2 class="section-title">Join the Movement</h2>
@@ -484,6 +540,7 @@
                         <h4>Company</h4>
                         <ul>
                             <li><a href="#about">About Us</a></li>
+                            <li><a href="#about">Vision & Mission</a></li>
                             <li><a href="#team">Our Team</a></li>
                             <li><a href="#careers">Careers</a></li>
                             <li><a href="#contact">Contact</a></li>

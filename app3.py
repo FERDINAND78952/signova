@@ -13,7 +13,18 @@ import cv2 as cv
 import mediapipe as mp
 import numpy as np
 import pyttsx3
-import tensorflow as tf
+
+# Check if we're on Render
+import os
+RENDER_DEPLOYMENT = os.environ.get('RENDER_EXTERNAL_HOSTNAME') is not None
+
+# Conditionally import TensorFlow
+tf = None
+if not RENDER_DEPLOYMENT:
+    try:
+        import tensorflow as tf
+    except ImportError:
+        print("TensorFlow not available")
 
 # Import classifier classes
 from model.keypoint_classifier.keypoint_classifier import KeyPointClassifier

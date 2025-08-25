@@ -36,7 +36,7 @@
                     <div class="video-thumbnail">
                         <img src="{% static 'images/video-thumbnail.svg' %}" alt="Video thumbnail">
                     </div>
-                    <h3>{{ video|replace:"_," |title }}</h3>
+                    <h3>{{ video|replace:"_,"|title }}</h3>
                 </div>
                 {% endfor %}
             </div>

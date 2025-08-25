@@ -6,6 +6,53 @@
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/auth.css' %}">
 <link rel="stylesheet" href="{% static 'css/base.css' %}">
+<style>
+    .signup-features {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin: 2rem 0;
+    }
+    
+    .feature-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        transition: transform 0.3s ease;
+    }
+    
+    .feature-card:hover {
+        transform: translateY(-5px);
+    }
+    
+    .feature-icon {
+        font-size: 2rem;
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+    }
+    
+    .progress-bar {
+        height: 4px;
+        background: #e0e0e0;
+        border-radius: 2px;
+        margin: 1rem 0;
+        overflow: hidden;
+    }
+    
+    .progress-fill {
+        height: 100%;
+        background: var(--primary-color);
+        width: 0%;
+        transition: width 0.5s ease;
+    }
+    
+    .password-strength {
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+    }
+</style>
 {% endblock %}
 
 {% block breadcrumbs %}
@@ -14,104 +61,185 @@
 
 {% block content %}
 <div class="container">
+    <h1 class="text-center" style="color: var(--primary-color); font-size: 3rem; margin-bottom: 20px; text-align: center; padding-top: 30px;">Join Our Community</h1>
+    <p style="font-size: 1.3rem; max-width: 700px; margin: 0 auto 30px; color: var(--text-color); line-height: 1.7; text-align: center;">Become part of a movement that's breaking down communication barriers and creating inclusive communities.</p>
+    
+    <div class="signup-features">
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-hands"></i>
+            </div>
+            <h3>Learn Faster</h3>
+            <p>Track your progress and master sign language with personalized lessons</p>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-comments"></i>
+            </div>
+            <h3>Connect Easily</h3>
+            <p>Join a community of learners and native sign language users</p>
+        </div>
+        
+        <div class="feature-card">
+            <div class="feature-icon">
+                <i class="fas fa-star"></i>
+            </div>
+            <h3>Earn Achievements</h3>
+            <p>Unlock badges and milestones as you progress in your learning journey</p>
+        </div>
+    </div>
+            
     <div class="auth-container">
-                <div class="auth-card signup-card">
-                    <div class="auth-header">
-                        <h2>Create Account</h2>
-                        <p>Join Signova and start your sign language journey</p>
+        <div class="auth-card signup-card">
+            <div class="auth-header">
+                <h2>Create Your Account</h2>
+                <p>Start your sign language journey today</p>
+            </div>
+            
+            <form class="auth-form" action="{% url 'signup' %}" method="post">
+                {% csrf_token %}
+                {% if messages %}
+                <div class="messages">
+                    {% for message in messages %}
+                    <div class="{% if message.tags %}{{ message.tags }}{% endif %}-message">
+                        <i class="fas fa-exclamation-circle"></i> {{ message }}
                     </div>
-                    
-                    <form class="auth-form" action="{% url 'signup' %}" method="post">
-                        {% csrf_token %}
-                        {% if messages %}
-                        <div class="messages">
-                            {% for message in messages %}
-                            <div class="{% if message.tags %}{{ message.tags }}{% endif %}-message">
-                                <i class="fas fa-exclamation-circle"></i> {{ message }}
-                            </div>
-                            {% endfor %}
-                        </div>
-                        {% endif %}
-                        
-                        {% if form.errors %}
-                        <div class="error-message">
-                            <i class="fas fa-exclamation-circle"></i> Please correct the errors below.
-                        </div>
-                        {% endif %}
-                        
-                        <div class="form-group">
-                            <label for="id_username"><i class="fas fa-user"></i> Username</label>
-                            {{ form.username }}
-                            {% if form.username.errors %}
-                            <div class="field-error">{{ form.username.errors }}</div>
-                            {% endif %}
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="id_password1"><i class="fas fa-lock"></i> Password</label>
-                            {{ form.password1 }}
-                            {% if form.password1.errors %}
-                            <div class="field-error">{{ form.password1.errors }}</div>
-                            {% endif %}
-                            <small class="password-hint">{{ form.password1.help_text }}</small>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="id_password2"><i class="fas fa-lock"></i> Confirm Password</label>
-                            {{ form.password2 }}
-                            {% if form.password2.errors %}
-                            <div class="field-error">{{ form.password2.errors }}</div>
-                            {% endif %}
-                        </div>
-                        
-                        <div class="form-group checkbox-group">
-                            <input type="checkbox" id="terms" name="terms" required>
-                            <label for="terms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></label>
-                        </div>
-                        
-                        <button type="submit" class="btn btn-primary btn-block" id="signup-btn">
-                            <i class="fas fa-user-plus"></i> Create Account
-                        </button>
-                    </form>
-                    
-                    <div class="auth-footer">
-                        <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
-                        
-                        <div class="social-login">
-                            <p>Or sign up with</p>
-                            <div class="social-buttons">
-                                <button class="social-btn google">
-                                    <i class="fab fa-google"></i>
-                                </button>
-                                <button class="social-btn facebook">
-                                    <i class="fab fa-facebook-f"></i>
-                                </button>
-                                <button class="social-btn twitter">
-                                    <i class="fab fa-twitter"></i>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
+                {% endif %}
+                
+                {% if form.errors %}
+                <div class="error-message">
+                    <i class="fas fa-exclamation-circle"></i> Please correct the errors below.
+                </div>
+                {% endif %}
+                
+                <div class="form-group">
+                    <label for="id_username"><i class="fas fa-user"></i> Username</label>
+                    {{ form.username }}
+                    {% if form.username.errors %}
+                    <div class="field-error">{{ form.username.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_email"><i class="fas fa-envelope"></i> Email</label>
+                    <input type="email" id="id_email" name="email" required placeholder="Enter your email">
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_password1"><i class="fas fa-lock"></i> Password</label>
+                    {{ form.password1 }}
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="password-strength-bar"></div>
+                    </div>
+                    <div class="password-strength" id="password-strength-text">Password strength</div>
+                    {% if form.password1.errors %}
+                    <div class="field-error">{{ form.password1.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group">
+                    <label for="id_password2"><i class="fas fa-lock"></i> Confirm Password</label>
+                    {{ form.password2 }}
+                    {% if form.password2.errors %}
+                    <div class="field-error">{{ form.password2.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="terms" name="terms" required>
+                    <label for="terms">I agree to the <a href="{% url 'terms_of_service' %}" target="_blank">Terms of Service</a> and <a href="{% url 'privacy_policy' %}" target="_blank">Privacy Policy</a></label>
+                </div>
+                
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="newsletter" name="newsletter">
+                    <label for="newsletter">Send me updates about new features and learning resources</label>
+                </div>
+                
+                <button type="submit" class="btn btn-primary btn-block" id="signup-btn">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </button>
+                
+                <div class="divider">
+                    <span>Or sign up with</span>
+                </div>
+                
+                <div class="social-login">
+                    <button type="button" class="social-btn google">
+                        <i class="fab fa-google"></i> Google
+                    </button>
+                    <button type="button" class="social-btn facebook">
+                        <i class="fab fa-facebook-f"></i> Facebook
+                    </button>
+                </div>
+            </form>
+            
+            <div class="auth-footer">
+                <p>Already have an account? <a href="{% url 'login' %}" class="auth-link">Login here</a></p>
             </div>
         </div>
+    </div>
+</div>
 {% endblock %}
 
 {% block extra_js %}
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('signup-btn').addEventListener('click', function(e) {
-            // Only add loading state if form is valid
-            if (this.form.checkValidity()) {
-                const originalText = this.innerHTML;
-                this.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Creating account...';
-                this.disabled = true;
+        const signupBtn = document.getElementById('signup-btn');
+        const passwordInput = document.getElementById('id_password1');
+        const strengthBar = document.getElementById('password-strength-bar');
+        const strengthText = document.getElementById('password-strength-text');
+        
+        if (signupBtn) {
+            signupBtn.addEventListener('click', function(e) {
+                if (this.form.checkValidity()) {
+                    const originalText = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Creating account...';
+                    this.disabled = true;
+                    
+                    setTimeout(() => {
+                        this.form.submit();
+                    }, 100);
+                }
+            });
+        }
+        
+        // Password strength indicator
+        if (passwordInput && strengthBar && strengthText) {
+            passwordInput.addEventListener('input', function() {
+                const password = this.value;
+                let strength = 0;
                 
-                // Ensure form submits
-                setTimeout(() => {
-                    this.form.submit();
-                }, 100);
-            }
+                if (password.length >= 8) strength += 25;
+                if (password.match(/[a-z]+/)) strength += 25;
+                if (password.match(/[A-Z]+/)) strength += 25;
+                if (password.match(/[0-9]+/)) strength += 25;
+                
+                strengthBar.style.width = strength + '%';
+                
+                if (strength < 50) {
+                    strengthBar.style.background = '#ff4757';
+                    strengthText.textContent = 'Weak password';
+                    strengthText.style.color = '#ff4757';
+                } else if (strength < 75) {
+                    strengthBar.style.background = '#ffa502';
+                    strengthText.textContent = 'Medium strength';
+                    strengthText.style.color = '#ffa502';
+                } else {
+                    strengthBar.style.background = '#2ed573';
+                    strengthText.textContent = 'Strong password';
+                    strengthText.style.color = '#2ed573';
+                }
+            });
+        }
+        
+        // Add animations
+        const formElements = document.querySelectorAll('.form-group');
+        formElements.forEach((element, index) => {
+            element.style.animationDelay = `${index * 0.1}s`;
+            element.classList.add('animate-fade-in');
         });
     });
 </script>

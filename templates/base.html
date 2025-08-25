@@ -34,7 +34,12 @@
                     <li><a href="{% url 'about' %}" {% if 'about' in request.path %}class="active"{% endif %}>About</a></li>
                     {% if user.is_authenticated %}
                     <li><a href="{% url 'dashboard' %}" {% if 'dashboard' in request.path %}class="active"{% endif %}>Dashboard</a></li>
-                    <li><a href="{% url 'logout' %}" class="btn-logout">Logout</a></li>
+                    <li>
+                        <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn-logout" style="background:none;border:none;color:inherit;font:inherit;cursor:pointer;padding:0;">Logout</button>
+                        </form>
+                    </li>
                     {% else %}
                     <li><a href="{% url 'login' %}" {% if 'login' in request.path %}class="active"{% endif %}>Login</a></li>
                     <li><a href="{% url 'signup' %}" {% if 'signup' in request.path %}class="active"{% endif %}>Sign Up</a></li>
@@ -82,7 +87,12 @@
                         <ul>
                             {% if user.is_authenticated %}
                             <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
-                            <li><a href="{% url 'logout' %}">Logout</a></li>
+                            <li>
+                                <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" style="background:none;border:none;color:inherit;font:inherit;cursor:pointer;padding:0;text-decoration:underline;">Logout</button>
+                                </form>
+                            </li>
                             {% else %}
                             <li><a href="{% url 'login' %}">Login</a></li>
                             <li><a href="{% url 'signup' %}">Sign Up</a></li>

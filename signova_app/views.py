@@ -20,6 +20,16 @@ try:
     import cv2 as cv
     import numpy as np
     import mediapipe as mp
+    # Check if we're on Render
+    import os
+    if os.environ.get('RENDER_EXTERNAL_HOSTNAME'):
+        # Skip TensorFlow imports on Render to avoid memory issues
+        raise ImportError("Skipping TensorFlow imports on Render deployment")
+    # Try to import TensorFlow
+    try:
+        import tensorflow as tf
+    except ImportError:
+        raise ImportError("TensorFlow not available")
     from app3 import (
         KeyPointClassifier, PointHistoryClassifier, CvFpsCalc, AudioTranslator,
         SentenceRecorder, calc_bounding_rect, calc_landmark_list, pre_process_landmark,

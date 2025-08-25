@@ -29,7 +29,12 @@
                     <li><a href="{% url 'learning_module' %}" class="nav-link">Learning Module</a></li>
                     {% if user.is_authenticated %}
                     <li><a href="{% url 'dashboard' %}" class="nav-link">Dashboard</a></li>
-                    <li><a href="{% url 'logout' %}" class="nav-link">Logout</a></li>
+                    <li>
+                        <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="nav-link" style="background:none;border:none;color:inherit;font:inherit;cursor:pointer;padding:0;">Logout</button>
+                        </form>
+                    </li>
                     {% else %}
                     <li><a href="{% url 'login' %}" class="nav-link">Login</a></li>
                     <li><a href="{% url 'signup' %}" class="nav-link">Sign Up</a></li>
@@ -104,7 +109,7 @@
                             <img src="{% static 'images/video-thumbnail.svg' %}" alt="Video thumbnail">
                         </div>
                         <div class="sign-info">
-                            <h3>{{ video|replace:"_"," "|title }}</h3>
+                            <h3>{{ video|replace:"_,"|title }}</h3>
                         </div>
                     </div>
                     {% endfor %}
@@ -211,7 +216,7 @@
                     currentVideo = videoName;
                     
                     // Update video player
-                    videoStream.src = "{% url 'video' %}" + videoName;
+                    videoStream.src = "/video/" + videoName + "/";
                     videoTitle.textContent = videoName.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
                     videoDescription.textContent = descriptions[videoName] || 'Learn this sign by following the video.';
                     
@@ -223,7 +228,7 @@
             
             // Replay button
             replayButton.addEventListener('click', function() {
-                videoStream.src = "{% url 'video' %}" + currentVideo;
+                videoStream.src = "/video/" + currentVideo + "/";
             });
             
             // Back button
@@ -273,7 +278,7 @@
                     
                     signCards.forEach(card => {
                         const videoName = card.getAttribute('data-video');
-                        const displayName = videoName.replace(/_/g, ' ').toLowerCase();
+                        const displayName = videoName.replace('_', ' ').toLowerCase();
                         
                         if (displayName.includes(searchTerm) || searchTerm === '') {
                             card.style.display = 'block';

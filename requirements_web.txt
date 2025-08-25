@@ -12,3 +12,6 @@ sqlparse==0.5.3
 tzdata==2025.2
 whitenoise==6.6.0
 pillow==11.2.1
+
+# Explicitly exclude TensorFlow and related packages
+# These cause memory issues on Render

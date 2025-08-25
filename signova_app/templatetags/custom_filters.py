@@ -5,13 +5,15 @@ register = template.Library()
 @register.filter
 def replace(value, arg):
     """
-    Replaces all instances of the first argument in the value
-    with the second argument.
-    
-    Usage: {{ value|replace:"_," }}
+    Replaces all occurrences of a substring with another substring
+    Usage: {{ value|replace:"old,new" }}
     """
-    if len(arg.split(',')) != 2:
-        return value
-    
-    old, new = arg.split(',')
-    return value.replace(old, new)
+    if ',' in arg:
+        old, new = arg.split(',', 1)
+        return value.replace(old, new)
+    return value
+
+@register.filter
+def underscore_to_space(value):
+    """Converts underscores to spaces"""
+    return value.replace('_', ' ')
