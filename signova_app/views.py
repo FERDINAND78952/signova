@@ -1,8 +1,8 @@
 import os
 import time
 import threading
-import cv2 as cv
-import numpy as np
+import csv
+from collections import deque
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.http import StreamingHttpResponse, JsonResponse
@@ -11,14 +11,23 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
+from django.views.static import serve
 
-# Import from app3.py (will need to be refactored for Django)
-from app3 import (
-    KeyPointClassifier, PointHistoryClassifier, CvFpsCalc, AudioTranslator,
-    SentenceRecorder, calc_bounding_rect, calc_landmark_list, pre_process_landmark,
-    pre_process_point_history, draw_landmarks, draw_bounding_rect, draw_info_text,
-    draw_point_history, draw_info, draw_sentence_info
-)
+# Conditionally import ML dependencies
+ML_IMPORTS_AVAILABLE = False
+try:
+    import cv2 as cv
+    import numpy as np
+    from app3 import (
+        KeyPointClassifier, PointHistoryClassifier, CvFpsCalc, AudioTranslator,
+        SentenceRecorder, calc_bounding_rect, calc_landmark_list, pre_process_landmark,
+        pre_process_point_history, draw_landmarks, draw_bounding_rect, draw_info_text,
+        draw_point_history, draw_info, draw_sentence_info
+    )
+    ML_IMPORTS_AVAILABLE = True
+except ImportError:
+    # For web deployment without ML dependencies
+    pass
 
 # Global variables for video processing
 camera = None
@@ -106,28 +115,49 @@ def signup(request):
 def gen_frames():
     global frame_buffer, frame_lock
     
-    while True:
-        with frame_lock:
-            if frame_buffer is not None:
-                frame = frame_buffer.copy()
-            else:
-                # Create a blank frame if no frame is available
+    if not ML_IMPORTS_AVAILABLE:
+        # If ML imports are not available, return a static message frame
+        while True:
+            # Create a blank frame with a message
+            import numpy as np
+            try:
+                import cv2 as cv
                 frame = np.zeros((480, 640, 3), np.uint8)
-                # Add helpful message on blank frame
-                cv.putText(frame, "Camera initializing...", (50, 240), cv.FONT_HERSHEY_SIMPLEX, 
-                          1, (255, 255, 255), 2, cv.LINE_AA)
-                cv.putText(frame, "Please wait or check camera permissions", (50, 280), 
-                          cv.FONT_HERSHEY_SIMPLEX, 0.7, (200, 200, 200), 1, cv.LINE_AA)
-                cv.putText(frame, "Camera Off", (200, 240), cv.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
-        
-        # Encode the frame as JPEG
-        ret, buffer = cv.imencode('.jpg', frame)
-        frame_bytes = buffer.tobytes()
-        
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame_bytes + b'\r\n')
-        
-        time.sleep(0.033)  # ~30 FPS
+                cv.putText(frame, "ML features not available in web mode", (50, 240), 
+                          cv.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
+                ret, buffer = cv.imencode('.jpg', frame)
+                frame_bytes = buffer.tobytes()
+            except ImportError:
+                # If even cv2 is not available, return a simple error message
+                frame_bytes = b'ML features not available in web mode'
+            
+            yield (b'--frame\r\n'
+                   b'Content-Type: image/jpeg\r\n\r\n' + frame_bytes + b'\r\n')
+            
+            time.sleep(1.0)  # Slow refresh rate for static message
+    else:
+        # Normal operation with ML imports
+        while True:
+            with frame_lock:
+                if frame_buffer is not None:
+                    frame = frame_buffer.copy()
+                else:
+                    # Create a blank frame if no frame is available
+                    frame = np.zeros((480, 640, 3), np.uint8)
+                    # Add helpful message on blank frame
+                    cv.putText(frame, "Camera initializing...", (50, 240), cv.FONT_HERSHEY_SIMPLEX, 
+                              1, (255, 255, 255), 2, cv.LINE_AA)
+                    cv.putText(frame, "Please wait or check camera permissions", (50, 280), 
+                              cv.FONT_HERSHEY_SIMPLEX, 0.7, (200, 200, 200), 1, cv.LINE_AA)
+            
+            # Encode the frame as JPEG
+            ret, buffer = cv.imencode('.jpg', frame)
+            frame_bytes = buffer.tobytes()
+            
+            yield (b'--frame\r\n'
+                   b'Content-Type: image/jpeg\r\n\r\n' + frame_bytes + b'\r\n')
+            
+            time.sleep(0.033)  # ~30 FPS
 
 # Video feed view
 def video_feed(request):
@@ -138,20 +168,33 @@ def video_feed(request):
 def start_camera(request):
     global camera, processing_thread, should_stop, audio_translator, sentence_recorder
     
+    if not ML_IMPORTS_AVAILABLE:
+        # Return a message indicating ML features are not available in web mode
+        return JsonResponse({
+            'status': 'error',
+            'message': 'ML features are not available in web deployment mode'
+        })
+    
     if camera is None:
-        camera = cv.VideoCapture(0)
-        camera.set(cv.CAP_PROP_FRAME_WIDTH, 1280)
-        camera.set(cv.CAP_PROP_FRAME_HEIGHT, 720)
-        
-        # Initialize audio and sentence recorder
-        audio_translator = AudioTranslator(rate=150)
-        sentence_recorder = SentenceRecorder(audio_translator)
-        
-        # Start processing thread
-        should_stop = False
-        processing_thread = threading.Thread(target=process_frames)
-        processing_thread.daemon = True
-        processing_thread.start()
+        try:
+            camera = cv.VideoCapture(0)
+            camera.set(cv.CAP_PROP_FRAME_WIDTH, 1280)
+            camera.set(cv.CAP_PROP_FRAME_HEIGHT, 720)
+            
+            # Initialize audio and sentence recorder
+            audio_translator = AudioTranslator(rate=150)
+            sentence_recorder = SentenceRecorder(audio_translator)
+            
+            # Start processing thread
+            should_stop = False
+            processing_thread = threading.Thread(target=process_frames)
+            processing_thread.daemon = True
+            processing_thread.start()
+        except Exception as e:
+            return JsonResponse({
+                'status': 'error',
+                'message': f'Failed to initialize camera: {str(e)}'
+            })
         
         return JsonResponse({'status': 'success', 'message': 'Camera started'})
     else:
@@ -161,6 +204,12 @@ def start_camera(request):
 @csrf_exempt
 def stop_camera(request):
     global camera, processing_thread, should_stop
+    
+    if not ML_IMPORTS_AVAILABLE:
+        return JsonResponse({
+            'status': 'error',
+            'message': 'ML features are not available in web deployment mode'
+        })
     
     if camera is not None:
         should_stop = True
@@ -179,6 +228,12 @@ def stop_camera(request):
 def clear_sentence(request):
     global sentence_recorder
     
+    if not ML_IMPORTS_AVAILABLE:
+        return JsonResponse({
+            'status': 'error',
+            'message': 'ML features are not available in web deployment mode'
+        })
+    
     if sentence_recorder is not None:
         sentence_recorder.current_sentence = []
         return JsonResponse({'status': 'success', 'message': 'Sentence cleared'})
@@ -190,6 +245,12 @@ def clear_sentence(request):
 def speak_sentence(request):
     global sentence_recorder
     
+    if not ML_IMPORTS_AVAILABLE:
+        return JsonResponse({
+            'status': 'error',
+            'message': 'ML features are not available in web deployment mode'
+        })
+    
     if sentence_recorder is not None:
         sentence_recorder.speak_sentence()
         return JsonResponse({'status': 'success', 'message': 'Speaking sentence'})
@@ -200,6 +261,12 @@ def speak_sentence(request):
 @csrf_exempt
 def get_recognized_signs(request):
     global sentence_recorder, recognized_signs, signs_lock
+    
+    if not ML_IMPORTS_AVAILABLE:
+        return JsonResponse({
+            'status': 'error',
+            'message': 'ML features are not available in web deployment mode'
+        })
     
     if sentence_recorder is not None:
         with signs_lock:
@@ -218,6 +285,12 @@ def get_recognized_signs(request):
 def set_language(request):
     global sentence_recorder
     
+    if not ML_IMPORTS_AVAILABLE:
+        return JsonResponse({
+            'status': 'error',
+            'message': 'ML features are not available in web deployment mode'
+        })
+    
     if request.method == 'POST':
         language = request.POST.get('language', 'english')
         
@@ -232,3 +305,89 @@ def set_language(request):
 # About page view
 def about(request):
     return render(request, 'about.html')
+
+# Contact page view
+def contact(request):
+    return render(request, 'contact.html')
+
+# Terms of Service page view
+def terms_of_service(request):
+    return render(request, 'terms_of_service.html')
+
+# Privacy Policy page view
+def privacy_policy(request):
+    return render(request, 'privacy_policy.html')
+
+# Serve video files
+def serve_video(request, video_name):
+    # Map the video name to the actual file path
+    video_path = None
+    for key, path in VIDEO_FILES.items():
+        if key == video_name.lower():
+            video_path = path
+            break
+    
+    if not video_path or not os.path.exists(video_path):
+        # Return a 404 response if the video doesn't exist
+        from django.http import Http404
+        raise Http404(f"Video '{video_name}' not found")
+    
+    # Serve the video file
+    return serve(request, os.path.basename(video_path), os.path.dirname(video_path))
+
+# Process frames function for ML processing
+def process_frames():
+    global camera, frame_buffer, frame_lock, should_stop, recognized_signs, signs_lock, sentence_recorder
+    
+    if not ML_IMPORTS_AVAILABLE:
+        return
+    
+    try:
+        # Initialize MediaPipe hands module
+        mp_hands = mp.solutions.hands
+        hands = mp_hands.Hands(
+            static_image_mode=False,
+            max_num_hands=1,
+            min_detection_confidence=0.7,
+            min_tracking_confidence=0.5,
+        )
+        
+        # Initialize classifiers
+        keypoint_classifier = KeyPointClassifier()
+        point_history_classifier = PointHistoryClassifier()
+        
+        # Read labels
+        with open('model/keypoint_classifier/keypoint_classifier_label.csv', encoding='utf-8-sig') as f:
+            keypoint_classifier_labels = [row[0] for row in csv.reader(f)]
+        with open('model/point_history_classifier/point_history_classifier_label.csv', encoding='utf-8-sig') as f:
+            point_history_classifier_labels = [row[0] for row in csv.reader(f)]
+        
+        # Initialize variables
+        point_history = deque(maxlen=16)
+        finger_gesture_history = deque(maxlen=16)
+        
+        while not should_stop:
+            # Read frame from camera
+            ret, frame = camera.read()
+            if not ret:
+                continue
+            
+            # Process frame with MediaPipe
+            frame = cv.flip(frame, 1)  # Mirror display
+            debug_image = copy.deepcopy(frame)
+            
+            # Convert to RGB for MediaPipe
+            frame_rgb = cv.cvtColor(frame, cv.COLOR_BGR2RGB)
+            results = hands.process(frame_rgb)
+            
+            # Update frame buffer with processed frame
+            with frame_lock:
+                frame_buffer = debug_image
+            
+            # Sleep to reduce CPU usage
+            time.sleep(0.01)
+    except Exception as e:
+        print(f"Error in process_frames: {str(e)}")
+    finally:
+        if 'hands' in locals():
+            hands.close()
