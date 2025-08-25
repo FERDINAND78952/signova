@@ -2,6 +2,7 @@ import os
 import time
 import threading
 import csv
+import copy
 from collections import deque
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -18,6 +19,7 @@ ML_IMPORTS_AVAILABLE = False
 try:
     import cv2 as cv
     import numpy as np
+    import mediapipe as mp
     from app3 import (
         KeyPointClassifier, PointHistoryClassifier, CvFpsCalc, AudioTranslator,
         SentenceRecorder, calc_bounding_rect, calc_landmark_list, pre_process_landmark,
@@ -56,6 +58,11 @@ VIDEO_FILES = {
 
 # Home page view
 def index(request):
+    # Check if we're on Render and add a small delay to prevent worker timeout
+    import os
+    if os.environ.get('RENDER_EXTERNAL_HOSTNAME'):
+        # Add a small delay to prevent worker timeout during initial load
+        time.sleep(0.1)
     return render(request, 'modern_index.html')
 
 # Modern landing page view
@@ -317,6 +324,10 @@ def terms_of_service(request):
 # Privacy Policy page view
 def privacy_policy(request):
     return render(request, 'privacy_policy.html')
+
+# Health check endpoint for Render
+def health_check(request):
+    return JsonResponse({'status': 'ok'})
 
 # Serve video files
 def serve_video(request, video_name):
