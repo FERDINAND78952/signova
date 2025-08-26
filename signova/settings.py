@@ -63,20 +63,43 @@ if config('RENDER', default=False, cast=bool) or os.environ.get('RENDER_EXTERNAL
 
 ROOT_URLCONF = 'signova.urls'
 
+# Define base context processors
+base_context_processors = [
+    'django.template.context_processors.debug',
+    'django.template.context_processors.request',
+    'django.contrib.auth.context_processors.auth',
+    'django.contrib.messages.context_processors.messages',
+]
+
+# Add social_django context processors only when not on Render
+if not IS_RENDER:
+    base_context_processors.extend([
+        'social_django.context_processors.backends',
+        'social_django.context_processors.login_redirect',
+    ])
+
+# Define base context processors
+base_context_processors = [
+    'django.template.context_processors.debug',
+    'django.template.context_processors.request',
+    'django.contrib.auth.context_processors.auth',
+    'django.contrib.messages.context_processors.messages',
+]
+
+# Add social_django context processors only when not on Render
+if not IS_RENDER:
+    base_context_processors.extend([
+        'social_django.context_processors.backends',
+        'social_django.context_processors.login_redirect',
+    ])
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-                'social_django.context_processors.backends',
-                'social_django.context_processors.login_redirect',
-            ],
+            'context_processors': base_context_processors,
         },
     },
 ]
