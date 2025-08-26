@@ -514,6 +514,69 @@ footer {
     gap: 15px;
 }
 
+.auth-btn {
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-weight: 500;
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+.auth-btn:not(.btn-signup) {
+    color: var(--white);
+    border: 1px solid var(--white);
+}
+
+.auth-btn:not(.btn-signup):hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.btn-signup {
+    background-color: var(--accent-color);
+    color: var(--white);
+    box-shadow: 0 2px 5px rgba(255, 87, 34, 0.3);
+}
+
+.btn-signup:hover {
+    background-color: rgba(255, 87, 34, 0.9);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(255, 87, 34, 0.4);
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.auth-buttons .btn {
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.auth-buttons .btn-login {
+    background-color: transparent;
+    color: var(--white);
+    border: 1px solid var(--white);
+}
+
+.auth-buttons .btn-login:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.auth-buttons .btn-signup {
+    background-color: var(--accent-color);
+    color: var(--white);
+}
+
+.auth-buttons .btn-signup:hover {
+    background-color: rgba(255, 87, 34, 0.9);
+    transform: translateY(-2px);
+}
+
 .theme-toggle {
     background: none;
     border: none;
@@ -554,5 +617,38 @@ footer {
 
     .translation-container {
         flex-direction: column;
+    }
+    
+    /* Mobile auth buttons */
+    .auth-buttons {
+        flex-direction: column;
+        width: 100%;
+        margin-top: 15px;
+    }
+    
+    .auth-buttons .btn {
+        width: 100%;
+        text-align: center;
+    }
+    
+    /* Mobile auth container */
+    .mobile-auth-container {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 20px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .mobile-auth-container .auth-btn {
+        display: block;
+        text-align: center;
+        color: var(--text-color);
+        border-color: var(--text-color);
+    }
+
+    .mobile-auth-container .btn-signup {
+        color: var(--white);
     }
 }
