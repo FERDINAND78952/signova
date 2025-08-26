@@ -2,8 +2,10 @@ import numpy as np
 import csv
 import os
 
-# Check if we're on Render
-RENDER_DEPLOYMENT = os.environ.get('RENDER_EXTERNAL_HOSTNAME') is not None
+# Check if we're on Render deployment
+RENDER_DEPLOYMENT = (os.environ.get('RENDER_EXTERNAL_HOSTNAME') is not None or 
+                    os.environ.get('RENDER', 'False').lower() == 'true' or
+                    os.environ.get('SIGNOVA_DISABLE_ML', 'False').lower() == 'true')
 
 # Conditionally import TensorFlow
 if not RENDER_DEPLOYMENT:

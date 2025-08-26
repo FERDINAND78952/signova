@@ -14,7 +14,9 @@ class MemoryOptimizationMiddleware:
     
     def __init__(self, get_response):
         self.get_response = get_response
-        self.is_render = os.environ.get('RENDER', 'False').lower() == 'true'
+        # Check both RENDER and RENDER_EXTERNAL_HOSTNAME environment variables
+        self.is_render = (os.environ.get('RENDER', 'False').lower() == 'true' or 
+                         os.environ.get('RENDER_EXTERNAL_HOSTNAME') is not None)
         self.request_count = 0
         self.last_full_gc = time.time()
         

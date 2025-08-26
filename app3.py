@@ -14,9 +14,11 @@ import mediapipe as mp
 import numpy as np
 import pyttsx3
 
-# Check if we're on Render
+# Check if we're on Render deployment
 import os
-RENDER_DEPLOYMENT = os.environ.get('RENDER_EXTERNAL_HOSTNAME') is not None
+RENDER_DEPLOYMENT = (os.environ.get('RENDER_EXTERNAL_HOSTNAME') is not None or 
+                    os.environ.get('RENDER', 'False').lower() == 'true' or
+                    os.environ.get('SIGNOVA_DISABLE_ML', 'False').lower() == 'true')
 
 # Conditionally import TensorFlow
 tf = None

@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'signova_app',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -42,10 +43,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 # Add memory optimization middleware on Render
-if config('RENDER', default=False, cast=bool):
+# Check both RENDER config and RENDER_EXTERNAL_HOSTNAME environment variable
+if config('RENDER', default=False, cast=bool) or os.environ.get('RENDER_EXTERNAL_HOSTNAME') is not None:
     MIDDLEWARE.append('signova.middleware.MemoryOptimizationMiddleware')
 
 ROOT_URLCONF = 'signova.urls'
@@ -61,6 +64,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -149,10 +154,11 @@ if not DEBUG:
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 # Memory optimization settings for Render
-IS_RENDER = config('RENDER', default=False, cast=bool)
+IS_RENDER = config('RENDER', default=False, cast=bool) or os.environ.get('RENDER_EXTERNAL_HOSTNAME') is not None
 if IS_RENDER:
     # Disable TensorFlow and ML features on Render to prevent memory issues
     os.environ['DISABLE_TENSORFLOW'] = 'True'
+    os.environ['SIGNOVA_DISABLE_ML'] = 'True'
     
     # Set memory optimization environment variables
     os.environ['MALLOC_TRIM_THRESHOLD_'] = '65536'  # Memory trimming threshold
@@ -160,3 +166,9 @@ if IS_RENDER:
     # Reduce Django's memory footprint
     DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB
     FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB
+    
+    # Disable social authentication on Render if keys are not set
+    if not (SOCIAL_AUTH_GOOGLE_OAUTH2_KEY and SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET):
+        INSTALLED_APPS.remove('social_django')
+        MIDDLEWARE.remove('social_django.middleware.SocialAuthExceptionMiddleware')
+        AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',)
