@@ -162,7 +162,7 @@
                     <i class="fas fa-user-plus"></i> Create Account
                 </button>
                 
-                {% if not IS_RENDER %}
+                {% if not IS_RENDER and 'social' in url_namespaces %}
                 <div class="divider">
                     <span>Or sign up with</span>
                 </div>
