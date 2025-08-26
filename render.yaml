@@ -7,8 +7,8 @@ services:
     scaling:
       minInstances: 1
       maxInstances: 1
-    buildCommand: pip install -r requirements_web.txt && pip install --upgrade pip && python manage.py migrate && python manage.py collectstatic --noinput
-    startCommand: gunicorn signova.wsgi:application --timeout 180 --workers 1 --preload --max-requests 1000 --max-requests-jitter 50 --bind 0.0.0.0:$PORT
+    buildCommand: pip install -r requirements_web.txt && pip install social-auth-app-django==5.5.1 && python manage.py migrate && python manage.py collectstatic --noinput
+    startCommand: gunicorn signova.wsgi:application --timeout 180 --workers 1 --preload --max-requests 1000 --max-requests-jitter 50
     healthCheckPath: /health/
     autoDeploy: true
     envVars:
@@ -26,6 +26,12 @@ services:
       - key: SECRET_KEY
         generateValue: true
       - key: RENDER
+        value: true
+      - key: DEBUG
+        value: false
+      - key: DISABLE_TENSORFLOW
+        value: true
+      - key: SIGNOVA_DISABLE_ML
         value: true
       - key: DATABASE_URL
         fromDatabase:

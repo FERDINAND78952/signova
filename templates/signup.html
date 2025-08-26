@@ -162,20 +162,18 @@
                     <i class="fas fa-user-plus"></i> Create Account
                 </button>
                 
-                {% if not IS_RENDER and 'social' in url_namespaces %}
                 <div class="divider">
                     <span>Or sign up with</span>
                 </div>
                 
                 <div class="social-login">
-                    <a href="{% url 'social:begin' 'google-oauth2' %}" class="social-btn google">
+                    <button type="button" class="social-btn google">
                         <i class="fab fa-google"></i> Google
-                    </a>
-                    <a href="{% url 'social:begin' 'facebook' %}" class="social-btn facebook">
+                    </button>
+                    <button type="button" class="social-btn facebook">
                         <i class="fab fa-facebook-f"></i> Facebook
-                    </a>
+                    </button>
                 </div>
-                {% endif %}
             </form>
             
             <div class="auth-footer">

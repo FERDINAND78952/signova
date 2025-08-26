@@ -69,7 +69,6 @@ base_context_processors = [
     'django.template.context_processors.request',
     'django.contrib.auth.context_processors.auth',
     'django.contrib.messages.context_processors.messages',
-    'signova_app.context_processors.render_settings',  # Add custom context processor for IS_RENDER
 ]
 
 # Add social_django context processors only when not on Render
@@ -85,7 +84,6 @@ base_context_processors = [
     'django.template.context_processors.request',
     'django.contrib.auth.context_processors.auth',
     'django.contrib.messages.context_processors.messages',
-    'signova_app.context_processors.render_settings',
 ]
 
 # Add social_django context processors only when not on Render

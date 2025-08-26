@@ -313,7 +313,7 @@ def get_recognized_signs(request):
     else:
         return JsonResponse({'status': 'error', 'message': 'Sentence recorder not initialized'})
 
-# Health check endpoint for Render deployment monitoring
+# Health check endpoint for deployment monitoring
 def health_check(request):
     return JsonResponse({
         'status': 'ok',
@@ -357,6 +357,11 @@ def terms_of_service(request):
 # Privacy Policy page view
 def privacy_policy(request):
     return render(request, 'privacy_policy.html')
+
+# Health check endpoint for Render
+def health_check(request):
+    """Simple health check endpoint for Render deployment monitoring"""
+    return HttpResponse("OK", content_type="text/plain")
 
 # Serve video files
 def serve_video(request, video_name):
