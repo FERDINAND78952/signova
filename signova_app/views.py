@@ -16,30 +16,46 @@ from django.views.static import serve
 
 # Conditionally import ML dependencies
 ML_IMPORTS_AVAILABLE = False
-try:
-    import cv2 as cv
-    import numpy as np
-    import mediapipe as mp
-    # Check if we're on Render
-    import os
-    if os.environ.get('RENDER_EXTERNAL_HOSTNAME'):
-        # Skip TensorFlow imports on Render to avoid memory issues
-        raise ImportError("Skipping TensorFlow imports on Render deployment")
-    # Try to import TensorFlow
+
+# Check if ML features should be disabled
+is_render = os.environ.get('RENDER', 'False').lower() == 'true'
+disable_tensorflow = os.environ.get('DISABLE_TENSORFLOW', 'False').lower() == 'true'
+disable_ml = os.environ.get('SIGNOVA_DISABLE_ML', 'False').lower() == 'true'
+
+# Skip ML imports if we're on Render or if ML is explicitly disabled
+if not (is_render or disable_tensorflow or disable_ml):
     try:
-        import tensorflow as tf
+        # Import lightweight dependencies first
+        import cv2 as cv
+        import numpy as np
+        
+        # Try to import MediaPipe (less memory intensive than TensorFlow)
+        import mediapipe as mp
+        
+        # Only import TensorFlow if explicitly allowed
+        try:
+            # Set TensorFlow log level to suppress warnings
+            os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+            import tensorflow as tf
+            # Limit TensorFlow memory usage
+            gpus = tf.config.experimental.list_physical_devices('GPU')
+            if gpus:
+                for gpu in gpus:
+                    tf.config.experimental.set_memory_growth(gpu, True)
+            # Import application modules
+            from app3 import (
+                KeyPointClassifier, PointHistoryClassifier, CvFpsCalc, AudioTranslator,
+                SentenceRecorder, calc_bounding_rect, calc_landmark_list, pre_process_landmark,
+                pre_process_point_history, draw_landmarks, draw_bounding_rect, draw_info_text,
+                draw_point_history, draw_info, draw_sentence_info
+            )
+            ML_IMPORTS_AVAILABLE = True
+        except ImportError:
+            # TensorFlow not available, but we might still have OpenCV and MediaPipe
+            pass
     except ImportError:
-        raise ImportError("TensorFlow not available")
-    from app3 import (
-        KeyPointClassifier, PointHistoryClassifier, CvFpsCalc, AudioTranslator,
-        SentenceRecorder, calc_bounding_rect, calc_landmark_list, pre_process_landmark,
-        pre_process_point_history, draw_landmarks, draw_bounding_rect, draw_info_text,
-        draw_point_history, draw_info, draw_sentence_info
-    )
-    ML_IMPORTS_AVAILABLE = True
-except ImportError:
-    # For web deployment without ML dependencies
-    pass
+        # For web deployment without ML dependencies
+        pass
 
 # Global variables for video processing
 camera = None
@@ -296,6 +312,13 @@ def get_recognized_signs(request):
         })
     else:
         return JsonResponse({'status': 'error', 'message': 'Sentence recorder not initialized'})
+
+# Health check endpoint for deployment monitoring
+def health_check(request):
+    return JsonResponse({
+        'status': 'ok',
+        'message': 'Service is running'
+    })
 
 # Set language API endpoint
 @csrf_exempt

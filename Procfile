@@ -1,1 +1,1 @@
-web: gunicorn signova.wsgi:application --workers 1 --timeout 120 --preload
+web: gunicorn signova.wsgi:application --workers 1 --timeout 120 --max-requests 1000 --max-requests-jitter 50 --log-level warning
