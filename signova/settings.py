@@ -167,8 +167,7 @@ if IS_RENDER:
     DATA_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB
     FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB
     
-    # Disable social authentication on Render if keys are not set
-    if not (SOCIAL_AUTH_GOOGLE_OAUTH2_KEY and SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET):
-        INSTALLED_APPS.remove('social_django')
-        MIDDLEWARE.remove('social_django.middleware.SocialAuthExceptionMiddleware')
-        AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',)
+    # Disable social authentication on Render
+    # Instead of removing apps which can cause errors if templates/URLs reference them,
+    # we'll keep the apps but disable the actual authentication backends
+    AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',)
