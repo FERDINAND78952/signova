@@ -35,10 +35,7 @@
                     {% if user.is_authenticated %}
                     <li><a href="{% url 'dashboard' %}" {% if 'dashboard' in request.path %}class="active"{% endif %}>Dashboard</a></li>
                     <li>
-                        <form method="post" action="{% url 'logout' %}" style="display:inline;">
-                            {% csrf_token %}
-                            <button type="submit" class="btn-logout" style="background:none;border:none;color:inherit;font:inherit;cursor:pointer;padding:0;">Logout</button>
-                        </form>
+                        <a href="{% url 'logout' %}" class="btn-logout">Logout</a>
                     </li>
                     {% else %}
                     <li><a href="{% url 'login' %}" {% if 'login' in request.path %}class="active"{% endif %}>Login</a></li>
@@ -87,12 +84,7 @@
                         <ul>
                             {% if user.is_authenticated %}
                             <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
-                            <li>
-                                <form method="post" action="{% url 'logout' %}" style="display:inline;">
-                                    {% csrf_token %}
-                                    <button type="submit" style="background:none;border:none;color:inherit;font:inherit;cursor:pointer;padding:0;text-decoration:underline;">Logout</button>
-                                </form>
-                            </li>
+                            <li><a href="{% url 'logout' %}">Logout</a></li>
                             {% else %}
                             <li><a href="{% url 'login' %}">Login</a></li>
                             <li><a href="{% url 'signup' %}">Sign Up</a></li>
@@ -102,10 +94,20 @@
                     <div class="footer-column">
                         <h3>Legal</h3>
                         <ul>
-                            <li><a href="#">Terms of Service</a></li>
-                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="{% url 'terms_of_service' %}">Terms of Service</a></li>
+                            <li><a href="{% url 'privacy_policy' %}">Privacy Policy</a></li>
                         </ul>
                     </div>
+                </div>
+            </div>
+            <div class="footer-social">
+                <h3>Connect With Us</h3>
+                <div class="social-icons">
+                    <a href="https://www.facebook.com/ferdinandleny.ingabire" target="_blank" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    <a href="https://youtube.com/@ferdy_inga6?si=GwXcZDqoroTaMGVf" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    <a href="https://x.com/Ferdy_inga6?t=z0Oa0T4bznt6Ts0VFA24Tg&s=08" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/ferdy_inga6?igsh=MXNtMno5dTR3c2VwYg==" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.linkedin.com/in/ferdinand-ingabire-440b3a317/" target="_blank" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
                 </div>
             </div>
             <div class="footer-bottom">
