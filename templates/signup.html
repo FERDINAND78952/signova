@@ -162,6 +162,7 @@
                     <i class="fas fa-user-plus"></i> Create Account
                 </button>
                 
+                {% if not IS_RENDER %}
                 <div class="divider">
                     <span>Or sign up with</span>
                 </div>
@@ -174,6 +175,7 @@
                         <i class="fab fa-facebook-f"></i> Facebook
                     </button>
                 </div>
+                {% endif %}
             </form>
             
             <div class="auth-footer">

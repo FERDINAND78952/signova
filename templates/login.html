@@ -108,6 +108,7 @@
                     <i class="fas fa-sign-in-alt"></i> Login
                 </button>
                 
+                {% if not IS_RENDER %}
                 <div class="divider">
                     <span>Or continue with</span>
                 </div>
@@ -123,6 +124,7 @@
                         <i class="fab fa-twitter"></i> Twitter
                     </a>
                 </div>
+                {% endif %}
             </form>
             
             <div class="auth-footer">
