@@ -13,9 +13,9 @@ tzdata==2025.2
 whitenoise==6.6.0
 pillow==11.2.1
 
-# Social Authentication
-social-auth-app-django==5.5.1
-social-auth-core==4.7.0
+# Social Authentication - Disabled due to compatibility issues
+# social-auth-app-django==5.5.1
+# social-auth-core==4.7.0
 # django-social-auth is deprecated, social-auth-app-django provides the social_django module
 
 # Explicitly exclude TensorFlow and related packages

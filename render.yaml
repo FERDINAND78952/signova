@@ -7,8 +7,8 @@ services:
     scaling:
       minInstances: 1
       maxInstances: 1
-    buildCommand: pip install -r requirements_web.txt && pip install social-auth-app-django==5.5.1 && python manage.py migrate && python manage.py collectstatic --noinput
-    startCommand: gunicorn signova.wsgi:application --timeout 180 --workers 1 --preload --max-requests 1000 --max-requests-jitter 50
+    buildCommand: pip install -r requirements_web.txt && pip install --upgrade pip && python manage.py migrate && python manage.py collectstatic --noinput
+    startCommand: gunicorn signova.wsgi:application --timeout 180 --workers 1 --preload --max-requests 1000 --max-requests-jitter 50 --bind 0.0.0.0:$PORT
     healthCheckPath: /health/
     autoDeploy: true
     envVars:
