@@ -168,12 +168,12 @@
                 </div>
                 
                 <div class="social-login">
-                    <button type="button" class="social-btn google">
+                    <a href="{% url 'social:begin' 'google-oauth2' %}" class="social-btn google">
                         <i class="fab fa-google"></i> Google
-                    </button>
-                    <button type="button" class="social-btn facebook">
+                    </a>
+                    <a href="{% url 'social:begin' 'facebook' %}" class="social-btn facebook">
                         <i class="fab fa-facebook-f"></i> Facebook
-                    </button>
+                    </a>
                 </div>
                 {% endif %}
             </form>
