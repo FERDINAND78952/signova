@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Subscription Payment - Signova{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/payment.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="payment-container">
+    <div class="payment-header">
+        <h1>Choose Your Subscription Plan</h1>
+        <p>Select a plan that suits your needs and unlock premium features</p>
+    </div>
+    
+    <div class="plans-container">
+        {% for plan_id, plan in plans.items %}
+        <div class="plan-card">
+            <div class="plan-header">
+                <h3>{{ plan.name }}</h3>
+                <div class="plan-price">
+                    <span class="price">{{ plan.amount }} RWF</span>
+                    <span class="period">/month</span>
+                </div>
+            </div>
+            <div class="plan-features">
+                <ul>
+                    {% if plan_id == 'advanced' %}
+                    <li><i class="fas fa-check"></i> Full access to learning materials</li>
+                    <li><i class="fas fa-check"></i> Advanced translation features</li>
+                    <li><i class="fas fa-check"></i> Email support</li>
+                    {% elif plan_id == 'pro' %}
+                    <li><i class="fas fa-check"></i> Premium learning materials</li>
+                    <li><i class="fas fa-check"></i> Offline translation capabilities</li>
+                    <li><i class="fas fa-check"></i> Priority support</li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="plan-footer">
+                <form method="post" action="{% url 'initiate_payment' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="plan" value="{{ plan_id }}">
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <i class="fas fa-credit-card"></i> Subscribe Now
+                    </button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+    <div class="payment-info">
+        <h3>Secure Payment</h3>
+        <p>Your payment information is securely processed by Flutterwave, a trusted payment provider in Africa.</p>
+        <div class="payment-methods">
+            <img src="{% static 'images/mtn-momo.svg' %}" alt="MTN Mobile Money">
+            <img src="{% static 'images/airtel-money.svg' %}" alt="Airtel Money">
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/payment.js' %}"></script>
+{% endblock %}

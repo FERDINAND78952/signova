@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Payment Failed - Signova{% endblock %}
+
+{% block extra_css %}
+<style>
+    .failed-container {
+        max-width: 600px;
+        margin: 60px auto;
+        padding: 30px;
+        text-align: center;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .failed-icon {
+        font-size: 80px;
+        color: #dc3545;
+        margin-bottom: 20px;
+    }
+    
+    .failed-title {
+        font-size: 2rem;
+        color: #333;
+        margin-bottom: 15px;
+    }
+    
+    .failed-message {
+        font-size: 1.1rem;
+        color: #666;
+        margin-bottom: 30px;
+    }
+    
+    .error-details {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 5px;
+        margin-bottom: 30px;
+        text-align: left;
+        color: #721c24;
+        background-color: #f8d7da;
+        border: 1px solid #f5c6cb;
+    }
+    
+    .btn-retry {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 25px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: background-color 0.3s;
+        margin-right: 15px;
+    }
+    
+    .btn-retry:hover {
+        background-color: #0069d9;
+    }
+    
+    .btn-dashboard {
+        background-color: #6c757d;
+        color: white;
+        padding: 10px 25px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: background-color 0.3s;
+    }
+    
+    .btn-dashboard:hover {
+        background-color: #5a6268;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="failed-container">
+    <div class="failed-icon">
+        <i class="fas fa-times-circle"></i>
+    </div>
+    <h1 class="failed-title">Payment Failed</h1>
+    <p class="failed-message">We're sorry, but there was an issue processing your payment.</p>
+    
+    {% if error %}
+    <div class="error-details">
+        <h3>Error Details</h3>
+        <p>{{ error }}</p>
+    </div>
+    {% endif %}
+    
+    <p>Please try again or contact our support team if the problem persists.</p>
+    <div>
+        <a href="{% url 'payment' %}" class="btn-retry">
+            <i class="fas fa-redo"></i> Try Again
+        </a>
+        <a href="{% url 'dashboard' %}" class="btn-dashboard">
+            <i class="fas fa-tachometer-alt"></i> Go to Dashboard
+        </a>
+    </div>
+</div>
+{% endblock %}

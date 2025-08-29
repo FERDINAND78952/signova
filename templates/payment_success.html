@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Payment Successful - Signova{% endblock %}
+
+{% block extra_css %}
+<style>
+    .success-container {
+        max-width: 600px;
+        margin: 60px auto;
+        padding: 30px;
+        text-align: center;
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .success-icon {
+        font-size: 80px;
+        color: #28a745;
+        margin-bottom: 20px;
+    }
+    
+    .success-title {
+        font-size: 2rem;
+        color: #333;
+        margin-bottom: 15px;
+    }
+    
+    .success-message {
+        font-size: 1.1rem;
+        color: #666;
+        margin-bottom: 30px;
+    }
+    
+    .transaction-details {
+        background-color: #f8f9fa;
+        padding: 20px;
+        border-radius: 5px;
+        margin-bottom: 30px;
+        text-align: left;
+    }
+    
+    .transaction-details p {
+        margin: 10px 0;
+    }
+    
+    .btn-dashboard {
+        background-color: #007bff;
+        color: white;
+        padding: 10px 25px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: background-color 0.3s;
+    }
+    
+    .btn-dashboard:hover {
+        background-color: #0069d9;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="success-container">
+    <div class="success-icon">
+        <i class="fas fa-check-circle"></i>
+    </div>
+    <h1 class="success-title">Payment Successful!</h1>
+    <p class="success-message">Thank you for subscribing to Signova's {{ plan.name }}. Your account has been upgraded successfully.</p>
+    
+    <div class="transaction-details">
+        <h3>Transaction Details</h3>
+        <p><strong>Plan:</strong> {{ plan.name }}</p>
+        <p><strong>Amount:</strong> {{ plan.amount }} RWF</p>
+        <p><strong>Transaction ID:</strong> {{ transaction_id }}</p>
+        <p><strong>Duration:</strong> {{ plan.duration }} days</p>
+    </div>
+    
+    <p>You now have access to all the premium features included in your subscription plan.</p>
+    <a href="{% url 'dashboard' %}" class="btn-dashboard">
+        <i class="fas fa-tachometer-alt"></i> Go to Dashboard
+    </a>
+</div>
+{% endblock %}

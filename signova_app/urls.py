@@ -4,6 +4,7 @@ from django.views.static import serve
 from django.conf import settings
 import os
 from . import views
+from . import payment
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -40,5 +41,11 @@ urlpatterns = [
     path('privacy-policy/', views.privacy_policy, name='privacy_policy'),
     
     # Video serving endpoint
-    path('video/<str:video_name>/', views.serve_video, name='video')
+    path('video/<str:video_name>/', views.serve_video, name='video'),
+    
+    # Payment endpoints
+    path('payment/', views.payment_page, name='payment'),
+    path('initiate_payment/', payment.initiate_payment, name='initiate_payment'),
+    path('payment_callback/', payment.payment_callback, name='payment_callback'),
+    path('payment_webhook/', payment.payment_webhook, name='payment_webhook')
 ]

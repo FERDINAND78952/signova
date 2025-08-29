@@ -10,6 +10,101 @@
     <link rel="stylesheet" href="{% static 'css/modern.css' %}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-content {
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            width: 90%;
+            max-width: 600px;
+            animation: modalFadeIn 0.3s;
+        }
+        
+        @keyframes modalFadeIn {
+            from {opacity: 0; transform: translateY(-20px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+        
+        .modal-header {
+            padding: 15px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h3 {
+            margin: 0;
+            font-size: 1.2rem;
+        }
+        
+        .close-modal {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        .modal-body {
+            padding: 20px;
+        }
+        
+        .modal-body ul {
+            padding-left: 20px;
+            margin: 15px 0;
+        }
+        
+        .modal-body li {
+            margin-bottom: 10px;
+            list-style-type: none;
+        }
+        
+        .modal-body li i {
+            color: var(--primary-color);
+            margin-right: 8px;
+        }
+        
+        .consent-checkbox {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8f9fa;
+            border-radius: 6px;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .consent-checkbox input {
+            margin-top: 4px;
+            margin-right: 10px;
+        }
+        
+        .modal-footer {
+            padding: 15px 20px;
+            background-color: #f8f9fa;
+            border-top: 1px solid #e9ecef;
+            border-radius: 0 0 8px 8px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -45,6 +140,33 @@
             </div>
             
             <h2>Sign Language Translator</h2>
+            
+            <!-- Camera Consent Modal -->
+            <div id="cameraConsentModal" class="modal" role="dialog" aria-labelledby="cameraConsentTitle" aria-hidden="true">
+                <div class="modal-content" role="document">
+                    <div class="modal-header">
+                        <h3 id="cameraConsentTitle"><i class="fas fa-camera" aria-hidden="true"></i> Camera Permission Required</h3>
+                        <span class="close-modal" aria-label="Close">&times;</span>
+                    </div>
+                    <div class="modal-body">
+                        <p>Signova needs access to your camera to translate sign language. Here's how we handle your data:</p>
+                        <ul>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> <strong>Privacy:</strong> Your video is processed in real-time and is not stored permanently.</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> <strong>Processing:</strong> Video frames are analyzed to detect hand gestures and translate them.</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> <strong>Data Usage:</strong> No video data is shared with third parties.</li>
+                            <li><i class="fas fa-check" aria-hidden="true"></i> <strong>Offline Mode:</strong> In Pro plans, processing can happen on your device without sending data.</li>
+                        </ul>
+                        <div class="consent-checkbox">
+                            <input type="checkbox" id="consentCheckbox" aria-required="true">
+                            <label for="consentCheckbox">I understand and give permission to access my camera for sign language translation.</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="cancelCameraBtn" class="btn btn-secondary" aria-label="Cancel camera access">Cancel</button>
+                        <button id="confirmCameraBtn" class="btn btn-primary" disabled aria-label="Start camera with consent">Start Camera</button>
+                    </div>
+                </div>
+            </div>
             
             <div class="translation-container">
                 <div class="video-container">
@@ -134,7 +256,7 @@
                             <li>Advanced translation features</li>
                             <li>Email support</li>
                         </ul>
-                        <a href="#" class="btn btn-primary">Upgrade - 5,000 RWF/month</a>
+                        <a href="/payment/" class="btn btn-primary">Upgrade - 5,000 RWF/month</a>
                     </div>
                     <div class="plan">
                         <h4>Pro</h4>
@@ -144,13 +266,13 @@
                             <li>Offline translation capabilities</li>
                             <li>Priority support</li>
                         </ul>
-                        <a href="#" class="btn btn-primary">Upgrade - 10,000 RWF/month</a>
+                        <a href="/payment/" class="btn btn-primary">Upgrade - 10,000 RWF/month</a>
                     </div>
                 </div>
                 <div class="payment-info">
-                    <h4>Payment Method</h4>
-                    <p>Mobile Money: +250785617205</p>
-                    <p>After payment, please email your transaction ID to <a href="mailto:support@signova.com">support@signova.com</a></p>
+                    <h4>Secure Payment</h4>
+                    <p>We offer secure payment processing through Flutterwave, supporting Mobile Money and other payment methods.</p>
+                    <a href="/payment/" class="btn btn-primary mt-3">Subscribe Now</a>
                 </div>
             </div>
             <p>&copy; 2025 Signova. All rights reserved.</p>
@@ -170,11 +292,81 @@
             const currentSentence = document.getElementById('currentSentence');
             const recentSigns = document.getElementById('recentSigns');
             
+            // Get CSRF token from cookie
+            function getCookie(name) {
+                let cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    const cookies = document.cookie.split(';');
+                    for (let i = 0; i < cookies.length; i++) {
+                        const cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
+            
+            // Add CSRF token to fetch requests
+            function fetchWithCSRF(url, options = {}) {
+                const csrftoken = getCookie('csrftoken');
+                options.headers = options.headers || {};
+                options.headers['X-CSRFToken'] = csrftoken;
+                return fetch(url, options);
+            }
+            
             let updateInterval = null;
             let currentLanguage = 'english';
             
+            // Modal elements
+            const modal = document.getElementById('cameraConsentModal');
+            const closeModalBtn = document.querySelector('.close-modal');
+            const consentCheckbox = document.getElementById('consentCheckbox');
+            const confirmCameraBtn = document.getElementById('confirmCameraBtn');
+            const cancelCameraBtn = document.getElementById('cancelCameraBtn');
+            
+            // Show modal when Start Camera button is clicked
             startCameraBtn.addEventListener('click', function() {
-                fetch('{% url "start_camera" %}')
+                modal.style.display = 'block';
+            });
+            
+            // Close modal when X is clicked
+            closeModalBtn.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+            
+            // Close modal when clicking outside of it
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+            
+            // Cancel button closes modal
+            cancelCameraBtn.addEventListener('click', function() {
+                modal.style.display = 'none';
+            });
+            
+            // Enable confirm button when checkbox is checked
+            consentCheckbox.addEventListener('change', function() {
+                confirmCameraBtn.disabled = !this.checked;
+            });
+            
+            // Start camera when consent is given
+            confirmCameraBtn.addEventListener('click', function() {
+                modal.style.display = 'none';
+                
+                // Store consent in localStorage
+                localStorage.setItem('cameraConsent', 'true');
+                
+                // Start the camera
+                fetchWithCSRF('{% url "start_camera" %}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
                     .then(response => response.json())
                     .then(data => {
                         console.log('Camera started:', data);
@@ -193,7 +385,12 @@
             });
             
             stopCameraBtn.addEventListener('click', function() {
-                fetch('{% url "stop_camera" %}')
+                fetchWithCSRF('{% url "stop_camera" %}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
                     .then(response => response.json())
                     .then(data => {
                         console.log('Camera stopped:', data);
@@ -215,7 +412,12 @@
             });
             
             clearSentenceBtn.addEventListener('click', function() {
-                fetch('{% url "clear_sentence" %}')
+                fetchWithCSRF('{% url "clear_sentence" %}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
                     .then(response => response.json())
                     .then(data => {
                         console.log('Sentence cleared:', data);
@@ -225,7 +427,12 @@
             });
             
             speakSentenceBtn.addEventListener('click', function() {
-                fetch('{% url "speak_sentence" %}')
+                fetchWithCSRF('{% url "speak_sentence" %}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
                     .then(response => response.json())
                     .then(data => console.log('Speaking sentence:', data))
                     .catch(error => console.error('Error speaking sentence:', error));
@@ -238,7 +445,7 @@
                 const formData = new FormData();
                 formData.append('language', currentLanguage);
                 
-                fetch('{% url "set_language" %}', {
+                fetchWithCSRF('{% url "set_language" %}', {
                     method: 'POST',
                     body: formData
                 })
@@ -250,7 +457,12 @@
 
             
             function updateRecognizedSigns() {
-                fetch('{% url "get_recognized_signs" %}')
+                fetchWithCSRF('{% url "get_recognized_signs" %}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                })
                     .then(response => response.json())
                     .then(data => {
                         // Update current sentence

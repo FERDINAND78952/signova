@@ -35,6 +35,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'crispy_forms',
     'signova_app',
+    'axes',  # Django-Axes for login protection
+    'flutterwavedjango',  # Flutterwave Django integration
 ]
 
 # Only include social_django when not on Render
@@ -50,6 +52,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'signova.middleware.SecurityHeadersMiddleware',
+    'axes.middleware.AxesMiddleware',  # Django-Axes for login protection
+    'django_ratelimit.middleware.RatelimitMiddleware',  # Django-Ratelimit middleware
+    'signova.ratelimit_middleware.RateLimitMiddleware',  # Custom rate limit response handling
 ]
 
 # Only include social auth middleware when not on Render
@@ -159,6 +165,34 @@ LOGIN_REDIRECT_URL = 'index'
 LOGOUT_REDIRECT_URL = 'index'
 LOGIN_URL = 'login'
 
+# Django-Axes Configuration (Login Rate Limiting)
+AUTHENTICATION_BACKENDS = [
+    # AxesStandaloneBackend should be the first backend
+    'axes.backends.AxesStandaloneBackend',
+    # Django's default ModelBackend
+    'django.contrib.auth.backends.ModelBackend',
+]
+
+# Django-Axes Settings
+AXES_FAILURE_LIMIT = 5  # Number of login attempts allowed before lockout
+AXES_LOCKOUT_TIMEOUT = 30  # Lockout time in minutes
+AXES_COOLOFF_TIME = 30  # Time in minutes before lockout is reset
+AXES_RESET_ON_SUCCESS = True  # Reset failed attempts on successful login
+AXES_LOCKOUT_TEMPLATE = None  # Use the default 403 template
+AXES_LOCKOUT_URL = None  # No custom lockout URL
+AXES_USE_USER_AGENT = True  # Include user agent in lockout criteria
+AXES_LOCK_OUT_BY_COMBINATION_USER_AND_IP = True  # Lock out based on both username and IP
+
+# Django-Ratelimit Settings
+RATELIMIT_VIEW = 'signova_app.views.ratelimit_view'  # View to use when rate limit is exceeded
+RATELIMIT_USE_CACHE = 'default'  # Cache to use for rate limiting
+RATELIMIT_ENABLE = True  # Enable rate limiting
+
+# Custom Rate Limit Settings
+API_RATE_LIMIT = '30/m'  # 30 requests per minute for general API endpoints
+CAMERA_RATE_LIMIT = '10/m'  # 10 requests per minute for camera endpoints
+SPEECH_RATE_LIMIT = '20/m'  # 20 requests per minute for speech endpoints
+
 # Social Authentication - conditionally configure based on environment
 if IS_RENDER:
     # On Render, only use the default Django authentication
@@ -193,6 +227,25 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 if not DEBUG:
     SECURE_SSL_REDIRECT = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+    
+    # Cookie security settings
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_HTTPONLY = True
+    CSRF_COOKIE_HTTPONLY = True
+    SESSION_COOKIE_SAMESITE = 'Lax'
+    CSRF_COOKIE_SAMESITE = 'Lax'
+    
+    # CSRF settings
+    CSRF_FAILURE_VIEW = 'django.views.csrf.csrf_failure'
+    CSRF_TRUSTED_ORIGINS = ['https://signova.onrender.com']
+    
+    # Additional security settings
+    SECURE_HSTS_SECONDS = 31536000  # 1 year
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    SECURE_BROWSER_XSS_FILTER = True
 
 # Memory optimization settings for Render
 if IS_RENDER:
@@ -209,4 +262,14 @@ if IS_RENDER:
     
     # Memory trimming thresholds
     MALLOC_TRIM_THRESHOLD_ = 65536  # 64KB
-    FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB
+
+# Flutterwave Configuration
+FLW_PUBLIC_KEY = config('FLW_PUBLIC_KEY', default='FLWPUBK_TEST-your-public-key-here')
+FLW_SECRET_KEY = config('FLW_SECRET_KEY', default='FLWSECK_TEST-your-secret-key-here')
+FLW_ENCRYPTION_KEY = config('FLW_ENCRYPTION_KEY', default='your-encryption-key-here')
+FLW_WEBHOOK_HASH = config('FLW_WEBHOOK_HASH', default='your-webhook-hash-here')
+
+# Flutterwave Django Settings
+FLUTTERWAVE_SECRET_KEY = FLW_SECRET_KEY
+FLUTTERWAVE_PUBLIC_KEY = FLW_PUBLIC_KEY
+FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880  # 5MB
