@@ -1,5 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 80">
-  <rect width="200" height="80" rx="10" fill="#FFCC00"/>
-  <text x="100" y="35" font-family="Arial, sans-serif" font-size="20" font-weight="bold" text-anchor="middle" fill="#000">MTN</text>
-  <text x="100" y="55" font-family="Arial, sans-serif" font-size="16" text-anchor="middle" fill="#000">Mobile Money</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100">
+  <!-- MTN Yellow Background -->
+  <rect width="200" height="100" rx="10" fill="#FFCC00"/>
+  
+  <!-- MTN Logo -->
+  <text x="40" y="45" font-family="Arial, sans-serif" font-weight="bold" font-size="28" fill="#000000">MTN</text>
+  
+  <!-- MoMo Text -->
+  <text x="40" y="75" font-family="Arial, sans-serif" font-weight="bold" font-size="24" fill="#000000">MoMo</text>
+  
+  <!-- Mobile Money Icon -->
+  <path d="M150 30c-11 0-20 9-20 20s9 20 20 20 20-9 20-20-9-20-20-20zm0 36c-8.8 0-16-7.2-16-16s7.2-16 16-16 16 7.2 16 16-7.2 16-16 16z" fill="#000000"/>
+  <path d="M150 38v16m-8-8h16" stroke="#000000" stroke-width="4" stroke-linecap="round"/>
 </svg>

@@ -13,8 +13,6 @@ from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login, authenticate
 from django.views.static import serve
-from signova.ratelimit_middleware import api_rate_limit, camera_rate_limit, speech_rate_limit
-from .payment import PAYMENT_PLANS
 
 # Conditionally import ML dependencies
 ML_IMPORTS_AVAILABLE = False
@@ -83,18 +81,6 @@ VIDEO_FILES = {
     'same_to_you': os.path.join(VIDEO_DIR, 'SameToYou.mp4'),
     'you': os.path.join(VIDEO_DIR, 'You.mp4')
 }
-
-# Rate limit exceeded view
-def ratelimit_view(request, exception):
-    """
-    View to handle rate limit exceeded responses.
-    This is called by the RatelimitMiddleware when a request is rate limited.
-    """
-    return JsonResponse({
-        'status': 'error',
-        'message': 'Rate limit exceeded. Please try again later.',
-        'retry_after': '60 seconds'
-    }, status=429)
 
 # Home page view
 def index(request):
@@ -211,7 +197,7 @@ def video_feed(request):
     return StreamingHttpResponse(gen_frames(), content_type='multipart/x-mixed-replace; boundary=frame')
 
 # Start camera API endpoint
-@camera_rate_limit
+@csrf_exempt
 def start_camera(request):
     global camera, processing_thread, should_stop, audio_translator, sentence_recorder
     
@@ -248,7 +234,7 @@ def start_camera(request):
         return JsonResponse({'status': 'error', 'message': 'Camera already running'})
 
 # Stop camera API endpoint
-@camera_rate_limit
+@csrf_exempt
 def stop_camera(request):
     global camera, processing_thread, should_stop
     
@@ -271,7 +257,7 @@ def stop_camera(request):
         return JsonResponse({'status': 'error', 'message': 'Camera not running'})
 
 # Clear sentence API endpoint
-@api_rate_limit
+@csrf_exempt
 def clear_sentence(request):
     global sentence_recorder
     
@@ -288,7 +274,7 @@ def clear_sentence(request):
         return JsonResponse({'status': 'error', 'message': 'Sentence recorder not initialized'})
 
 # Speak sentence API endpoint
-@speech_rate_limit
+@csrf_exempt
 def speak_sentence(request):
     global sentence_recorder
     
@@ -305,7 +291,7 @@ def speak_sentence(request):
         return JsonResponse({'status': 'error', 'message': 'Sentence recorder not initialized'})
 
 # Get recognized signs API endpoint
-@api_rate_limit
+@csrf_exempt
 def get_recognized_signs(request):
     global sentence_recorder, recognized_signs, signs_lock
     
@@ -336,7 +322,6 @@ def health_check(request):
 
 # Set language API endpoint
 @csrf_exempt
-@api_rate_limit
 def set_language(request):
     global sentence_recorder
     
@@ -451,10 +436,3 @@ def process_frames():
     finally:
         if 'hands' in locals():
             hands.close()
-
-@login_required
-def payment_page(request):
-    """
-    Renders the payment page with subscription plans
-    """
-    return render(request, 'payment.html', {'plans': PAYMENT_PLANS})

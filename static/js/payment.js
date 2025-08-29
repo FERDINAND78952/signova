@@ -1,45 +1,109 @@
+/**
+ * Payment form handling for Signova
+ * This script handles the payment form interactions
+ */
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Add smooth scrolling for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            document.querySelector(this.getAttribute('href')).scrollIntoView({
-                behavior: 'smooth'
-            });
-        });
-    });
-
-    // Add hover effects for plan cards
-    const planCards = document.querySelectorAll('.plan-card');
-    planCards.forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-5px)';
-            this.style.boxShadow = '0 8px 20px rgba(0, 0, 0, 0.15)';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0)';
-            this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.1)';
-        });
-    });
-
-    // Form submission handling
-    const paymentForms = document.querySelectorAll('form[action*="initiate_payment"]');
-    paymentForms.forEach(form => {
-        form.addEventListener('submit', function(e) {
-            // Show loading state
-            const button = this.querySelector('button[type="submit"]');
-            const originalText = button.innerHTML;
-            button.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-            button.disabled = true;
-            
-            // Form will submit normally to the backend
-            // The loading state is just for user feedback
-            
-            // If you need to add client-side validation, do it here
-            // e.preventDefault();
-            // ... validation logic
-            // then submit form programmatically if valid
-        });
-    });
+    initPaymentForm();
 });
+
+/**
+ * Initialize payment form
+ */
+function initPaymentForm() {
+    // Get payment form elements
+    const planCards = document.querySelectorAll('.plan-card');
+    const processingMessage = document.querySelector('.payment-processing');
+    
+    if (planCards.length === 0) return;
+    
+    // Add click event to plan cards for selection
+    planCards.forEach(card => {
+        card.addEventListener('click', function() {
+            // Remove active class from all cards
+            planCards.forEach(c => c.classList.remove('active'));
+            
+            // Add active class to clicked card
+            this.classList.add('active');
+            
+            // Find the button in this card and focus it
+            const button = this.querySelector('button');
+            if (button) button.focus();
+        });
+    });
+    
+    // Check if we have payment data from the server
+    if (typeof paymentData !== 'undefined' && paymentData) {
+        try {
+            // Parse payment data if it's a string
+            const data = typeof paymentData === 'string' ? JSON.parse(paymentData) : paymentData;
+            
+            // If we have payment data, initialize Flutterwave checkout
+            if (data && data.public_key && data.tx_ref) {
+                // Show processing message
+                if (processingMessage) processingMessage.style.display = 'block';
+                
+                // Initialize Flutterwave checkout
+                const flw = new FlutterwaveCheckout({
+                    public_key: data.public_key,
+                    tx_ref: data.tx_ref,
+                    amount: data.amount,
+                    currency: data.currency,
+                    payment_options: "card, mobilemoney, ussd",
+                    customer: data.customer,
+                    customizations: data.customizations,
+                    callback: function(response) {
+                        // Handle successful payment
+                        if (response.status === "successful") {
+                            // Create form to submit transaction details
+                            const form = document.createElement('form');
+                            form.method = 'POST';
+                            form.action = data.redirect_url || window.location.href;
+                            
+                            // Add CSRF token
+                            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+                            const csrfInput = document.createElement('input');
+                            csrfInput.type = 'hidden';
+                            csrfInput.name = 'csrfmiddlewaretoken';
+                            csrfInput.value = csrfToken;
+                            form.appendChild(csrfInput);
+                            
+                            // Add transaction reference
+                            const txRefInput = document.createElement('input');
+                            txRefInput.type = 'hidden';
+                            txRefInput.name = 'tx_ref';
+                            txRefInput.value = response.tx_ref;
+                            form.appendChild(txRefInput);
+                            
+                            // Add transaction ID
+                            const txIdInput = document.createElement('input');
+                            txIdInput.type = 'hidden';
+                            txIdInput.name = 'transaction_id';
+                            txIdInput.value = response.transaction_id;
+                            form.appendChild(txIdInput);
+                            
+                            // Submit the form
+                            document.body.appendChild(form);
+                            form.submit();
+                        } else {
+                            // Hide processing message
+                            if (processingMessage) processingMessage.style.display = 'none';
+                            
+                            // Show error message
+                            alert('Payment failed. Please try again.');
+                        }
+                    },
+                    onclose: function() {
+                        // Hide processing message when payment modal is closed
+                        if (processingMessage) processingMessage.style.display = 'none';
+                    }
+                });
+                
+                // Open Flutterwave checkout
+                flw.open();
+            }
+        } catch (error) {
+            console.error('Error parsing payment data:', error);
+        }
+    }
+}

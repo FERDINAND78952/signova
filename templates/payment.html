@@ -5,6 +5,59 @@
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/payment.css' %}">
+<style>
+    .payment-processing {
+        display: none;
+        text-align: center;
+        padding: 20px;
+        margin-top: 20px;
+        background-color: #f8f9fa;
+        border-radius: 10px;
+    }
+    
+    .payment-processing i {
+        font-size: 24px;
+        color: #007bff;
+        margin-right: 10px;
+    }
+    
+    .payment-methods-icons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-top: 15px;
+    }
+    
+    .payment-methods-icons img {
+        height: 30px;
+        object-fit: contain;
+    }
+    
+    .payment-method-selector .btn-group {
+        display: flex;
+        width: 100%;
+    }
+    
+    .payment-method-selector .btn {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 8px 12px;
+    }
+    
+    .payment-method-selector .btn.active {
+        background-color: #007bff;
+        color: white;
+        border-color: #007bff;
+    }
+    
+    .payment-method-selector img {
+        height: 20px;
+        width: auto;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
@@ -16,7 +69,7 @@
     
     <div class="plans-container">
         {% for plan_id, plan in plans.items %}
-        <div class="plan-card">
+        <div class="plan-card" data-plan="{{ plan_id }}">
             <div class="plan-header">
                 <h3>{{ plan.name }}</h3>
                 <div class="plan-price">
@@ -26,7 +79,11 @@
             </div>
             <div class="plan-features">
                 <ul>
-                    {% if plan_id == 'advanced' %}
+                    {% if plan_id == 'free' %}
+                    <li><i class="fas fa-check"></i> Basic translation features</li>
+                    <li><i class="fas fa-check"></i> Limited learning materials</li>
+                    <li><i class="fas fa-check"></i> Community support</li>
+                    {% elif plan_id == 'advanced' %}
                     <li><i class="fas fa-check"></i> Full access to learning materials</li>
                     <li><i class="fas fa-check"></i> Advanced translation features</li>
                     <li><i class="fas fa-check"></i> Email support</li>
@@ -38,13 +95,43 @@
                 </ul>
             </div>
             <div class="plan-footer">
+                {% if plan_id == 'free' %}
                 <form method="post" action="{% url 'initiate_payment' %}">
                     {% csrf_token %}
                     <input type="hidden" name="plan" value="{{ plan_id }}">
-                    <button type="submit" class="btn btn-primary btn-block">
+                    <button type="submit" class="btn btn-success btn-block">
+                        <i class="fas fa-check-circle"></i> Activate Free Plan
+                    </button>
+                </form>
+                {% else %}
+                <form method="post" action="{% url 'initiate_payment' %}">
+                    {% csrf_token %}
+                    <input type="hidden" name="plan" value="{{ plan_id }}">
+                    <div class="form-group mb-3">
+                        <input type="tel" class="form-control" id="phone-{{ plan_id }}" placeholder="Your Phone Number for Mobile Money" required>
+                    </div>
+                    <div class="payment-method-selector mb-3">
+                        <div class="btn-group w-100" role="group">
+                            <button type="button" class="btn btn-outline-primary payment-method" data-method="mtn" data-plan="{{ plan_id }}">
+                                <img src="{% static 'images/mtn-momo.svg' %}" alt="MTN MoMo" height="20">
+                                MTN MoMo
+                            </button>
+                            <button type="button" class="btn btn-outline-primary payment-method" data-method="card" data-plan="{{ plan_id }}">
+                                <i class="fas fa-credit-card"></i> Card
+                            </button>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-primary btn-block flutterwave-pay"
+                            data-amount="{{ plan.amount }}"
+                            data-currency="RWF"
+                            data-description="{{ plan.description }}"
+                            data-plan="{{ plan_id }}"
+                            data-email="{% if user.is_authenticated %}{{ user.email }}{% endif %}"
+                            data-name="{% if user.is_authenticated %}{{ user.get_full_name|default:user.username }}{% endif %}">
                         <i class="fas fa-credit-card"></i> Subscribe Now
                     </button>
                 </form>
+                {% endif %}
             </div>
         </div>
         {% endfor %}
@@ -53,14 +140,59 @@
     <div class="payment-info">
         <h3>Secure Payment</h3>
         <p>Your payment information is securely processed by Flutterwave, a trusted payment provider in Africa.</p>
-        <div class="payment-methods">
+        <div class="payment-methods-icons">
             <img src="{% static 'images/mtn-momo.svg' %}" alt="MTN Mobile Money">
             <img src="{% static 'images/airtel-money.svg' %}" alt="Airtel Money">
+            <img src="{% static 'images/visa.svg' %}" alt="Visa">
+            <img src="{% static 'images/mastercard.svg' %}" alt="Mastercard">
+        </div>
+    </div>
+    
+    <div class="payment-processing">
+        <i class="fas fa-spinner fa-spin"></i>
+        <span>Processing your payment. Please do not close this page...</span>
+    </div>
+    
+    <div class="mtn-instructions" style="display: none;">
+        <div class="alert alert-info mt-4">
+            <h4><img src="{% static 'images/mtn-momo.svg' %}" alt="MTN MoMo" height="24"> MTN Mobile Money Payment</h4>
+            <p>Please check your phone for a payment prompt from MTN Mobile Money.</p>
+            <ol>
+                <li>You will receive a prompt on your phone to authorize the payment</li>
+                <li>Enter your MTN Mobile Money PIN to confirm the payment</li>
+                <li>Once confirmed, you will be redirected to the success page</li>
+            </ol>
+            <p><strong>Note:</strong> If you don't receive a prompt within 1 minute, please check that you entered the correct phone number and try again.</p>
         </div>
     </div>
 </div>
 {% endblock %}
 
 {% block extra_js %}
+<!-- Flutterwave JS SDK -->
+<script src="https://checkout.flutterwave.com/v3.js"></script>
+<!-- Custom payment scripts -->
 <script src="{% static 'js/payment.js' %}"></script>
+<script src="{% static 'js/flutterwave.js' %}"></script>
+<script>
+    // Set Flutterwave public key
+    const flutterwavePublicKey = "{{ flutterwave_public_key }}";
+    
+    // Set payment data if available
+    {% if payment_data %}
+    const paymentData = {{ payment_data|safe }};
+    {% endif %}
+    
+    // Set selected plan if available
+    {% if selected_plan %}
+    const selectedPlan = "{{ selected_plan }}";
+    document.addEventListener('DOMContentLoaded', function() {
+        // Highlight the selected plan
+        const planCard = document.querySelector('.plan-card[data-plan="' + selectedPlan + '"]');
+        if (planCard) {
+            planCard.classList.add('active');
+        }
+    });
+    {% endif %}
+</script>
 {% endblock %}

@@ -91,9 +91,9 @@
                 </div>
                 
                 <div class="payment-info">
-                    <h4>Secure Payment</h4>
-                    <p>We offer secure payment processing through Flutterwave, supporting Mobile Money and other payment methods.</p>
-                    <a href="/payment/" class="btn btn-primary mt-3">Subscribe Now</a>
+                    <h4>Payment Method</h4>
+                    <p>Mobile Money: +250785617205</p>
+                    <p>After payment, please email your transaction ID to <a href="mailto:support@signova.com">support@signova.com</a></p>
                 </div>
             </div>
             
@@ -159,7 +159,7 @@
                             <li>Advanced translation features</li>
                             <li>Email support</li>
                         </ul>
-                        <a href="/payment/" class="btn btn-primary">Upgrade - 5,000 RWF/month</a>
+                        <a href="#" class="btn btn-primary">Upgrade - 5,000 RWF/month</a>
                     </div>
                     <div class="plan">
                         <h4>Pro</h4>
@@ -169,13 +169,13 @@
                             <li>Offline translation capabilities</li>
                             <li>Priority support</li>
                         </ul>
-                        <a href="/payment/" class="btn btn-primary">Upgrade - 10,000 RWF/month</a>
+                        <a href="#" class="btn btn-primary">Upgrade - 10,000 RWF/month</a>
                     </div>
                 </div>
                 <div class="payment-info">
-                    <h4>Secure Payment</h4>
-                    <p>We offer secure payment processing through Flutterwave, supporting Mobile Money and other payment methods.</p>
-                    <a href="/payment/" class="btn btn-primary mt-3">Subscribe Now</a>
+                    <h4>Payment Method</h4>
+                    <p>Mobile Money: +250785617205</p>
+                    <p>After payment, please email your transaction ID to <a href="mailto:support@signova.com">support@signova.com</a></p>
                 </div>
             </div>
             <p>&copy; 2025 Signova. All rights reserved.</p>
@@ -262,9 +262,10 @@
                         this.innerHTML = originalText;
                         this.disabled = false;
                         
-                        // If this is a paid plan, redirect to payment page
+                        // If this is a paid plan, you could redirect to payment page
+                        // or show payment instructions
                         if (plan !== 'free') {
-                            window.location.href = '/payment/';
+                            alert('Please complete payment using Mobile Money: +250785617205 and email your transaction ID to support@signova.com');
                         }
                     }, 800);
                 });

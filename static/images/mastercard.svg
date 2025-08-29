@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 100">
+  <!-- Mastercard Background -->
+  <rect width="200" height="100" rx="10" fill="#FFFFFF" stroke="#E6E6E6" stroke-width="1"/>
+  
+  <!-- Mastercard Logo -->
+  <circle cx="80" cy="50" r="25" fill="#EB001B"/>
+  <circle cx="120" cy="50" r="25" fill="#F79E1B"/>
+  <path d="M100 32.5c-6.9 6.9-6.9 18.1 0 25s18.1 6.9 25 0c-6.9-6.9-6.9-18.1 0-25-6.9-6.9-18.1-6.9-25 0z" fill="#FF5F00"/>
+</svg>
