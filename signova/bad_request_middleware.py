@@ -2,6 +2,7 @@ from django.http import JsonResponse, HttpResponse
 from django.core.exceptions import SuspiciousOperation, DisallowedHost
 import logging
 import os
+import traceback
 
 logger = logging.getLogger('django')
 
@@ -21,13 +22,21 @@ class BadRequestMiddleware:
         
     def __call__(self, request):
         try:
+            # Log request details for debugging
+            logger.info(f"Processing request: {request.method} {request.path} from {request.META.get('REMOTE_ADDR')}, Host: {request.META.get('HTTP_HOST')}")
+            logger.info(f"Request headers: {dict(request.headers)}")
+            
             return self.get_response(request)
         except (SuspiciousOperation, DisallowedHost) as e:
             logger.error(f"Bad Request Exception: {str(e)}")
+            logger.error(f"Exception traceback: {traceback.format_exc()}")
+            logger.error(f"Request details: {request.method} {request.path}, Host: {request.META.get('HTTP_HOST')}")
             return self.handle_bad_request(request, e)
         except Exception as e:
             if hasattr(e, 'status_code') and e.status_code == 400:
                 logger.error(f"Bad Request (400): {str(e)}")
+                logger.error(f"Exception traceback: {traceback.format_exc()}")
+                logger.error(f"Request details: {request.method} {request.path}, Host: {request.META.get('HTTP_HOST')}")
                 return self.handle_bad_request(request, e)
             raise
     
@@ -35,11 +44,19 @@ class BadRequestMiddleware:
         # Handle SuspiciousOperation exceptions (which often result in 400 errors)
         if isinstance(exception, SuspiciousOperation) or isinstance(exception, DisallowedHost):
             logger.error(f"Bad Request Exception in process_exception: {str(exception)}")
+            logger.error(f"Exception type: {type(exception).__name__}")
+            logger.error(f"Exception traceback: {traceback.format_exc()}")
+            logger.error(f"Request details: {request.method} {request.path}, Host: {request.META.get('HTTP_HOST')}")
+            logger.error(f"Request headers: {dict(request.headers)}")
             return self.handle_bad_request(request, exception)
             
         # Check if the exception is related to bad requests
         if hasattr(exception, 'status_code') and exception.status_code == 400:
             logger.error(f"Bad Request (400) in process_exception: {str(exception)}")
+            logger.error(f"Exception type: {type(exception).__name__}")
+            logger.error(f"Exception traceback: {traceback.format_exc()}")
+            logger.error(f"Request details: {request.method} {request.path}, Host: {request.META.get('HTTP_HOST')}")
+            logger.error(f"Request headers: {dict(request.headers)}")
             return self.handle_bad_request(request, exception)
         
         # For other exceptions, let Django handle them

@@ -1,9 +1,11 @@
 import os
 import gc
 import sys
+import re
 
 from django.core.wsgi import get_wsgi_application
 from signova.wsgi_handler import CustomWSGIHandler
+from signova.direct_health import direct_health_check_app
 
 # Set memory optimization environment variables before loading Django
 is_render = os.environ.get('RENDER', 'False').lower() == 'true' or os.environ.get('RENDER_EXTERNAL_HOSTNAME') is not None
@@ -23,6 +25,18 @@ base_application = get_wsgi_application()
 
 # Use our custom WSGI handler on Render to catch 400 errors
 if is_render:
-    application = CustomWSGIHandler()
+    django_app = CustomWSGIHandler()
 else:
-    application = base_application
+    django_app = base_application
+
+# Create a WSGI dispatcher that routes health check requests to our direct health check app
+def application(environ, start_response):
+    # Check if this is a health check request
+    path_info = environ.get('PATH_INFO', '')
+    
+    # If it's a health check request, use the direct health check app
+    if path_info in ['/health-check/', '/health/', '/simple-health-check/', '/simple-health/']:
+        return direct_health_check_app(environ, start_response)
+    
+    # Otherwise, use the Django application
+    return django_app(environ, start_response)

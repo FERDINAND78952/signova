@@ -9,7 +9,7 @@ services:
       maxInstances: 1
     buildCommand: pip install -r requirements_web.txt && pip install social-auth-app-django==5.5.1 && python manage.py migrate && python manage.py collectstatic --noinput
     startCommand: gunicorn signova.wsgi:application --timeout 180 --workers 1 --preload --max-requests 1000 --max-requests-jitter 50
-    healthCheckPath: /health-check/
+    healthCheckPath: /simple-health-check/
     autoDeploy: true
     envVars:
       - key: WEB_CONCURRENCY

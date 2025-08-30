@@ -360,8 +360,40 @@ def privacy_policy(request):
 
 # Health check endpoint for Render
 def health_check(request):
-    """Simple health check endpoint for Render deployment monitoring"""
-    return HttpResponse("OK", content_type="text/plain")
+    """Enhanced health check endpoint for Render deployment monitoring"""
+    try:
+        # Log request details for debugging
+        logger = logging.getLogger('django')
+        logger.info(f"Health check accessed: {request.method} {request.path} from {request.META.get('REMOTE_ADDR')}, Host: {request.META.get('HTTP_HOST')}")
+        logger.info(f"Health check headers: {dict(request.headers)}")
+        
+        # Check if database is accessible
+        from django.db import connection
+        with connection.cursor() as cursor:
+            cursor.execute("SELECT 1")
+            result = cursor.fetchone()
+            db_ok = result[0] == 1
+        
+        # Build response with system info
+        import sys
+        import django
+        response_data = {
+            "status": "OK",
+            "database": "Connected" if db_ok else "Error",
+            "python_version": sys.version,
+            "django_version": django.__version__,
+            "timestamp": time.time()
+        }
+        
+        # Return JSON or plain text based on Accept header
+        if 'application/json' in request.META.get('HTTP_ACCEPT', ''):
+            return JsonResponse(response_data)
+        else:
+            return HttpResponse("OK", content_type="text/plain")
+    except Exception as e:
+        logger = logging.getLogger('django')
+        logger.error(f"Health check error: {str(e)}")
+        return HttpResponse(f"ERROR: {str(e)}", content_type="text/plain", status=500)
 
 # Serve video files
 def serve_video(request, video_name):

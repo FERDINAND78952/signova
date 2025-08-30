@@ -5,6 +5,7 @@ from django.conf import settings
 import os
 from . import views
 from .payment import initiate_payment, payment_callback, payment_webhook
+from .simple_health import simple_health_check
 
 urlpatterns = [
     path('', views.index, name='index'),
@@ -31,6 +32,8 @@ urlpatterns = [
     path('start_camera/', views.start_camera, name='start_camera'),
     path('health/', views.health_check, name='health_check'),
     path('health-check/', views.health_check, name='health_check_render'),
+    path('simple-health/', simple_health_check, name='simple_health_check'),
+    path('simple-health-check/', simple_health_check, name='simple_health_check_render'),
     path('stop_camera/', views.stop_camera, name='stop_camera'),
     path('clear_sentence/', views.clear_sentence, name='clear_sentence'),
     path('speak_sentence/', views.speak_sentence, name='speak_sentence'),
