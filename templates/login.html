@@ -108,21 +108,7 @@
                     <i class="fas fa-sign-in-alt"></i> Login
                 </button>
                 
-                <div class="divider">
-                    <span>Or continue with</span>
-                </div>
-                
-                <div class="social-login">
-                    <a href="{% url 'social:begin' 'google-oauth2' %}" class="social-btn google">
-                        <i class="fab fa-google"></i> Google
-                    </a>
-                    <a href="{% url 'social:begin' 'facebook' %}" class="social-btn facebook">
-                        <i class="fab fa-facebook-f"></i> Facebook
-                    </a>
-                    <a href="{% url 'social:begin' 'twitter' %}" class="social-btn twitter">
-                        <i class="fab fa-twitter"></i> Twitter
-                    </a>
-                </div>
+                <!-- Social login buttons removed to prevent errors on Render deployment -->
             </form>
             
             <div class="auth-footer">
