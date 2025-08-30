@@ -22,7 +22,7 @@ services:
         value: 65536
 
       - key: DJANGO_SETTINGS_MODULE
-        value: signova.settings
+        value: signova.settings.prod
       - key: SECRET_KEY
         generateValue: true
       - key: RENDER
