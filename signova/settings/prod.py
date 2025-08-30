@@ -1,7 +1,7 @@
 from .base import *
 
 DEBUG = False
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "signova.onrender.com", ".render.com"]
+ALLOWED_HOSTS = ["127.0.0.1", "localhost", "signova.onrender.com", ".render.com", "*.onrender.com"]
 
 # Database configuration for Render PostgreSQL
 import dj_database_url

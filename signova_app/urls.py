@@ -30,6 +30,7 @@ urlpatterns = [
     path('video_feed/', views.video_feed, name='video_feed'),
     path('start_camera/', views.start_camera, name='start_camera'),
     path('health/', views.health_check, name='health_check'),
+    path('health-check/', views.health_check, name='health_check_render'),
     path('stop_camera/', views.stop_camera, name='stop_camera'),
     path('clear_sentence/', views.clear_sentence, name='clear_sentence'),
     path('speak_sentence/', views.speak_sentence, name='speak_sentence'),
